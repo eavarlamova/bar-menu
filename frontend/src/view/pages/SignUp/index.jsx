@@ -1,5 +1,6 @@
 import React,
 {
+  memo,
   useState,
   useCallback,
 } from 'react';
@@ -136,4 +137,4 @@ const SignUp = () => {
   )
 };
 
-export default SignUp;
+export default memo(SignUp);
