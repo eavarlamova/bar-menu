@@ -1,8 +1,7 @@
 import React,
 {
+  useState,
   useCallback,
-  useEffect,
-  useState
 } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { isEmail, isStrongPassword } from 'validator';
@@ -38,7 +37,7 @@ const SignUp = () => {
       [name]: value
     })
     setError(initialUserData);
-  });
+  }); // have not any sence without dep array
 
   const clickSignUp = useCallback(() => {
     const { email } = userData;
@@ -78,7 +77,6 @@ const SignUp = () => {
         </Typography>
         {
           ['email', 'password', 'name', 'sign up'].map((item, index, array) => (
-
             <Grid
               item
               xs={12}

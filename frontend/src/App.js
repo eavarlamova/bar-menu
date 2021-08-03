@@ -13,6 +13,19 @@ import SignIn from './view/pages/SignIn';
 import SignUp from './view/pages/SignUp';
 
 
+const PrivateRouter = ({
+  isAuth,
+  pathForRoute,
+  pathForRedirect = '/',
+  component: Component,
+}) => (
+  isAuth
+    ?
+    <Redirect to={pathForRedirect} />
+    :
+    <Route component={Component} path={pathForRoute} />
+)
+
 const App = () => {
   const { isAuth } = useSelector(state => state.users);
 
@@ -21,13 +34,12 @@ const App = () => {
       <Switch>
         <Route path='/user' component={Personal} />
         <Route path='/signin' component={SignIn} />
-        {
-          isAuth
-            ?
-            <Redirect to='user'/>
-            :
-            <Route path='/signup' component={SignUp} />
-        }
+        <PrivateRouter
+          component={SignUp}
+          pathForRoute={'/signup'}
+          pathForRedirect={'/user'}
+          isAuth={isAuth}
+        />
         <Route path='/' component={Home} />
       </Switch>
     </Router>

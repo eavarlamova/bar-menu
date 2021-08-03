@@ -21,8 +21,6 @@ const HANDLER = {
                 data: payload
             })
             yield put(signUpSuccses(data))
-        
-            // REDIRECT TO HOME
         }
         catch (error) {
             const {
@@ -31,7 +29,7 @@ const HANDLER = {
                     status,
                 }
             } = error;
-            yield put(signUpFail({status, msg}))
+            yield put(signUpFail({ status, msg }))
         }
     },
 

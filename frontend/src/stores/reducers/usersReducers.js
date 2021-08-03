@@ -21,8 +21,6 @@ const initialState = {
 const usersReducers = (state = initialState, { type, payload }) => {
     console.log('type', type)
     switch (type) {
-        case SING_UP:
-            return { ...state };
         case SIGN_UP_SUCCSES:
             return {
                 ...state,

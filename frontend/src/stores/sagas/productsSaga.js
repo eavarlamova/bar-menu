@@ -2,7 +2,7 @@ import { call, put, takeEvery } from "redux-saga/effects"
 
 import {
     ADD_PRODUCT,
-    DELETE_PRODUCT
+    DELETE_PRODUCT,
 } from '../constants/products';
 
 
