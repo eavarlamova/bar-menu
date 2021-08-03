@@ -14,6 +14,7 @@ import {
   Typography,
 } from '../../../../node_modules/@material-ui/core'
 
+import Navbar from '../../components/Navbar';
 import { signUp as signUpAction } from '../../../stores/actions/users';
 
 import './index.scss'
@@ -66,6 +67,7 @@ const SignUp = () => {
 
   return (
     <>
+    <Navbar/>
       <Grid
         className='sign-up__form'
         container

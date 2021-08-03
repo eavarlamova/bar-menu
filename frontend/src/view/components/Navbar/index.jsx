@@ -1,9 +1,69 @@
 import
 React, {
-    memo,
+	memo,
 } from 'react';
+import { useSelector } from 'react-redux';
+import {
+	Badge,
+	AppBar,
+	Button,
+	Toolbar,
+	MenuItem,
+	Typography,
+	IconButton,
+} from '@material-ui/core';
+import {
+	Person as PersonIcon,
+	LocalBar as LocalBarIcon,
+} from '@material-ui/icons';
 
-const Navbar = () => { };
+import './index.scss'
+import { Link } from 'react-router-dom';
+
+
+const Navbar = () => {
+	const { isAuth } = useSelector(state => state.users)
+
+	return (
+		<>
+			<AppBar position="static">
+				<Toolbar className="navbar">
+					<Link to='/'>
+						<Typography variant="h6" >
+							Bar_menu
+    			</Typography>
+					</Link>
+					<MenuItem>
+						{isAuth
+							?
+							<Link to='/user'>
+								<IconButton >
+									{/*in badgeContent will be ingredients in Availability*/}
+									<Badge badgeContent={2} color="secondary">
+										<PersonIcon />
+										<LocalBarIcon />
+									</Badge>
+								</IconButton>
+							</Link>
+							:
+							(
+								<>
+									<Link to='/signin'>
+										<Button color="inherit">SignIn</Button>
+									</Link>
+									<Link to='/signup'>
+										<Button color="inherit">SignUp</Button>
+									</Link>
+								</>
+							)
+						}
+
+					</MenuItem>
+				</Toolbar>
+			</AppBar >
+		</>
+	)
+};
 
 
 export default memo(Navbar);
