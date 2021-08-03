@@ -11,6 +11,7 @@ import {
     signUpFail,
     signUpSuccses,
 } from "../actions/users"
+import { setJWT } from "../../helpers/jwt";
 
 
 const HANDLER = {
@@ -21,6 +22,7 @@ const HANDLER = {
                 data: payload
             })
             yield put(signUpSuccses(data))
+            setJWT(data.jwt);
         }
         catch (error) {
             const {

@@ -28,6 +28,7 @@ const usersReducers = (state = initialState, { type, payload }) => {
                 isAuth: true,
                 error: null,
             }
+
         case SIGN_UP_FAIL:
             return {
                 ...state,

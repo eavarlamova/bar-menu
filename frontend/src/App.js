@@ -28,9 +28,10 @@ const App = () => {
   return (
     <Router>
       <Switch>
-        <PrivateRouter component={Personal} path={'/user'} />
+        {/* <PrivateRouter component={Personal} path={'/user'} /> */}
+        <Route path='/user' component={Personal}/>
         <Route path='/signin' component={SignIn} />      
-        <Route path={'/signup'} component={SignUp}  />
+        <Route path={'/signup'} component={SignUp} />
         <Route path='/' component={Home} />
       </Switch>
     </Router>
