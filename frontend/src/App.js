@@ -1,4 +1,4 @@
-import React, { memo } from 'react';
+import React, { memo, useEffect } from 'react';
 import { useSelector } from 'react-redux';
 import {
   Route,
@@ -16,6 +16,10 @@ import SignUp from './view/pages/SignUp';
 
 const App = () => {
   const { isAuth } = useSelector(state => state.users);
+  
+  useEffect(() => { 
+    console.log('#######', 'app.js reload', '#######')
+  }, [])
 
   const PrivateRouter = (props) => (
     isAuth
@@ -29,8 +33,8 @@ const App = () => {
     <Router>
       <Switch>
         {/* <PrivateRouter component={Personal} path={'/user'} /> */}
-        <Route path='/user' component={Personal}/>
-        <Route path='/signin' component={SignIn} />      
+        <Route path='/user' component={Personal} />
+        <Route path='/signin' component={SignIn} />
         <Route path={'/signup'} component={SignUp} />
         <Route path='/' component={Home} />
       </Switch>
