@@ -35,6 +35,27 @@ const HANDLER = {
         }
     },
 
+    *[SING_IN](payload) {
+        try {
+            const { data } = yield call(axios, `${URL}/users/signin`, {
+                method: "POST",
+                data: payload
+            })
+            console.log('data', data)
+            // yield put(signUpSuccses(data))
+            // setJWT(data.jwt);
+        }
+        catch (error) {
+            // const {
+            //     response: {
+            //         data: { msg },
+            //         status,
+            //     }
+            // } = error;
+            // yield put(signUpFail({ status, msg }))
+        }
+    },
+
 };
 
 function* sagaManage({ type, payload }) {
