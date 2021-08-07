@@ -7,21 +7,20 @@ import {
     ADD_PRODUCT,
     DELETE_PRODUCT,
 } from '../constants/products';
+import {
+    addProductSuccses,
+} from '../actions/products';
 
 
 const HANDLER = {
     *[ADD_PRODUCT](payload) {
         try {
-            const response = yield call(axios, `${URL}/products/add`, {
+            const { data } = yield call(axios, `${URL}/products/add`, {
                 method: "POST",
                 data: payload,
-            })
-            console.log('response.data', response.data)
-            // // if we have succses response
-            // // we'll must make new action
-            // yield put(newAction(response.data)) 
+            });
+            yield put(addProductSuccses(data))
 
-            // }
         }
         catch (error) { }
     },
