@@ -5,7 +5,7 @@ import { URL, CHECK_JWT } from '../../mainConstants';
 import {
     SING_UP,
     SING_IN,
-    
+
 } from '../constants/users';
 import {
     signInFail,
@@ -21,8 +21,15 @@ const HANDLER = {
             yield put(signInSuccses(data))
         }
         catch (error) {
-// put errro and redirect to sign in 
-            console.log('error.response', error.response)
+            // put errro and redirect to sign in 
+            const {
+                response: {
+                    data: { msg },
+                    status,
+                }
+            } = error;
+            yield put(signInFail({ status, msg }))
+            setJWT(null)
         }
     },
     *[SING_UP](payload) {
