@@ -128,7 +128,7 @@ const SignIn = () => {
                         color="error"
                         align='center'
                       >
-                        {/* {signUpGlobalError ? signUpGlobalError.msg : ''} */}
+                        {signInGlobalError ? signInGlobalError.msg : ''}
                       </Typography>
                     </>
                   )

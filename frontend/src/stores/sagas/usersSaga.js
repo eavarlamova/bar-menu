@@ -9,7 +9,9 @@ import {
 } from '../constants/users';
 import {
     signUpFail,
+    signInFail,
     signUpSuccses,
+    signInSuccses,
 } from "../actions/users"
 import { setJWT } from "../../helpers/jwt";
 
@@ -41,18 +43,17 @@ const HANDLER = {
                 method: "POST",
                 data: payload
             })
-            console.log('data', data)
-            // yield put(signUpSuccses(data))
-            // setJWT(data.jwt);
+            yield put(signInSuccses(data))
+            setJWT(data.jwt);
         }
         catch (error) {
-            // const {
-            //     response: {
-            //         data: { msg },
-            //         status,
-            //     }
-            // } = error;
-            // yield put(signUpFail({ status, msg }))
+            const {
+                response: {
+                    data: { msg },
+                    status,
+                }
+            } = error;
+            yield put(signInFail({ status, msg }))
         }
     },
 
