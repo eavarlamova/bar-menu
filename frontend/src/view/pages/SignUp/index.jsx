@@ -40,15 +40,15 @@ const SignUp = () => {
   //   redirectWithAuth(isAuth)
   // }, [isAuth])
 
-  const handleChange = useCallback(({ target: { value, name } }) => {
+  const handleChange = ({ target: { value, name } }) => {
     setUserData({
       ...userData,
       [name]: value
     })
     setError(initialUserData);
-  }); // have not any sence without dep array
+  };
 
-  const clickSignUp = useCallback(() => {
+  const clickSignUp = () => {
     const { email } = userData;
     const emailValidate = isEmail(email);
     // add isStrongPassword for password in 'if'
@@ -69,7 +69,7 @@ const SignUp = () => {
         name: trimUserName ? '' : 'uncorrect name',
       })
     }
-  })
+  };
 
 
   return (
