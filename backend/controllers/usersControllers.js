@@ -3,7 +3,7 @@
 const { hash, verify } = require("argon2");
 const jwt = require("jsonwebtoken");
 
-const { Users, JWTtemp } = require("../models");
+const { Users, JWTtemp, Products } = require("../models");
 
 const getPublicUsersData = (user) => ({
   id: user.id,
@@ -12,6 +12,8 @@ const getPublicUsersData = (user) => ({
   email: user.email,
   avatar: user.avatar,
   users_ingredients: user.users_ingredients,
+
+  products: user.products,
 })
 
 const usersControllers = {
@@ -74,8 +76,14 @@ const usersControllers = {
   async signIn({ body }, res, next) {
     try {
       const findUser = await Users.findOne({
-        where: { email: body.email }
+        where: { email: body.email },
+        include: [{
+          model: Products,
+          as: 'products',
+          attributes: ['id', 'product', 'steps', 'ingredients', 'descriptions', 'photo']
+        }],
       });
+      console.log('findUser', findUser)
       if (findUser) {
         const { dataValues: currentUser } = findUser;
         const varifyPasswordResult = await verify(currentUser.password, body.password.trim());

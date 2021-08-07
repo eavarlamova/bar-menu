@@ -9,7 +9,7 @@ const initialState = {
     email: '',
     name: '',
     id: null,
-    user_ingredients: '',
+    users_ingredients: '',
   },
   isAuth: false,
   error: null,
