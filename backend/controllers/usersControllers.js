@@ -83,13 +83,12 @@ const usersControllers = {
           attributes: ['id', 'product', 'steps', 'ingredients', 'descriptions', 'photo']
         }],
       });
-      console.log('findUser', findUser)
       if (findUser) {
         const { dataValues: currentUser } = findUser;
         const varifyPasswordResult = await verify(currentUser.password, body.password.trim());
         if (varifyPasswordResult) {
           const jwtToken = `JWT ${jwt.sign(currentUser, 'secret')}`
-          console.log('jwtToken', jwtToken)
+
           await JWTtemp.create({
             jwt: jwtToken,
             user_id: currentUser.id,

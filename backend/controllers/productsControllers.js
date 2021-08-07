@@ -1,24 +1,26 @@
-const { Products ,Users} = require('../models')
+const { Products, Users } = require('../models')
 
 const productsControllers = {
     async add({ body }, res, next) {
         try {
             // validate body
-            const newProduct = await Products.create(body)
+            // const newProduct = await Products.create(body)
 
             const allProducts = await Products.findAll({
-                inclue: [{
+                include: [{
                     model: Users,
                     as: 'author',
-                    attributes: ['email']
-                  }],
+                    attributes: ['email', 'name', 'avatar']
+                }],
             })
-            console.log('newProduct', newProduct)
+            console.log('allProducts', allProducts)
+            // console.log('newProduct', newProduct)
+            res.status(200).send(allProducts)
         }
-        catch(error){
+        catch (error) {
             console.log('#######', error, '#######')
         }
-        
+
     },
 }
 

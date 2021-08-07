@@ -16,6 +16,7 @@ const HANDLER = {
                 method: "POST",
                 data: payload,
             })
+            console.log('response.data', response.data)
             // // if we have succses response
             // // we'll must make new action
             // yield put(newAction(response.data)) 
