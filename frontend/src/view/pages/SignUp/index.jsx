@@ -2,6 +2,7 @@ import React,
 {
   memo,
   useState,
+  useEffect,
   useCallback,
 } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
@@ -14,7 +15,9 @@ import {
   Typography,
 } from '../../../../node_modules/@material-ui/core'
 
+import Navbar from '../../components/Navbar';
 import { signUp as signUpAction } from '../../../stores/actions/users';
+import { redirectWithAuth } from '../../../helpers/redirect'
 
 import './index.scss'
 
@@ -28,9 +31,15 @@ const vallidateUserData = ({ email, password, name }) => ({
 
 const SignUp = () => {
   const dispatch = useDispatch();
+  const { isAuth } = useSelector(state => state.users)
   const [userData, setUserData] = useState(initialUserData);
   const [error, setError] = useState(initialUserData);
   const { error: signUpGlobalError } = useSelector(state => state.users);
+
+  // useEffect(() => {
+  //   redirectWithAuth(isAuth)
+  // }, [isAuth])
+
 
   const handleChange = ({ target: { value, name } }) => {
     setUserData({
@@ -38,8 +47,8 @@ const SignUp = () => {
       [name]: value
     })
     setError(initialUserData);
+  };
 
-  }; 
 
   const clickSignUp = () => {
     const { email } = userData;
@@ -67,6 +76,7 @@ const SignUp = () => {
 
   return (
     <>
+      <Navbar />
       <Grid
         className='sign-up__form'
         container

@@ -20,14 +20,11 @@ module.exports = {
       name: {
         type: Sequelize.STRING
       },
-      name: {
-        type: Sequelize.STRING
-      },
       avatar: {
-        type: Sequelize.STRING
+        type: Sequelize.TEXT
       },
       users_ingredients: {
-        type: Sequelize.STRING
+        type: Sequelize.TEXT
       },
       createdAt: {
         allowNull: false,

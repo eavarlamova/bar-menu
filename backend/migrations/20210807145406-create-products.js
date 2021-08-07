@@ -12,16 +12,16 @@ module.exports = {
         type: Sequelize.STRING
       },
       ingredients: {
-        type: Sequelize.STRING
+        type: Sequelize.TEXT
       },
       steps: {
-        type: Sequelize.STRING
+        type: Sequelize.TEXT
       },
       descriptions: {
-        type: Sequelize.STRING
+        type: Sequelize.TEXT
       },
       photo: {
-        type: Sequelize.STRING
+        type: Sequelize.TEXT
       },
       createdAt: {
         allowNull: false,
