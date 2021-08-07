@@ -40,6 +40,7 @@ const SignUp = () => {
   //   redirectWithAuth(isAuth)
   // }, [isAuth])
 
+
   const handleChange = ({ target: { value, name } }) => {
     setUserData({
       ...userData,
@@ -47,6 +48,7 @@ const SignUp = () => {
     })
     setError(initialUserData);
   };
+
 
   const clickSignUp = () => {
     const { email } = userData;
