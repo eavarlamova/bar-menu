@@ -2,7 +2,12 @@ import
 React, {
 	memo,
 } from 'react';
-import { useSelector } from 'react-redux';
+import {
+	useDispatch,
+	useSelector
+} from 'react-redux';
+import { Link } from 'react-router-dom';
+
 import {
 	Badge,
 	AppBar,
@@ -15,14 +20,23 @@ import {
 import {
 	Person as PersonIcon,
 	LocalBar as LocalBarIcon,
+	ExitToApp as ExitToAppIcon,
 } from '@material-ui/icons';
 
+
+import { setJWT } from '../../../helpers/jwt';
+import { signOut } from '../../../stores/actions/users'
 import './index.scss'
-import { Link } from 'react-router-dom';
 
 
 const Navbar = () => {
+	const dispatch = useDispatch();
 	const { isAuth } = useSelector(state => state.users)
+
+	const handleSignOut = () => {
+		dispatch(signOut())
+		setJWT(null)
+	};
 
 	return (
 		<>
@@ -36,15 +50,20 @@ const Navbar = () => {
 					<MenuItem>
 						{isAuth
 							?
-							<Link to='/user'>
-								<IconButton >
-									{/*in badgeContent will be ingredients in Availability*/}
-									<Badge badgeContent={2} color="secondary">
-										<PersonIcon />
-										<LocalBarIcon />
-									</Badge>
+							<>
+								<Link to='/user'>
+									<IconButton >
+										{/*in badgeContent will be ingredients in Availability*/}
+										<Badge badgeContent={2} color="secondary">
+											<PersonIcon />
+											<LocalBarIcon />
+										</Badge>
+									</IconButton>
+								</Link>
+								<IconButton onClick={handleSignOut}>
+									<ExitToAppIcon />
 								</IconButton>
-							</Link>
+							</>
 							:
 							(
 								<>

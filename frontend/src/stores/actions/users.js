@@ -4,23 +4,21 @@ import {
   SING_OUT,
   SIGN_UP_FAIL,
   SING_IN_FAIL,
-  SIGN_UP_SUCCSES,
   SING_IN_SUCCSES,
 } from "../constants/users";
 
+import { CHECK_JWT } from '../../mainConstants'
+
+export const checkJWT = (payload) => ({
+  type: CHECK_JWT,
+  payload,
+})
 
 export const signUp = (payload) => ({
   type: SING_UP,
   payload,
 });
-export const signUpSuccses = (payload) => ({
-  type: SIGN_UP_SUCCSES,
-  payload,
-})
-export const signUpFail = (payload) => ({
-  type: SIGN_UP_FAIL,
-  payload,
-})
+
 
 
 export const signIn = (payload) => ({

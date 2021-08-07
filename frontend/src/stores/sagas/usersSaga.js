@@ -1,29 +1,37 @@
 import { call, put, takeEvery } from "redux-saga/effects"
 import axios from 'axios';
 
-import { URL } from '../../mainConstants';
+import { URL, CHECK_JWT } from '../../mainConstants';
 import {
     SING_UP,
     SING_IN,
-    SING_OUT,
+    
 } from '../constants/users';
 import {
-    signUpFail,
     signInFail,
-    signUpSuccses,
     signInSuccses,
 } from "../actions/users"
 import { setJWT } from "../../helpers/jwt";
 
 
 const HANDLER = {
+    *[CHECK_JWT](payload) {
+        try {
+            const { data } = yield call(axios, `${URL}/users/check/${payload}`);
+            yield put(signInSuccses(data))
+        }
+        catch (error) {
+// put errro and redirect to sign in 
+            console.log('error.response', error.response)
+        }
+    },
     *[SING_UP](payload) {
         try {
             const { data } = yield call(axios, `${URL}/users/signup`, {
                 method: "POST",
                 data: payload
             })
-            yield put(signUpSuccses(data))
+            yield put(signInSuccses(data))
             setJWT(data.jwt);
         }
         catch (error) {
@@ -33,7 +41,7 @@ const HANDLER = {
                     status,
                 }
             } = error;
-            yield put(signUpFail({ status, msg }))
+            yield put(signInFail({ status, msg }))
         }
     },
 

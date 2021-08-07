@@ -1,6 +1,4 @@
 export const SING_UP = 'SING_UP';
-export const SIGN_UP_FAIL = 'SIGN_UP_FAIL';
-export const SIGN_UP_SUCCSES = 'SIGN_UP_SUCCSES';
 
 
 export const SING_IN = 'SING_IN';

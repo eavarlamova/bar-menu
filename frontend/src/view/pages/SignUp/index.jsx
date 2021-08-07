@@ -36,9 +36,9 @@ const SignUp = () => {
   const [error, setError] = useState(initialUserData);
   const { error: signUpGlobalError } = useSelector(state => state.users);
 
-  useEffect(() => {
-    redirectWithAuth(isAuth)
-  }, [isAuth])
+  // useEffect(() => {
+  //   redirectWithAuth(isAuth)
+  // }, [isAuth])
 
   const handleChange = useCallback(({ target: { value, name } }) => {
     setUserData({

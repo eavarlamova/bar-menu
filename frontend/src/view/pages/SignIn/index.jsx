@@ -33,9 +33,9 @@ const SignIn = () => {
   const [error, setError] = useState(initialUserData);
   const { error: signInGlobalError } = useSelector(state => state.users);
 
-  useEffect(() => {
-    redirectWithAuth(isAuth)
-  }, [isAuth])
+  // useEffect(() => {
+  //   redirectWithAuth(isAuth)
+  // }, [isAuth])
 
   const handleChange = ({ target: { value, name } }) => {
     setUserData({
