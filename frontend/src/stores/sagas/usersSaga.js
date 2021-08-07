@@ -21,7 +21,6 @@ const HANDLER = {
             yield put(signInSuccses(data))
         }
         catch (error) {
-            // put errro and redirect to sign in 
             const {
                 response: {
                     data: { msg },
