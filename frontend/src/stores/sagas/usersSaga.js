@@ -39,7 +39,7 @@ const HANDLER = {
                 }
             } = error;
             yield put(signInFail({ status, msg }))
-            setJWT(null)
+            setJWT('')
         }
     },
     *[SING_UP](payload) {
@@ -86,7 +86,7 @@ const HANDLER = {
         try {
             const response = yield call(axios, `${URL}/users/signout/${payload}`);
             yield put(signOutSuccses());
-            setJWT(null);
+            setJWT('');
         }
         catch (error) {
             const { msg, status } = getErrorInfo(error);

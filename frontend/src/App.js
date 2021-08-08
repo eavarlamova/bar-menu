@@ -22,7 +22,11 @@ const App = () => {
 
   useEffect(() => {
     const jwt = getJWT();
-    jwt && dispatch(checkJWT(jwt));
+    console.log('jwt in APP', typeof jwt)
+    if (jwt)  {
+      console.log('#######', 'in if', '#######')
+      dispatch(checkJWT(jwt))
+    };
   }, [dispatch])
 
   const PrivateRouter = (props) => (

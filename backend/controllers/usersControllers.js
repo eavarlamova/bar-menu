@@ -115,7 +115,6 @@ const usersControllers = {
 
   async signOut({ params: { jwt } }, res, next) {
     try {
-      throw new Error()
       const response = await JWTtemp.destroy({
         where: {
           jwt
@@ -123,8 +122,8 @@ const usersControllers = {
       });
       res.sendStatus(200)
     }
-    catch(error){
-      res.status(500).send({msg: 'server error of sign out'})
+    catch (error) {
+      res.status(500).send({ msg: 'server error of sign out' })
     }
   },
 };
