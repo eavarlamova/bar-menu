@@ -13,6 +13,8 @@ import {
     signInSuccses,
     signOutSuccses,
 } from "../actions/users"
+import { setPersonalProducts } from "../actions/products";
+
 import { setJWT } from "../../helpers/jwt";
 
 const getErrorInfo = (error) => {
@@ -69,6 +71,8 @@ const HANDLER = {
                 data: payload
             })
             yield put(signInSuccses(data))
+            // personalProduct from user.products
+            yield put(setPersonalProducts(data.products))
             setJWT(data.jwt);
         }
         catch (error) {

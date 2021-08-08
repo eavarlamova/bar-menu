@@ -2,6 +2,7 @@ import {
     ADD_PRODUCT,
     DELETE_PRODUCT,
     ADD_PRODUCT_SUCCSES,
+    SET_PERSONAL_PRODUCTS,
 } from "../constants/products";
 
 
@@ -11,6 +12,11 @@ export const addProduct = (payload) => ({
 });
 export const addProductSuccses = (payload) => ({
     type: ADD_PRODUCT_SUCCSES,
+    payload,
+})
+
+export const setPersonalProducts = (payload) => ({
+    type: SET_PERSONAL_PRODUCTS,
     payload,
 })
 

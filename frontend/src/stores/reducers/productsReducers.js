@@ -1,5 +1,6 @@
 import {
     ADD_PRODUCT_SUCCSES,
+    SET_PERSONAL_PRODUCTS,
 } from "../constants/products";
 
 const initialState = {
@@ -27,6 +28,11 @@ const productsReducers = (state = initialState, { type, payload }) => {
                     payload,
                 ]
             };
+        case SET_PERSONAL_PRODUCTS:
+            return {
+                ...state,
+                personalProducts: payload,
+            }
         default:
             return { ...state }
     }
