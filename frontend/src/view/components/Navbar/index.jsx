@@ -24,7 +24,7 @@ import {
 } from '@material-ui/icons';
 
 
-import { setJWT } from '../../../helpers/jwt';
+import { setJWT, getJWT } from '../../../helpers/jwt';
 import { signOut } from '../../../stores/actions/users'
 import './index.scss'
 
@@ -34,8 +34,8 @@ const Navbar = () => {
 	const { isAuth } = useSelector(state => state.users)
 
 	const handleSignOut = () => {
-		dispatch(signOut())
-		setJWT(null)
+		const jwt = getJWT();
+		dispatch(signOut(jwt))
 	};
 
 	return (

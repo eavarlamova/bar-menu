@@ -1,7 +1,9 @@
 import {
   SING_OUT,
   SING_IN_FAIL,
+  SIGN_OUT_FAIL,
   SING_IN_SUCCSES,
+  SING_OUT_SUCCSES,
 } from "../constants/users";
 
 const initialState = {
@@ -32,10 +34,15 @@ const usersReducers = (state = initialState, { type, payload }) => {
         error: { ...payload },
       };
 
-    case SING_OUT:
+    case SING_OUT_SUCCSES:
       return {
         ...initialState,
       };
+    case SIGN_OUT_FAIL:
+      return {
+        ...state,
+        error: { ...payload }
+      }
     default:
       return { ...state };
   }

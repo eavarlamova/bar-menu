@@ -112,6 +112,21 @@ const usersControllers = {
       res.status(500).send({ msg: 'oops... some problem in server work' })
     }
   },
+
+  async signOut({ params: { jwt } }, res, next) {
+    try {
+      throw new Error()
+      const response = await JWTtemp.destroy({
+        where: {
+          jwt
+        }
+      });
+      res.sendStatus(200)
+    }
+    catch(error){
+      res.status(500).send({msg: 'server error of sign out'})
+    }
+  },
 };
 
 module.exports = usersControllers;

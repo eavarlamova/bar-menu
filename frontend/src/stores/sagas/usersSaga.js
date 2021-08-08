@@ -5,14 +5,25 @@ import { URL, CHECK_JWT } from '../../mainConstants';
 import {
     SING_UP,
     SING_IN,
-
+    SING_OUT,
 } from '../constants/users';
 import {
     signInFail,
+    signOutFail,
     signInSuccses,
+    signOutSuccses,
 } from "../actions/users"
 import { setJWT } from "../../helpers/jwt";
 
+const getErrorInfo = (error) => {
+    const {
+        response: {
+            data: { msg },
+            status,
+        }
+    } = error;
+    return { msg, status };
+};
 
 const HANDLER = {
     *[CHECK_JWT](payload) {
@@ -68,6 +79,18 @@ const HANDLER = {
                 }
             } = error;
             yield put(signInFail({ status, msg }))
+        }
+    },
+
+    *[SING_OUT](payload) {
+        try {
+            const response = yield call(axios, `${URL}/users/signout/${payload}`);
+            yield put(signOutSuccses());
+            setJWT(null);
+        }
+        catch (error) {
+            const { msg, status } = getErrorInfo(error);
+            yield put(signOutFail({ status, msg }))
         }
     },
 
