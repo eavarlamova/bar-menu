@@ -9,12 +9,13 @@ import {
 import { HighlightOff, HighlightOff as HighlightOffIcon } from '@material-ui/icons';
 
 import { addProduct } from '../../../stores/actions/products';
+import './index.scss';
 
 const initialProduct = {
   product: '',
   steps: '', // need remake in array of strings before save
   descriptions: '',
-  ingredients: { all: ['ing1', 'ing2'], current: '' },   /* [
+  ingredients: { all: [{ name: 'ing1' }, { name: 'ing2' }], current: '' },   /* [
                                         {
                                           name_ingredient: 'ice',
                                           size_ingredient: 40, 
@@ -42,7 +43,6 @@ const AddingForm = () => {
   const dispatch = useDispatch();
   const { id: users_id } = useSelector(state => state.users.user)
   const [currentProduct, setCurrentProduct] = useState(initialProduct);
-  // const [currentIngredient, setCurrentIngredient] = useState('123');
 
   const handleChange = ({ target: { value, name } }) => {
     setCurrentProduct({
@@ -50,31 +50,46 @@ const AddingForm = () => {
       [name]: value,
     })
   };
-useEffect(()=>{
-  console.log('####### currentProduct.ingredients: ', currentProduct.ingredients, '#######')
-},[currentProduct])
+  // useEffect(() => {
+  //   // const widthAllIngredientsForm = document.querySelector('.adding-form_ingredients').offsetWidth;
+  //   // const widthReadyIngredientsForm = document.querySelector('.adding-form_ready-ingredients').offsetWidth;
+  //   // const procentCorrect = ((widthReadyIngredientsForm / widthAllIngredientsForm) * 100)
+  //   // // console.log('####### widthAllIngredientsForm', widthAllIngredientsForm, widthReadyIngredientsForm, '#######')
+  //   // // console.log('####### procentCorrect', procentCorrect, '#######')
+  //   // document.querySelector('.adding-form_input-ingredients').style.width = `${widthAllIngredientsForm - widthReadyIngredientsForm}px`
+  //   // if(procentCorrect > 60){
+  //   //   document.querySelector('.adding-form_input-ingredients').style.width = `100%`
+  //   //   document.querySelector('.adding-form_ready-ingredients').style.width = `100%`
+
+  //     // document.querySelector('..adding-form_ready-ingredients').style
+  //     // document.querySelector('.adding-form_ready-ingredients').offsetWidth = widthAllIngredientsForm - widthReadyIngredientsForm;
+  //   // }
+  // }, [currentProduct.ingredients.all])
 
   const saveIngredient = ({ key }) => {
     if (key === ',' || key === 'Enter') {
       const newIngredient = currentProduct.ingredients.current.trim().toLocaleLowerCase();
-      setCurrentProduct({
-        ...currentProduct,
-        ingredients: {
-          all: [
-            ...currentProduct.ingredients.all,
-            newIngredient,
-          ],
-          current: '',
-        }
-      })
-     }
+      if (newIngredient) {
+        setCurrentProduct({
+          ...currentProduct,
+          ingredients: {
+            all: [
+              ...currentProduct.ingredients.all,
+              { name: newIngredient },
+            ],
+            current: '',
+          }
+        })
+      }
+
+    }
+
     // get adding-form_ready-ingredients
     // set adding-form_input-ingredients  !!! new wigth
   };
 
   const handleChangeIngredients = ({ target: { value, name }, key }) => {
-    const valideValue = value.replace(/[,]+/g, "")
-    // setCurrentIngredient(value)
+    const valideValue = value.replace(/[,\n]+/g, "")
     setCurrentProduct({
       ...currentProduct,
       ingredients: {
@@ -104,6 +119,16 @@ useEffect(()=>{
     }
   };
 
+  const deleteIngredient = (ingredient) => {
+    const allIngredientsUpdate = currentProduct.ingredients.all.filter(item => item !== ingredient);
+    setCurrentProduct({
+      ...currentProduct,
+      ingredients: {
+        ...currentProduct.ingredients,
+        all: allIngredientsUpdate,
+      }
+    })
+  }
 
 
   return (
@@ -121,34 +146,10 @@ useEffect(()=>{
             container
             alignItems='center'
             spacing={2}
-            fullWidth
           >
-            <Grid item className='adding-form_ready-ingredients'>
-              {
-                currentProduct.ingredients.all.length
-                  ?
-                  currentProduct.ingredients.all.map(item => (
-                    // {currentProduct[item].map(item => (
-                    <Chip
-                      // avatar={<Avatar alt="Natacha" src="/static/images/avatar/1.jpg" />}
-                      label={item}
-                      // avatar={<HighlightOffIcon/>}
-                      // onDelete={handleDelete}
-                      variant="outlined"
-                      deleteIcon={<HighlightOffIcon />}
-                      onDelete={() => { console.log('#######', 'it`s work', '#######') }}
-
-                    />
-                  ))
-                  :
-                  ''
-              }
-            </Grid>
             <Grid
               item
               className='adding-form_input-ingredients'
-
-            // style={getStyle}
             >
               <TextField
                 id={`${item}-input`}
@@ -158,13 +159,32 @@ useEffect(()=>{
                 type={item}
                 name={item}
                 value={currentProduct.ingredients.current}
-                // value={}
                 fullWidth
                 multiline
-              ></TextField>
+              />
+            </Grid>
+            <Grid
+              item
+              className='adding-form_ready-ingredients'
+              fullWidth
+            >
+              {
+                currentProduct.ingredients.all.length
+                  ?
+                  currentProduct.ingredients.all.map(item => (
+                    <Chip
+                      label={item.name}
+                      variant="outlined"
+                      deleteIcon={<HighlightOffIcon />}
+                      onDelete={() => { deleteIngredient(item.name) }}
+                      style={{ maxWidth: '200px' }}
+                    />
+                  ))
+                  :
+                  ''
+              }
             </Grid>
           </Grid>
-
           ) : (
             <TextField
               id={`${item}-input`}
