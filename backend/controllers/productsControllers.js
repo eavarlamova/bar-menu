@@ -16,6 +16,7 @@ const productsControllers = {
     async add({ body }, res, next) {
         try {
             // validate body
+            // check jwt in dataBase
             const newProduct = await Products.create(body)
             res.status(200).send(newProduct)
         }
