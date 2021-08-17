@@ -3,10 +3,21 @@ import { useDispatch, useSelector } from 'react-redux';
 import {
   Button,
   Chip,
+  FormControl,
+  FormControlLabel,
   Grid,
+  InputLabel,
+  MenuItem,
+  Modal,
+  Select,
+  Switch,
   TextField,
+  Tooltip,
 } from '@material-ui/core';
-import { HighlightOff, HighlightOff as HighlightOffIcon } from '@material-ui/icons';
+import {
+  CreateSharp as CreateSharpIcon,
+  HighlightOff as HighlightOffIcon
+} from '@material-ui/icons';
 
 import { addProduct } from '../../../stores/actions/products';
 import './index.scss';
@@ -43,28 +54,74 @@ const AddingForm = () => {
   const dispatch = useDispatch();
   const { id: users_id } = useSelector(state => state.users.user)
   const [currentProduct, setCurrentProduct] = useState(initialProduct);
+  const [modalState, setModalState] = useState(false);
+  const [editIngredient, setEditIngredient] = useState(null);
 
+  const handleChangeModal = (ingredient) => {
+    // can be event 
+    setEditIngredient(ingredient)
+    setModalState(!modalState)
+  };
+  const getModalContent = () => {
+    console.log('#######', editIngredient, '#######')
+    return (
+      editIngredient
+        ?
+        <div className='adding-form__modal'        >
+          <div className='adding-form__modal-header'>
+            <h3>{editIngredient.name.toUpperCase()}</h3>
+            <div
+              onClick={() => { handleChangeModal(null) }}
+            >
+              <HighlightOffIcon />
+            </div>
+          </div>
+          <TextField
+            label='name of ingredient'
+          />
+          <FormControlLabel
+            label='alkohol'
+            control={<Switch color='primary' />}>
+          </FormControlLabel>
+          {/* <FormControlLabel> */}
+          <div className='adding-form__modal-edit-size'>
+            <TextField
+              type='number'
+              label='wigth of ingredient' />
+            <FormControl>
+              <InputLabel
+                id='adding-form__measure_ingredient'
+              >
+                measure of ingredient
+              </InputLabel>
+              <Select
+                labelId="adding-form__measure_ingredient"
+                onChange={() => { console.log('#######', 'click onChange SELECT', '#######') }}
+              >
+                <MenuItem value='gram'>gram</MenuItem>
+                <MenuItem value='ml'>ml</MenuItem>
+              </Select>
+            </FormControl>
+          </div>
+          {/* </FormControlLabel> */}
+          <Button
+            className='adding-form__modal-button'
+            fullWidth
+          >
+            edit ingredient
+          </Button>
+        </div>
+        :
+        ''
+    )
+  }
   const handleChange = ({ target: { value, name } }) => {
     setCurrentProduct({
       ...currentProduct,
       [name]: value,
     })
   };
-  // useEffect(() => {
-  //   // const widthAllIngredientsForm = document.querySelector('.adding-form_ingredients').offsetWidth;
-  //   // const widthReadyIngredientsForm = document.querySelector('.adding-form_ready-ingredients').offsetWidth;
-  //   // const procentCorrect = ((widthReadyIngredientsForm / widthAllIngredientsForm) * 100)
-  //   // // console.log('####### widthAllIngredientsForm', widthAllIngredientsForm, widthReadyIngredientsForm, '#######')
-  //   // // console.log('####### procentCorrect', procentCorrect, '#######')
-  //   // document.querySelector('.adding-form_input-ingredients').style.width = `${widthAllIngredientsForm - widthReadyIngredientsForm}px`
-  //   // if(procentCorrect > 60){
-  //   //   document.querySelector('.adding-form_input-ingredients').style.width = `100%`
-  //   //   document.querySelector('.adding-form_ready-ingredients').style.width = `100%`
 
-  //     // document.querySelector('..adding-form_ready-ingredients').style
-  //     // document.querySelector('.adding-form_ready-ingredients').offsetWidth = widthAllIngredientsForm - widthReadyIngredientsForm;
-  //   // }
-  // }, [currentProduct.ingredients.all])
 
   const saveIngredient = ({ key }) => {
     if (key === ',' || key === 'Enter') {
@@ -75,7 +132,10 @@ const AddingForm = () => {
           ingredients: {
             all: [
               ...currentProduct.ingredients.all,
-              { name: newIngredient },
+              {
+                name: newIngredient,
+                id: `ing-${Math.random()}`
+              },
             ],
             current: '',
           }
@@ -83,9 +143,6 @@ const AddingForm = () => {
       }
 
     }
-
-    // get adding-form_ready-ingredients
-    // set adding-form_input-ingredients  !!! new wigth
   };
 
   const handleChangeIngredients = ({ target: { value, name }, key }) => {
@@ -119,8 +176,8 @@ const AddingForm = () => {
     }
   };
 
-  const deleteIngredient = (ingredient) => {
-    const allIngredientsUpdate = currentProduct.ingredients.all.filter(item => item !== ingredient);
+  const deleteIngredient = (ingredientId) => {
+    const allIngredientsUpdate = currentProduct.ingredients.all.filter(item => item.id !== ingredientId);
     setCurrentProduct({
       ...currentProduct,
       ingredients: {
@@ -172,13 +229,18 @@ const AddingForm = () => {
                 currentProduct.ingredients.all.length
                   ?
                   currentProduct.ingredients.all.map(item => (
-                    <Chip
-                      label={item.name}
-                      variant="outlined"
-                      deleteIcon={<HighlightOffIcon />}
-                      onDelete={() => { deleteIngredient(item.name) }}
-                      style={{ maxWidth: '200px' }}
-                    />
+                    <Tooltip
+                      title={`edit ${item.name}`}>
+                      <Chip
+                        label={item.name}
+                        variant="outlined"
+                        deleteIcon={<HighlightOffIcon />}
+                        onDelete={() => { deleteIngredient(item.id) }}
+                        // icon={<CreateSharpIcon />}
+                        onClick={() => { handleChangeModal(item) }}
+                        style={{ maxWidth: '200px' }}
+                      />
+                    </Tooltip>
                   ))
                   :
                   ''
@@ -204,6 +266,15 @@ const AddingForm = () => {
       >
         add product
       </Button>
+
+      <Modal
+        open={modalState}
+        onClose={handleChangeModal}
+        aria-labelledby="simple-modal-title"
+        aria-describedby="simple-modal-description"
+      >
+        {getModalContent()}
+      </Modal>
     </>
   )
 };
