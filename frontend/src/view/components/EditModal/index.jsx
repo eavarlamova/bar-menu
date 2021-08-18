@@ -4,12 +4,8 @@ import React, {
 
 import {
   Button,
-  FormControl,
   FormControlLabel,
-  InputLabel,
-  MenuItem,
   Modal,
-  Select,
   Switch,
   TextField
 } from '@material-ui/core';
@@ -46,11 +42,10 @@ const EditModal = (props) => {
       [name]: checked,
     })
   };
-
   const handleChangeAutocomtete = (event, value) => {
     setCurrentIngredient({
       ...currentIngredient,
-      ['measure_ingredient']: value,
+      'measure_ingredient': value,
     })
   }
 
