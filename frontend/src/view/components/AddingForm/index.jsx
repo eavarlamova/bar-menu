@@ -203,11 +203,11 @@ const AddingForm = () => {
                     <Tooltip
                       title={`edit ${item.name}`}>
                       <Chip
+                        color={item.alkohol ? 'primary' : 'ligth'}
                         label={item.name}
                         variant="outlined"
                         deleteIcon={<HighlightOffIcon />}
                         onDelete={() => { deleteIngredient(item.id) }}
-                        // icon={<CreateSharpIcon />}
                         onClick={() => { handleChangeModal(item) }}
                         style={{ maxWidth: '200px' }}
                       />
