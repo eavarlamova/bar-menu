@@ -21,12 +21,19 @@ import {
 
 import { addProduct } from '../../../stores/actions/products';
 import './index.scss';
+import EditModal from '../EditModal';
 
 const initialProduct = {
   product: '',
   steps: '', // need remake in array of strings before save
   descriptions: '',
-  ingredients: { all: [{ name: 'ing1' }, { name: 'ing2' }], current: '' },   /* [
+  ingredients: {
+    all: [
+      { name: 'ing1', id: 'ing-1' },
+      { name: 'ing2', id: 'ing-2' }
+    ],
+    current: '',
+  },   /* [
                                         {
                                           name_ingredient: 'ice',
                                           size_ingredient: 40, 
@@ -55,73 +62,20 @@ const AddingForm = () => {
   const { id: users_id } = useSelector(state => state.users.user)
   const [currentProduct, setCurrentProduct] = useState(initialProduct);
   const [modalState, setModalState] = useState(false);
-  const [editIngredient, setEditIngredient] = useState(null);
+  const [editableIngredient, setEditableIngredient] = useState(null);
 
   const handleChangeModal = (ingredient) => {
-    // can be event 
-    setEditIngredient(ingredient)
+    console.log('ingredient', ingredient)
+    ingredient && setEditableIngredient(ingredient)
     setModalState(!modalState)
   };
-  const getModalContent = () => {
-    console.log('#######', editIngredient, '#######')
-    return (
-      editIngredient
-        ?
-        <div className='adding-form__modal'        >
-          <div className='adding-form__modal-header'>
-            <h3>{editIngredient.name.toUpperCase()}</h3>
-            <div
-              onClick={() => { handleChangeModal(null) }}
-            >
-              <HighlightOffIcon />
-            </div>
-          </div>
-          <TextField
-            label='name of ingredient'
-          />
-          <FormControlLabel
-            label='alkohol'
-            control={<Switch color='primary' />}>
-          </FormControlLabel>
-          {/* <FormControlLabel> */}
-          <div className='adding-form__modal-edit-size'>
-            <TextField
-              type='number'
-              label='wigth of ingredient' />
-            <FormControl>
-              <InputLabel
-                id='adding-form__measure_ingredient'
-              >
-                measure of ingredient
-              </InputLabel>
-              <Select
-                labelId="adding-form__measure_ingredient"
-                onChange={() => { console.log('#######', 'click onChange SELECT', '#######') }}
-              >
-                <MenuItem value='gram'>gram</MenuItem>
-                <MenuItem value='ml'>ml</MenuItem>
-              </Select>
-            </FormControl>
-          </div>
-          {/* </FormControlLabel> */}
-          <Button
-            className='adding-form__modal-button'
-            fullWidth
-          >
-            edit ingredient
-          </Button>
-        </div>
-        :
-        ''
-    )
-  }
+
   const handleChange = ({ target: { value, name } }) => {
     setCurrentProduct({
       ...currentProduct,
       [name]: value,
     })
   };
-
 
   const saveIngredient = ({ key }) => {
     if (key === ',' || key === 'Enter') {
@@ -141,7 +95,6 @@ const AddingForm = () => {
           }
         })
       }
-
     }
   };
 
@@ -154,7 +107,25 @@ const AddingForm = () => {
         current: valideValue,
       }
     })
+  }
 
+  const editIngredient = (updateIngredient) => {
+    const updateName = updateIngredient.name.trim();
+    if (updateName) {
+      // const updateAllIngredients = [...currentProduct.ingredients.all];
+      const updateAllIngredients = currentProduct.ingredients.all.map(item => {
+        if (item.id === updateIngredient.id) return { ...updateIngredient, name: updateName }
+        return { ...item }
+      })
+      setCurrentProduct({
+        ...currentProduct,
+        ingredients: {
+          ...currentProduct.ingredients,
+          all: updateAllIngredients,
+        }
+      })
+      handleChangeModal(null)
+    }
   }
 
   const saveProduct = () => {
@@ -267,14 +238,12 @@ const AddingForm = () => {
         add product
       </Button>
 
-      <Modal
-        open={modalState}
-        onClose={handleChangeModal}
-        aria-labelledby="simple-modal-title"
-        aria-describedby="simple-modal-description"
-      >
-        {getModalContent()}
-      </Modal>
+      <EditModal
+        modalState={modalState}
+        editableIngredient={editableIngredient}
+        handleChangeModal={handleChangeModal}
+        editIngredient={editIngredient}
+      />
     </>
   )
 };
