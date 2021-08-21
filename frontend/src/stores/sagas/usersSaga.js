@@ -31,7 +31,14 @@ const HANDLER = {
     *[CHECK_JWT](payload) {
         try {
             const { data } = yield call(axios, `${URL}/users/check/${payload}`);
+
+            // make function normolize ingredients 
+            //  const updatePayload = payload.map(item => ({...item, ingredients: JSON.parse(payload.ingredients)}));
+            // console.log('####### ACTION: SET ', updatePayload, '#######')
+            
             yield put(signInSuccses(data))
+            yield put(setPersonalProducts(data.products))
+
         }
         catch (error) {
             const {
@@ -90,6 +97,8 @@ const HANDLER = {
         try {
             const response = yield call(axios, `${URL}/users/signout/${payload}`);
             yield put(signOutSuccses());
+            // delete products from personal
+            yield put(setPersonalProducts([]));
             setJWT('');
         }
         catch (error) {

@@ -12,6 +12,7 @@ import {
   Select,
   Switch,
   TextField,
+  Typography,
   Tooltip,
 } from '@material-ui/core';
 import {
@@ -47,12 +48,12 @@ const initialProduct = {
 const validateProduct = ({
   steps,
   product,
-  // ingredients,
+  ingredients,
   descriptions,
 }) => ({
   steps: steps.trim(),
   product: product.trim(),
-  // ingredients: ingredients.trim(),
+  ingredients: JSON.stringify(ingredients.all),
   descriptions: descriptions.trim(),
 });
 
@@ -60,12 +61,12 @@ const validateProduct = ({
 const AddingForm = () => {
   const dispatch = useDispatch();
   const { id: users_id } = useSelector(state => state.users.user)
+  const { error: productsError } = useSelector(state => state.products)
   const [currentProduct, setCurrentProduct] = useState(initialProduct);
   const [modalState, setModalState] = useState(false);
   const [editableIngredient, setEditableIngredient] = useState(null);
 
   const handleChangeModal = (ingredient) => {
-    console.log('ingredient', ingredient)
     ingredient && setEditableIngredient(ingredient)
     setModalState(!modalState)
   };
@@ -134,10 +135,16 @@ const AddingForm = () => {
     // but mb in process????
     const correctProduct = validateProduct(currentProduct);
     const { product, ingredients } = correctProduct;
+
     if (users_id && product && ingredients) {
       // correct name 
       // saga for add
-      dispatch(addProduct({ ...correctProduct, users_id }))
+      dispatch(
+        addProduct({ 
+          ...correctProduct, 
+          users_id,
+          ingredients: JSON.stringify(ingredients),
+        }))
       // give a new form for ingredients
       // saga for update ingredients in product
     }
@@ -237,7 +244,16 @@ const AddingForm = () => {
       >
         add product
       </Button>
-
+      {productsError
+        ?
+        <Typography
+          color="error"
+          align='center'
+        >
+          {productsError.msg}
+        </Typography>
+        :
+        ''}
       <EditModal
         modalState={modalState}
         editableIngredient={editableIngredient}

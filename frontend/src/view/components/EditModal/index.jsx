@@ -91,6 +91,7 @@ const EditModal = (props) => {
                 'ml',
                 'drop',
                 'gram',
+                'piece',
                 'tea spoon',
                 'table spoon',
               ]}

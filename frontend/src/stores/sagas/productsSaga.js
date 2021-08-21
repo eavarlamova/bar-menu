@@ -8,6 +8,7 @@ import {
     DELETE_PRODUCT,
 } from '../constants/products';
 import {
+    addProductFail,
     addProductSuccses,
 } from '../actions/products';
 
@@ -22,7 +23,15 @@ const HANDLER = {
             yield put(addProductSuccses(data))
 
         }
-        catch (error) { }
+        catch (error) {
+            const {
+                response: {
+                    data: { msg },
+                    status,
+                }
+            } = error;
+            yield put(addProductFail({ msg, status }))
+        }
     },
 
 };

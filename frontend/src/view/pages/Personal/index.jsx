@@ -4,6 +4,7 @@ import { useSelector } from 'react-redux';
 
 import AddingForm from '../../components/AddingForm';
 import Navbar from '../../components/Navbar';
+import ProductsList from '../../components/ProductsList';
 
 import './index.scss';
 
@@ -30,39 +31,10 @@ const Personal = () => {
           sm={8}
           xl={9}
         >
-          {
-            personalProducts.length
-              ?
-              personalProducts.map(item => (
-                <Card>
-                  <CardHeader
-                    avatar={
-                      (item.author && item.author.avatar)
-                        ?
-                        <Avatar>{item.author.avatar}</Avatar>
-                        :
-                        <Avatar>{(item.author && item.author.name) ? item.author.name[0] : item.users_id}</Avatar>
-                    }
-                    title={item.product}
-                    subheader={item.ingredients}
-
-                  />
-                  <CardMedia
-                    className='personal__photo'
-                    image={item.photo || 'https://loremflickr.com/g/320/240/cockail'}
-                    title={`drink ${item.product}`}
-                  />
-                  <CardContent>
-                    {item.descriptions}
-                    <Typography variant="body2" color="textSecondary" component="p">
-                      {item.steps}
-                    </Typography>
-                  </CardContent>
-                </Card>
-              ))
-              :
-              ''
-          }
+        
+          <ProductsList
+            products={personalProducts}
+          />
           Welcome {user.name}. It`s your Personal Page
       </Grid>
       </Grid>

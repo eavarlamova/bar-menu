@@ -21,12 +21,17 @@ const usersControllers = {
   async checkJWT({ params: { jwt } }, res, next) {
     try {
       const findJWT = await JWTtemp.findOne({
-        where: { jwt }
+        where: { jwt },
       })
       if (findJWT) {
         const { dataValues: { user_id: id } } = findJWT
         const { dataValues: findUser } = await Users.findOne({
-          where: { id }
+          where: { id },
+          include: [{
+          model: Products,
+          as: 'products',
+          attributes: ['id', 'product', 'steps', 'ingredients', 'descriptions', 'photo']
+        }],
         })
         const userData = getPublicUsersData(findUser);
         res.status(200).send(userData)
