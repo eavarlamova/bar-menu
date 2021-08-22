@@ -1,6 +1,7 @@
 import {
     ADD_PRODUCT_FAIL,
     ADD_PRODUCT_SUCCSES,
+    GET_USERS_PRODUCTS_FAIL,
     SET_PERSONAL_PRODUCTS,
 } from "../constants/products";
 import { parseIngredients } from '../../helpers/parse';
@@ -27,7 +28,7 @@ const productsReducers = (state = initialState, { type, payload }) => {
         case ADD_PRODUCT_FAIL:
             return {
                 ...state,
-                error: {...payload}
+                error: { ...payload }
             };
         case ADD_PRODUCT_SUCCSES:
             return {
@@ -40,10 +41,15 @@ const productsReducers = (state = initialState, { type, payload }) => {
 
             };
         case SET_PERSONAL_PRODUCTS:
-        
             return {
                 ...state,
                 personalProducts: payload,
+                error: null
+            }
+        case GET_USERS_PRODUCTS_FAIL:
+            return {
+                ...state,
+                error: payload,
             }
         default:
             return { ...state }

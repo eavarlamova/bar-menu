@@ -6,10 +6,13 @@ import { URL } from "../../mainConstants";
 import {
     ADD_PRODUCT,
     DELETE_PRODUCT,
+    GET_USERS_PRODUCTS,
 } from '../constants/products';
 import {
     addProductFail,
     addProductSuccses,
+    getUsersProductsFail,
+    setPersonalProducts,
 } from '../actions/products';
 
 
@@ -33,6 +36,22 @@ const HANDLER = {
             yield put(addProductFail({ msg, status }))
         }
     },
+
+    *[GET_USERS_PRODUCTS](payload) {
+        try {
+            const { data } = yield call(axios, `${URL}/products/${payload}`);
+            yield put(setPersonalProducts(data))
+        }
+        catch (error) {
+            const {
+                response: {
+                    data: { msg },
+                    status,
+                }
+            } = error;
+            yield put(getUsersProductsFail({ msg, status }))
+        }
+    }
 
 };
 

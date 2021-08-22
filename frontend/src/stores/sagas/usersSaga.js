@@ -13,7 +13,10 @@ import {
     signInSuccses,
     signOutSuccses,
 } from "../actions/users"
-import { setPersonalProducts } from "../actions/products";
+import {
+    getUsersProducts,
+    setPersonalProducts,
+} from "../actions/products";
 
 import { setJWT } from "../../helpers/jwt";
 
@@ -35,10 +38,10 @@ const HANDLER = {
             // make function normolize ingredients 
             //  const updatePayload = payload.map(item => ({...item, ingredients: JSON.parse(payload.ingredients)}));
             // console.log('####### ACTION: SET ', updatePayload, '#######')
-            
-            yield put(signInSuccses(data))
-            yield put(setPersonalProducts(data.products))
 
+            // make saga for getting user`s products
+            yield put(signInSuccses(data))
+            yield put(getUsersProducts(data.id))
         }
         catch (error) {
             const {
@@ -78,8 +81,8 @@ const HANDLER = {
                 data: payload
             })
             yield put(signInSuccses(data))
-            // personalProduct from user.products
-            yield put(setPersonalProducts(data.products))
+            yield put(getUsersProducts(data.id))
+
             setJWT(data.jwt);
         }
         catch (error) {
@@ -95,9 +98,8 @@ const HANDLER = {
 
     *[SING_OUT](payload) {
         try {
-            const response = yield call(axios, `${URL}/users/signout/${payload}`);
+            yield call(axios, `${URL}/users/signout/${payload}`);
             yield put(signOutSuccses());
-            // delete products from personal
             yield put(setPersonalProducts([]));
             setJWT('');
         }

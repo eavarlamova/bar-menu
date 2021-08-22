@@ -26,12 +26,7 @@ const usersControllers = {
       if (findJWT) {
         const { dataValues: { user_id: id } } = findJWT
         const { dataValues: findUser } = await Users.findOne({
-          where: { id },
-          include: [{
-          model: Products,
-          as: 'products',
-          attributes: ['id', 'product', 'steps', 'ingredients', 'descriptions', 'photo']
-        }],
+          where: { id }
         })
         const userData = getPublicUsersData(findUser);
         res.status(200).send(userData)
@@ -82,11 +77,6 @@ const usersControllers = {
     try {
       const findUser = await Users.findOne({
         where: { email: body.email },
-        include: [{
-          model: Products,
-          as: 'products',
-          attributes: ['id', 'product', 'steps', 'ingredients', 'descriptions', 'photo']
-        }],
       });
       if (findUser) {
         const { dataValues: currentUser } = findUser;

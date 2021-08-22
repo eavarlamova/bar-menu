@@ -11,9 +11,8 @@ const { Products, Users } = require('../models')
 // })
 
 
-
 const productsControllers = {
-    async add({ body }, res, next) {
+    async addProduct({ body }, res, next) {
         try {
             // validate body
             // check jwt in dataBase
@@ -22,6 +21,30 @@ const productsControllers = {
         }
         catch (error) {
             res.status(500).send({ msg: 'oops... some problem with adding your product' })
+        }
+    },
+    async getUsersProducts(req, res, next) {
+        try {
+            const usersProducts = await Products.findAll({
+                where: { users_id: req.params.id },
+                include: [{
+                    model: Users,
+                    as: 'author',
+                    attributes: ['email', 'name', 'avatar']
+                }],
+                attributes: [
+                    'id',
+                    'steps',
+                    'photo',
+                    'product',
+                    'ingredients',
+                    'descriptions',
+                ],
+            });
+            res.status(200).send(usersProducts);
+        }
+        catch (error) {
+            res.status(500).send({ msg: 'oops... some problem with gettins user`s products' })
         }
     },
 }

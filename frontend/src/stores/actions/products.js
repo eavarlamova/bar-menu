@@ -4,6 +4,8 @@ import {
     ADD_PRODUCT_FAIL,
     ADD_PRODUCT_SUCCSES,
     SET_PERSONAL_PRODUCTS,
+    GET_USERS_PRODUCTS,
+    GET_USERS_PRODUCTS_FAIL,
 } from "../constants/products";
 import { parseIngredients } from '../../helpers/parse';
 
@@ -11,9 +13,10 @@ import { parseIngredients } from '../../helpers/parse';
 export const addProduct = (payload) => {
     // console.log('payload', payload)
     return ({
-    type: ADD_PRODUCT,
-    payload,
-})};
+        type: ADD_PRODUCT,
+        payload,
+    })
+};
 export const addProductFail = (payload) => ({
     type: ADD_PRODUCT_FAIL,
     payload,
@@ -30,9 +33,9 @@ export const setPersonalProducts = (payload) => {
     //     console.log('item', typeof item, item)
     //     return({ ...item, ingredients: JSON.parse(item.ingredients) })})
     // console.log('updatePayload[0].ingredients', typeof updatePayload[0].ingredients, updatePayload[0].ingredients)
-   
-            // const correctProductsList = parseIngredients(payload.products)
-            // console.log('correctProductsList', correctProductsList)
+
+    // const correctProductsList = parseIngredients(payload.products)
+    // console.log('correctProductsList', correctProductsList)
     return ({
         type: SET_PERSONAL_PRODUCTS,
         payload,
@@ -41,5 +44,15 @@ export const setPersonalProducts = (payload) => {
 
 export const deleteProduct = (payload) => ({
     type: DELETE_PRODUCT,
+    payload,
+});
+
+export const getUsersProducts = (payload) => ({
+    type: GET_USERS_PRODUCTS,
+    payload,
+});
+
+export const getUsersProductsFail = (payload) => ({
+    type: GET_USERS_PRODUCTS_FAIL,
     payload,
 })
