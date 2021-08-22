@@ -47,6 +47,19 @@ const productsControllers = {
             res.status(500).send({ msg: 'oops... some problem with gettins user`s products' })
         }
     },
+    async deleteProduct(req, res, next) {
+        try {
+            await Products.destroy({
+                where: {
+                    id: req.params.id
+                }
+            });
+            res.sendStatus(200);
+        }
+        catch (error) {
+            res.status(500).send({ msg: 'oops... some problem with deleting  the product' })  
+         }
+    }
 }
 
 module.exports = productsControllers;

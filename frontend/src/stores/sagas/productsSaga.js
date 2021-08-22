@@ -37,9 +37,9 @@ const HANDLER = {
         }
     },
 
-    *[GET_USERS_PRODUCTS](payload) {
+    *[GET_USERS_PRODUCTS](id) {
         try {
-            const { data } = yield call(axios, `${URL}/products/${payload}`);
+            const { data } = yield call(axios, `${URL}/products/${id}`);
             yield put(setPersonalProducts(data))
         }
         catch (error) {
@@ -51,6 +51,11 @@ const HANDLER = {
             } = error;
             yield put(getUsersProductsFail({ msg, status }))
         }
+    },
+    *[DELETE_PRODUCT](id) {
+        yield call(axios, `${URL}/products/${id}`, {
+            method: 'DELETE',
+        })
     }
 
 };

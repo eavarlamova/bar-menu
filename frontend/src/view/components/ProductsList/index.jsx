@@ -1,5 +1,5 @@
 import { memo, useEffect } from "react";
-import { useSelector } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 
 import {
   Card,
@@ -8,10 +8,14 @@ import {
   Typography,
   CardHeader,
   CardContent,
+  CardActions,
+  Button,
+  Grid,
 } from "@material-ui/core";
 import { Alert } from '@material-ui/lab';
 
 import { parseIngredients } from '../../../helpers/parse';
+import { deleteProduct } from '../../../stores/actions/products';
 
 import './index.scss';
 
@@ -23,6 +27,7 @@ const ProductsList = (props) => {
     products: {
       error: errorGettingUsersProducts,
     } } = useSelector(state => state)
+  const dispatch = useDispatch();
 
   const getIngredientsFieldListForRender = (JSONstringIngredientsArray) => {
     const ingredientsArray = parseIngredients(JSONstringIngredientsArray)
@@ -35,6 +40,10 @@ const ProductsList = (props) => {
       </Typography>
     );
   };
+
+  const deleteCurrentProduct = (id) => {
+    dispatch(deleteProduct(id));
+  }
 
 
   return (
@@ -49,7 +58,6 @@ const ProductsList = (props) => {
           products.length
             ?
             products.map(item => {
-              console.log('item', item)
               return (
                 <Card>
                   <CardHeader
@@ -77,6 +85,29 @@ const ProductsList = (props) => {
                       {item.steps}
                     </Typography>
                   </CardContent>
+                  <CardActions>
+                    <Grid container spacing={1}>
+                      <Grid item xs={6}>
+                        <Button
+                          fullWidth
+                          variant="outlined"
+                          color="primary"
+                        >
+                          edit
+                        </Button>
+                      </Grid>
+                      <Grid item xs={6}>
+                        <Button
+                          fullWidth
+                          variant="outlined"
+                          color="primary"
+                          onClick={() => { deleteCurrentProduct(item.id) }}
+                        >
+                          delete
+                        </Button>
+                      </Grid>
+                    </Grid>
+                  </CardActions>
                 </Card>
               )
             })
