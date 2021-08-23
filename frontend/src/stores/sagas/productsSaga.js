@@ -10,9 +10,10 @@ import {
 } from '../constants/products';
 import {
     addProductFail,
-    addProductSuccses,
+    addProductSuccess,
     getUsersProductsFail,
     setPersonalProducts,
+    deleteProductSuccess,
 } from '../actions/products';
 
 
@@ -23,8 +24,7 @@ const HANDLER = {
                 method: "POST",
                 data: payload,
             });
-            yield put(addProductSuccses(data))
-
+            yield put(addProductSuccess(data))
         }
         catch (error) {
             const {
@@ -53,9 +53,21 @@ const HANDLER = {
         }
     },
     *[DELETE_PRODUCT](id) {
-        yield call(axios, `${URL}/products/${id}`, {
-            method: 'DELETE',
-        })
+        try {
+            yield call(axios, `${URL}/products/${id}`, {
+                method: 'DELETE',
+            })
+            yield put(deleteProductSuccess(id));
+// action succes
+        }
+        catch (error) {
+            const {
+                response: {
+                    data: { msg },
+                    status,
+                }
+            } = error;
+        }
     }
 
 };

@@ -143,7 +143,8 @@ const AddingForm = () => {
         addProduct({ 
           ...correctProduct, 
           users_id,
-          ingredients: JSON.stringify(ingredients),
+          ingredients,
+          // ingredients: JSON.stringify(ingredients),
         }))
       // give a new form for ingredients
       // saga for update ingredients in product

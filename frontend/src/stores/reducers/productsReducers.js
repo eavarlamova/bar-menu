@@ -1,8 +1,9 @@
 import {
     ADD_PRODUCT_FAIL,
-    ADD_PRODUCT_SUCCSES,
+    ADD_PRODUCT_SUCCESS,
     GET_USERS_PRODUCTS_FAIL,
     SET_PERSONAL_PRODUCTS,
+    DELETE_PRODUCT_SUCCESS,
 } from "../constants/products";
 import { parseIngredients } from '../../helpers/parse';
 
@@ -30,7 +31,7 @@ const productsReducers = (state = initialState, { type, payload }) => {
                 ...state,
                 error: { ...payload }
             };
-        case ADD_PRODUCT_SUCCSES:
+        case ADD_PRODUCT_SUCCESS:
             return {
                 ...state,
                 personalProducts: [
@@ -50,6 +51,12 @@ const productsReducers = (state = initialState, { type, payload }) => {
             return {
                 ...state,
                 error: payload,
+            };
+        case DELETE_PRODUCT_SUCCESS:
+            return {
+                ...state,
+                error: null,
+                personalProducts: [...state.personalProducts].filter(item => item.id !== payload) 
             }
         default:
             return { ...state }

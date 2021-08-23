@@ -5,8 +5,8 @@ import {
   SIGN_UP_FAIL,
   SING_IN_FAIL,
   SIGN_OUT_FAIL,
-  SING_IN_SUCCSES,
-  SING_OUT_SUCCSES,
+  SING_IN_SUCCESS,
+  SING_OUT_SUCCESS,
 } from "../constants/users";
 
 import { CHECK_JWT } from '../../mainConstants'
@@ -27,8 +27,8 @@ export const signIn = (payload) => ({
   type: SING_IN,
   payload,
 });
-export const signInSuccses = (payload) => ({
-  type: SING_IN_SUCCSES,
+export const signInSuccess = (payload) => ({
+  type: SING_IN_SUCCESS,
   payload,
 })
 export const signInFail = (payload) => ({
@@ -40,8 +40,8 @@ export const signOut = (payload) => ({
   type: SING_OUT,
   payload,
 });
-export const signOutSuccses = () => ({
-  type: SING_OUT_SUCCSES,
+export const signOutSuccess = () => ({
+  type: SING_OUT_SUCCESS,
 });
 export const signOutFail = (payload) => ({
   type: SIGN_OUT_FAIL,

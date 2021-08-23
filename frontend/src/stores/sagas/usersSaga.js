@@ -10,8 +10,8 @@ import {
 import {
     signInFail,
     signOutFail,
-    signInSuccses,
-    signOutSuccses,
+    signInSuccess,
+    signOutSuccess,
 } from "../actions/users"
 import {
     getUsersProducts,
@@ -40,7 +40,7 @@ const HANDLER = {
             // console.log('####### ACTION: SET ', updatePayload, '#######')
 
             // make saga for getting user`s products
-            yield put(signInSuccses(data))
+            yield put(signInSuccess(data))
             yield put(getUsersProducts(data.id))
         }
         catch (error) {
@@ -60,7 +60,7 @@ const HANDLER = {
                 method: "POST",
                 data: payload
             })
-            yield put(signInSuccses(data))
+            yield put(signInSuccess(data))
             setJWT(data.jwt);
         }
         catch (error) {
@@ -80,7 +80,7 @@ const HANDLER = {
                 method: "POST",
                 data: payload
             })
-            yield put(signInSuccses(data))
+            yield put(signInSuccess(data))
             yield put(getUsersProducts(data.id))
 
             setJWT(data.jwt);
@@ -99,7 +99,7 @@ const HANDLER = {
     *[SING_OUT](payload) {
         try {
             yield call(axios, `${URL}/users/signout/${payload}`);
-            yield put(signOutSuccses());
+            yield put(signOutSuccess());
             yield put(setPersonalProducts([]));
             setJWT('');
         }

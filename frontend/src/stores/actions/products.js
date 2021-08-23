@@ -1,8 +1,9 @@
 import {
     ADD_PRODUCT,
     DELETE_PRODUCT,
+    DELETE_PRODUCT_SUCCESS,
     ADD_PRODUCT_FAIL,
-    ADD_PRODUCT_SUCCSES,
+    ADD_PRODUCT_SUCCESS,
     SET_PERSONAL_PRODUCTS,
     GET_USERS_PRODUCTS,
     GET_USERS_PRODUCTS_FAIL,
@@ -21,8 +22,8 @@ export const addProductFail = (payload) => ({
     type: ADD_PRODUCT_FAIL,
     payload,
 });
-export const addProductSuccses = (payload) => ({
-    type: ADD_PRODUCT_SUCCSES,
+export const addProductSuccess = (payload) => ({
+    type: ADD_PRODUCT_SUCCESS,
     payload,
 })
 
@@ -46,12 +47,15 @@ export const deleteProduct = (payload) => ({
     type: DELETE_PRODUCT,
     payload,
 });
+export const deleteProductSuccess = (payload) => ({
+    type: DELETE_PRODUCT_SUCCESS,
+    payload,
+})
 
 export const getUsersProducts = (payload) => ({
     type: GET_USERS_PRODUCTS,
     payload,
 });
-
 export const getUsersProductsFail = (payload) => ({
     type: GET_USERS_PRODUCTS_FAIL,
     payload,

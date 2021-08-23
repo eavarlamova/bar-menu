@@ -2,8 +2,8 @@ import {
   SING_OUT,
   SING_IN_FAIL,
   SIGN_OUT_FAIL,
-  SING_IN_SUCCSES,
-  SING_OUT_SUCCSES,
+  SING_IN_SUCCESS,
+  SING_OUT_SUCCESS,
 } from "../constants/users";
 
 
@@ -22,7 +22,7 @@ const initialState = {
 
 const usersReducers = (state = initialState, { type, payload }) => {
   switch (type) {
-    case SING_IN_SUCCSES:
+    case SING_IN_SUCCESS:
       return {
         ...state,
         user: { ...payload },
@@ -36,7 +36,7 @@ const usersReducers = (state = initialState, { type, payload }) => {
         error: { ...payload },
       };
 
-    case SING_OUT_SUCCSES:
+    case SING_OUT_SUCCESS:
       return {
         ...initialState,
       };
