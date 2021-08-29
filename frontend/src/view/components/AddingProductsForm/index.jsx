@@ -28,8 +28,8 @@ const initialProduct = {
   descriptions: '',
   ingredients: {
     all: [
-      // { name: 'ing1', id: 'ing-1' },
-      // { name: 'ing2', id: 'ing-2' }
+      // { name_ingredient: 'ing1', id: 'ing-1' },
+      // { name_ingredient: 'ing2', id: 'ing-2' }
     ],
     current: '',
   },                              /* [
@@ -88,7 +88,7 @@ const AddingProductsForm = () => {
             all: [
               ...currentProduct.ingredients.all,
               {
-                name: newIngredient,
+                name_ingredient: newIngredient,
                 id: `ing-${Math.random()}`
               },
             ],
@@ -111,10 +111,10 @@ const AddingProductsForm = () => {
   };
 
   const editIngredient = (updateIngredient) => {
-    const updateName = updateIngredient.name.trim();
+    const updateName = updateIngredient.name_ingredient.trim();
     if (updateName) {
       const updateAllIngredients = currentProduct.ingredients.all.map(item => {
-        if (item.id === updateIngredient.id) return { ...updateIngredient, name: updateName }
+        if (item.id === updateIngredient.id) return { ...updateIngredient, name_ingredient: updateName }
         return { ...item }
       })
       setCurrentProduct({
@@ -196,20 +196,25 @@ const AddingProductsForm = () => {
                     className='adding-form_ready-ingredients'
                     fullWidth
                   >
-                    { currentProduct.ingredients.all.map(item => (
-                      <Tooltip
-                        title={`edit ${item.name}`}>
-                        <Chip
-                          color={item.alkohol ? 'primary' : 'ligth'}
-                          label={item.name}
-                          variant="outlined"
-                          deleteIcon={<HighlightOffIcon />}
-                          onDelete={() => { deleteIngredient(item.id) }}
-                          onClick={() => { handleChangeModal(item) }}
-                          style={{ maxWidth: '200px' }}
-                        />
-                      </Tooltip>
-                    ))}
+                    {console.log('currentProduct.ingredients.all', currentProduct.ingredients.all)}
+                    {
+                      currentProduct.ingredients.all.map(item => {
+                        console.log('item', item)
+                        return (
+                          <Tooltip
+                            title={`edit ${item.name_ingredient}`}>
+                            <Chip
+                              color={item.alkohol ? 'primary' : 'ligth'}
+                              label={item.name_ingredient}
+                              variant="outlined"
+                              deleteIcon={<HighlightOffIcon />}
+                              onDelete={() => { deleteIngredient(item.id) }}
+                              onClick={() => { handleChangeModal(item) }}
+                              style={{ maxWidth: '200px' }}
+                            />
+                          </Tooltip>
+                        )
+                      })}
                   </Grid>
                 )
                 :

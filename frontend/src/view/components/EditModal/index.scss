@@ -23,12 +23,4 @@
             align-self: center;
         }
     }
-    &__modal-edit-size {
-        display: flex;
-        justify-content: space-between;
-        padding-bottom: 5%;
-        > div {
-            width: 48%;
-        }
-    }
 }

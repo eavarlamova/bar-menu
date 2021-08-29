@@ -36,7 +36,7 @@ const ProductsList = (props) => {
         variant='body2'
         className='personal__ingredient'
       >
-        {item.name} {item.size_ingredient ? `- ${item.size_ingredient} ${item.measure_ingredient}` : ''}
+        {item.name_ingredient} {item.size_ingredient ? `- ${item.size_ingredient} ${item.measure_ingredient}` : ''}
       </Typography>
     );
   };
