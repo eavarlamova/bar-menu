@@ -2,7 +2,7 @@ import { Avatar, Card, CardContent, CardHeader, CardMedia, Grid, Typography } fr
 import React from 'react';
 import { useSelector } from 'react-redux';
 
-import AddingForm from '../../components/AddingForm';
+import AddingProductsForm from '../../components/AddingProductsForm';
 import Navbar from '../../components/Navbar';
 import ProductsList from '../../components/ProductsList';
 
@@ -22,8 +22,11 @@ const Personal = () => {
         spacing={3}
       >
         <Grid item xs={12} sm={4} xl={3}>
-          <AddingForm />
-
+          <AddingProductsForm />
+          {/*
+ form for adding user`s ingredients
+output all user`s ingredients
+          */}
         </Grid>
         <Grid
           item
@@ -31,12 +34,18 @@ const Personal = () => {
           sm={8}
           xl={9}
         >
-        
+          <Typography variant='h5'>
+            Welcome {user.name}. It`s your Personal Page
+          </Typography>
+          <Typography>
+            It`s your products.
+            All products from other users you can see in main page.
+          </Typography>
+
           <ProductsList
             products={personalProducts}
           />
-          Welcome {user.name}. It`s your Personal Page
-      </Grid>
+        </Grid>
       </Grid>
     </>
   )

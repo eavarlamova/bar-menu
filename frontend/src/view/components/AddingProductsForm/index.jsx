@@ -1,28 +1,26 @@
-import React, { memo, useEffect, useState } from 'react';
+import
+React, {
+  memo,
+  useState
+} from 'react';
 import { useDispatch, useSelector } from 'react-redux';
+
 import {
-  Button,
   Chip,
-  FormControl,
-  FormControlLabel,
   Grid,
-  InputLabel,
-  MenuItem,
-  Modal,
-  Select,
-  Switch,
+  Button,
+  Tooltip,
   TextField,
   Typography,
-  Tooltip,
 } from '@material-ui/core';
 import {
-  CreateSharp as CreateSharpIcon,
   HighlightOff as HighlightOffIcon
 } from '@material-ui/icons';
 
 import { addProduct } from '../../../stores/actions/products';
-import './index.scss';
 import EditModal from '../EditModal';
+
+import './index.scss';
 
 const initialProduct = {
   product: '',
@@ -30,11 +28,11 @@ const initialProduct = {
   descriptions: '',
   ingredients: {
     all: [
-      { name: 'ing1', id: 'ing-1' },
-      { name: 'ing2', id: 'ing-2' }
+      // { name: 'ing1', id: 'ing-1' },
+      // { name: 'ing2', id: 'ing-2' }
     ],
     current: '',
-  },   /* [
+  },                              /* [
                                         {
                                           name_ingredient: 'ice',
                                           size_ingredient: 40, 
@@ -58,13 +56,15 @@ const validateProduct = ({
 });
 
 
-const AddingForm = () => {
+const AddingProductsForm = () => {
   const dispatch = useDispatch();
   const { id: users_id } = useSelector(state => state.users.user)
   const { error: productsError } = useSelector(state => state.products)
-  const [currentProduct, setCurrentProduct] = useState(initialProduct);
+
   const [modalState, setModalState] = useState(false);
   const [editableIngredient, setEditableIngredient] = useState(null);
+  const [currentProduct, setCurrentProduct] = useState(initialProduct);
+
 
   const handleChangeModal = (ingredient) => {
     ingredient && setEditableIngredient(ingredient)
@@ -108,12 +108,11 @@ const AddingForm = () => {
         current: valideValue,
       }
     })
-  }
+  };
 
   const editIngredient = (updateIngredient) => {
     const updateName = updateIngredient.name.trim();
     if (updateName) {
-      // const updateAllIngredients = [...currentProduct.ingredients.all];
       const updateAllIngredients = currentProduct.ingredients.all.map(item => {
         if (item.id === updateIngredient.id) return { ...updateIngredient, name: updateName }
         return { ...item }
@@ -131,27 +130,17 @@ const AddingForm = () => {
 
   const saveProduct = () => {
     // check correct of obj
-    // remake steps and ingredients ?
-    // but mb in process????
+    // remake steps 
     const correctProduct = validateProduct(currentProduct);
     const { product, ingredients } = correctProduct;
 
     if (users_id && product && ingredients) {
-      // correct name 
-      // saga for add
       dispatch(
-        addProduct({ 
-          ...correctProduct, 
+        addProduct({
+          ...correctProduct,
           users_id,
           ingredients,
-          // ingredients: JSON.stringify(ingredients),
         }))
-      // give a new form for ingredients
-      // saga for update ingredients in product
-    }
-    else {
-      // create error  and write error
-      // view error 
     }
   };
 
@@ -174,9 +163,8 @@ const AddingForm = () => {
         'descriptions',
         'ingredients',
         'steps',
-      ].map((item) => {
-
-        return item === 'ingredients'
+      ].map((item) => (
+        item === 'ingredients'
           ?
           (<Grid
             container
@@ -199,32 +187,34 @@ const AddingForm = () => {
                 multiline
               />
             </Grid>
-            <Grid
-              item
-              className='adding-form_ready-ingredients'
-              fullWidth
-            >
-              {
-                currentProduct.ingredients.all.length
-                  ?
-                  currentProduct.ingredients.all.map(item => (
-                    <Tooltip
-                      title={`edit ${item.name}`}>
-                      <Chip
-                        color={item.alkohol ? 'primary' : 'ligth'}
-                        label={item.name}
-                        variant="outlined"
-                        deleteIcon={<HighlightOffIcon />}
-                        onDelete={() => { deleteIngredient(item.id) }}
-                        onClick={() => { handleChangeModal(item) }}
-                        style={{ maxWidth: '200px' }}
-                      />
-                    </Tooltip>
-                  ))
-                  :
-                  ''
-              }
-            </Grid>
+            {
+              currentProduct.ingredients.all.length
+                ?
+                (
+                  <Grid
+                    item
+                    className='adding-form_ready-ingredients'
+                    fullWidth
+                  >
+                    { currentProduct.ingredients.all.map(item => (
+                      <Tooltip
+                        title={`edit ${item.name}`}>
+                        <Chip
+                          color={item.alkohol ? 'primary' : 'ligth'}
+                          label={item.name}
+                          variant="outlined"
+                          deleteIcon={<HighlightOffIcon />}
+                          onDelete={() => { deleteIngredient(item.id) }}
+                          onClick={() => { handleChangeModal(item) }}
+                          style={{ maxWidth: '200px' }}
+                        />
+                      </Tooltip>
+                    ))}
+                  </Grid>
+                )
+                :
+                ''
+            }
           </Grid>
           ) : (
             <TextField
@@ -238,23 +228,25 @@ const AddingForm = () => {
               multiline
             />
           )
-      })}
+      ))}
       <Button
         onClick={saveProduct}
         fullWidth
       >
         add product
       </Button>
-      {productsError
-        ?
-        <Typography
-          color="error"
-          align='center'
-        >
-          {productsError.msg}
-        </Typography>
-        :
-        ''}
+      {
+        productsError
+          ?
+          <Typography
+            color="error"
+            align='center'
+          >
+            {productsError.msg}
+          </Typography>
+          :
+          ''
+      }
       <EditModal
         modalState={modalState}
         editableIngredient={editableIngredient}
@@ -265,4 +257,4 @@ const AddingForm = () => {
   )
 };
 
-export default memo(AddingForm);
+export default memo(AddingProductsForm);

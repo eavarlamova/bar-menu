@@ -49,12 +49,6 @@ const ProductsList = (props) => {
   return (
     <>
       {
-        errorGettingUsersProducts
-          ?
-          <Alert severity="error">
-            {errorGettingUsersProducts.msg}
-          </Alert>
-          :
           products.length
             ?
             products.map(item => {

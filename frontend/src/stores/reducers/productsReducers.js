@@ -1,9 +1,10 @@
 import {
     ADD_PRODUCT_FAIL,
+    DELETE_PRODUCT_FAIL,
     ADD_PRODUCT_SUCCESS,
-    GET_USERS_PRODUCTS_FAIL,
     SET_PERSONAL_PRODUCTS,
     DELETE_PRODUCT_SUCCESS,
+    GET_USERS_PRODUCTS_FAIL,
 } from "../constants/products";
 import { parseIngredients } from '../../helpers/parse';
 
@@ -57,6 +58,11 @@ const productsReducers = (state = initialState, { type, payload }) => {
                 ...state,
                 error: null,
                 personalProducts: [...state.personalProducts].filter(item => item.id !== payload) 
+            };
+        case DELETE_PRODUCT_FAIL:
+            return {
+                ...state,
+                error: payload,
             }
         default:
             return { ...state }

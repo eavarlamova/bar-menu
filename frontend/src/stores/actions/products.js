@@ -2,6 +2,7 @@ import {
     ADD_PRODUCT,
     DELETE_PRODUCT,
     DELETE_PRODUCT_SUCCESS,
+    DELETE_PRODUCT_FAIL,
     ADD_PRODUCT_FAIL,
     ADD_PRODUCT_SUCCESS,
     SET_PERSONAL_PRODUCTS,
@@ -45,6 +46,10 @@ export const setPersonalProducts = (payload) => {
 
 export const deleteProduct = (payload) => ({
     type: DELETE_PRODUCT,
+    payload,
+});
+export const deleteProductFail = (payload) => ({
+    type: DELETE_PRODUCT_FAIL,
     payload,
 });
 export const deleteProductSuccess = (payload) => ({

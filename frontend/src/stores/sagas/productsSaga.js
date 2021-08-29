@@ -10,10 +10,11 @@ import {
 } from '../constants/products';
 import {
     addProductFail,
+    deleteProductFail,
     addProductSuccess,
-    getUsersProductsFail,
     setPersonalProducts,
     deleteProductSuccess,
+    getUsersProductsFail,
 } from '../actions/products';
 
 
@@ -58,7 +59,6 @@ const HANDLER = {
                 method: 'DELETE',
             })
             yield put(deleteProductSuccess(id));
-// action succes
         }
         catch (error) {
             const {
@@ -67,6 +67,7 @@ const HANDLER = {
                     status,
                 }
             } = error;
+            yield put(deleteProductFail({ msg, status }))
         }
     }
 
