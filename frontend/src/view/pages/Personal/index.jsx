@@ -2,9 +2,10 @@ import { Avatar, Card, CardContent, CardHeader, CardMedia, Grid, Typography } fr
 import React from 'react';
 import { useSelector } from 'react-redux';
 
-import AddingProductsForm from '../../components/AddingProductsForm';
 import Navbar from '../../components/Navbar';
 import ProductsList from '../../components/ProductsList';
+import AddingProductsForm from '../../components/AddingProductsForm';
+import UsersIngredientsForm from '../../components/UsersIngredientsForm';
 
 import './index.scss';
 
@@ -21,8 +22,15 @@ const Personal = () => {
         justifyContent='center'
         spacing={3}
       >
-        <Grid item xs={12} sm={4} xl={3}>
-          <AddingProductsForm />
+        <Grid
+          item xs={12}
+          sm={4}
+          xl={3}
+        >
+          <div className='personal__adding-col'>
+            <AddingProductsForm />
+            <UsersIngredientsForm />
+          </div>
           {/*
  form for adding user`s ingredients
 output all user`s ingredients

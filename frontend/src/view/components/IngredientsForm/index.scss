@@ -1,0 +1,11 @@
+.ingredient-form {
+
+    &__size-info{
+        display: flex;
+        justify-content: space-between;
+        padding-bottom: 5%;
+        > div {
+            width: 48%;
+        }
+    }
+}

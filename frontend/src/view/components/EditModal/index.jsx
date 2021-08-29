@@ -14,6 +14,8 @@ import {
   HighlightOff as HighlightOffIcon
 } from '@material-ui/icons';
 
+import IngredientsForm from '../../components/IngredientsForm';
+
 import './index.scss'
 
 
@@ -27,6 +29,7 @@ const EditModal = (props) => {
   const [currentIngredient, setCurrentIngredient] = useState({ ...editableIngredient })
 
   useEffect(() => {
+    console.log('editableIngredient', editableIngredient)
     setCurrentIngredient({ ...editableIngredient })
   }, [editableIngredient])
 
@@ -48,6 +51,9 @@ const EditModal = (props) => {
       'measure_ingredient': value,
     })
   }
+  useEffect(()=>{
+    console.log('currentIngredient', currentIngredient)
+  },[currentIngredient])
 
   const getModalContent = () => {
     return (
@@ -55,56 +61,25 @@ const EditModal = (props) => {
         ?
         <div className='adding-form__modal'        >
           <div className='adding-form__modal-header'>
-            <h3>{editableIngredient.name.toUpperCase()}</h3>
+            <h3>{editableIngredient.name_ingredient.toUpperCase()}</h3>
             <div
               onClick={() => { handleChangeModal(null) }}
             >
               <HighlightOffIcon />
             </div>
           </div>
-          <TextField
-            label='name of ingredient'
-            value={currentIngredient.name}
-            name='name'
-            onChange={handleChange}
+
+          <IngredientsForm
+            currentIngredient={currentIngredient}
+            handleChange={handleChange}
+            handleChangeSwitch={handleChangeSwitch}
+            handleChangeAutocomtete={handleChangeAutocomtete}
           />
-          <FormControlLabel
-            label='alkohol'
-            control={
-              <Switch
-                color='primary'
-                name='alkohol'
-                checked={currentIngredient.alkohol}
-                onChange={handleChangeSwitch}
-              />}>
-          </FormControlLabel>
-          <div className='adding-form__modal-edit-size'>
-            <TextField
-              type='number'
-              label='wigth of ingredient'
-              name='size_ingredient'
-              value={currentIngredient.size_ingredient}
-              onChange={handleChange}
-            />
-            <Autocomplete
-              options={[
-                'ml',
-                'drop',
-                'gram',
-                'piece',
-                'tea spoon',
-                'table spoon',
-              ]}
-              value={currentIngredient.measure_ingredient}
-              onChange={handleChangeAutocomtete}
-              getOptionLabel={options => options}
-              renderInput={(params) => (<TextField {...params} label='measure of ingredient' />)}
-            />
-          </div>
+
           <Button
             className='adding-form__modal-button'
             fullWidth
-            onClick={() => { currentIngredient.name.trim() && editIngredient(currentIngredient) }}
+            onClick={() => { currentIngredient.name_ingredient.trim() && editIngredient(currentIngredient) }}
           >
             edit ingredient
           </Button>

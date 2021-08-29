@@ -44,7 +44,8 @@ const productsControllers = {
             res.status(200).send(usersProducts);
         }
         catch (error) {
-            res.status(500).send({ msg: 'oops... some problem with gettins user`s products' })
+            console.log('err', error)
+            res.status(500).send({ msg: 'oops... some problem with gettins user`s products' , error})
         }
     },
     async deleteProduct(req, res, next) {
