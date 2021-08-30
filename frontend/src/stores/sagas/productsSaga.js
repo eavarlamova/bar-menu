@@ -16,15 +16,17 @@ import {
     deleteProductSuccess,
     getUsersProductsFail,
 } from '../actions/products';
+import { makeAxiosWithJWTHeader } from '../../helpers/axiosHeader';
 
 
 const HANDLER = {
     *[ADD_PRODUCT](payload) {
         try {
-            const { data } = yield call(axios, `${URL}/products/add`, {
-                method: "POST",
-                data: payload,
-            });
+            const { data } = yield makeAxiosWithJWTHeader('products/add','POST',payload)
+            // const { data } = yield call(axios, `${URL}/products/add`, {
+            //     method: "POST",
+            //     data: payload,
+            // });
             yield put(addProductSuccess(data))
         }
         catch (error) {

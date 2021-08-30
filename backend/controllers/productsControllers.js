@@ -1,5 +1,6 @@
 const { Products, Users } = require('../models')
 
+const { checkAuthUser } = require("./helpers/checkAuth")
 
 
 // const allProducts = await Products.findAll({
@@ -12,12 +13,17 @@ const { Products, Users } = require('../models')
 
 
 const productsControllers = {
-    async addProduct({ body }, res, next) {
+    async addProduct(req , res, next) {
         try {
-            // validate body
-            // check jwt in dataBase
-            const newProduct = await Products.create(body)
-            res.status(200).send(newProduct)
+            const { body } = req;
+            const findJWT = await checkAuthUser(req);
+            if (findJWT) {
+                const newProduct = await Products.create(body)
+                res.status(200).send(newProduct)
+            }
+            else {
+                throw new Error();
+            }
         }
         catch (error) {
             res.status(500).send({ msg: 'oops... some problem with adding your product' })
@@ -44,8 +50,7 @@ const productsControllers = {
             res.status(200).send(usersProducts);
         }
         catch (error) {
-            console.log('err', error)
-            res.status(500).send({ msg: 'oops... some problem with gettins user`s products' , error})
+            res.status(500).send({ msg: 'oops... some problem with gettins user`s products', error })
         }
     },
     async deleteProduct(req, res, next) {
@@ -58,8 +63,8 @@ const productsControllers = {
             res.sendStatus(200);
         }
         catch (error) {
-            res.status(500).send({ msg: 'oops... some problem with deleting  the product' })  
-         }
+            res.status(500).send({ msg: 'oops... some problem with deleting  the product' })
+        }
     }
 }
 

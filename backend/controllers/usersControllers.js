@@ -5,6 +5,8 @@ const jwt = require("jsonwebtoken");
 
 const { Users, JWTtemp, Products } = require("../models");
 
+const { checkAuthUser } = require("./helpers/checkAuth")
+
 const getPublicUsersData = (user) => ({
   id: user.id,
   role: user.role,
@@ -16,26 +18,22 @@ const getPublicUsersData = (user) => ({
   products: user.products,
 });
 
-async function checkAuthUser(req) {
-  const {
-    headers: {
-      authorization: jwtForCheck
-    }
-  } = req;
-  const findJWT = await JWTtemp.findOne({
-    where: { jwt: jwtForCheck }
-  })
-  return findJWT;
-}
+// const checkAuthUser = async (req) => {
+//   const {
+//     headers: {
+//       authorization: jwtForCheck
+//     }
+//   } = req;
+//   const findJWT = await JWTtemp.findOne({
+//     where: { jwt: jwtForCheck }
+//   })
+//   return findJWT;
+// }
 
 const usersControllers = {
 
   async checkJWT(req, res, next) {
-    // async checkJWT({ params: { jwt } }, res, next) {
-      try {
-      // const findJWT = await JWTtemp.findOne({
-      //   where: { jwt },
-      // })
+    try {
       const findJWT = await checkAuthUser(req);
       if (findJWT) {
         const { dataValues: { user_id: id } } = findJWT

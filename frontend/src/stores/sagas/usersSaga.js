@@ -38,13 +38,7 @@ const getErrorInfo = (error) => {
 const HANDLER = {
     *[CHECK_JWT](payload) {
         try {
-            // const { data } = yield call(axios, `${URL}/users/check/${payload}`);
             const { data } = yield makeAxiosWithJWTHeader('users/check')
-            // make function normolize ingredients 
-            //  const updatePayload = payload.map(item => ({...item, ingredients: JSON.parse(payload.ingredients)}));
-            // console.log('####### ACTION: SET ', updatePayload, '#######')
-
-            // make saga for getting user`s products
             yield put(signInSuccess(data))
             yield put(getUsersProducts(data.id))
         }
