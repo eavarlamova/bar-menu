@@ -23,16 +23,8 @@ import {
 
 import { setJWT } from "../../helpers/jwt";
 import { makeAxiosWithJWTHeader } from '../../helpers/axiosHeader';
+import { getErrorInfo} from '../../helpers/errorInfo';
 
-const getErrorInfo = (error) => {
-    const {
-        response: {
-            data: { msg },
-            status,
-        }
-    } = error;
-    return { msg, status };
-};
 
 
 const HANDLER = {
