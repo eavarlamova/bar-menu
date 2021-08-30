@@ -6,12 +6,15 @@ import {
     SING_UP,
     SING_IN,
     SING_OUT,
+    ADD_INGREDIENT,
 } from '../constants/users';
 import {
     signInFail,
     signOutFail,
     signInSuccess,
     signOutSuccess,
+    addIngredientFail,
+    addIngredientSuccess,
 } from "../actions/users"
 import {
     getUsersProducts,
@@ -19,6 +22,7 @@ import {
 } from "../actions/products";
 
 import { setJWT } from "../../helpers/jwt";
+import { makeAxiosWithJWTHeader } from '../../helpers/axiosHeader';
 
 const getErrorInfo = (error) => {
     const {
@@ -29,6 +33,7 @@ const getErrorInfo = (error) => {
     } = error;
     return { msg, status };
 };
+
 
 const HANDLER = {
     *[CHECK_JWT](payload) {
@@ -44,12 +49,7 @@ const HANDLER = {
             yield put(getUsersProducts(data.id))
         }
         catch (error) {
-            const {
-                response: {
-                    data: { msg },
-                    status,
-                }
-            } = error;
+            const { msg, status } = getErrorInfo(error);
             yield put(signInFail({ status, msg }))
             setJWT('')
         }
@@ -64,12 +64,7 @@ const HANDLER = {
             setJWT(data.jwt);
         }
         catch (error) {
-            const {
-                response: {
-                    data: { msg },
-                    status,
-                }
-            } = error;
+            const { msg, status } = getErrorInfo(error);
             yield put(signInFail({ status, msg }))
         }
     },
@@ -86,12 +81,7 @@ const HANDLER = {
             setJWT(data.jwt);
         }
         catch (error) {
-            const {
-                response: {
-                    data: { msg },
-                    status,
-                }
-            } = error;
+            const { msg, status } = getErrorInfo(error);
             yield put(signInFail({ status, msg }))
         }
     },
@@ -108,6 +98,21 @@ const HANDLER = {
             yield put(signOutFail({ status, msg }))
         }
     },
+
+    *[ADD_INGREDIENT](payload) {
+        try {
+            const { data: allUsersIngredients } = yield makeAxiosWithJWTHeader(
+                'users/add-ingredient',
+                'PATCH',
+                payload,
+            );
+            yield put(addIngredientSuccess(allUsersIngredients))
+        }
+        catch (error) {
+            const { msg, status } = getErrorInfo(error);
+            yield put(addIngredientFail({ msg, status }));
+        }
+    }
 
 };
 

@@ -121,6 +121,44 @@ const usersControllers = {
       res.status(500).send({ msg: 'server error of sign out' })
     }
   },
+
+  async addIngredient(req, res, next) {
+    try {
+      const {
+        body,
+        headers: {
+          authorization: jwtForCheck
+        }
+      } = req;
+      const findJWT = await JWTtemp.findOne({
+        where: { jwt: jwtForCheck }
+      })
+      if (findJWT) {
+        const { dataValues: { user_id: id } } = findJWT;
+        const {
+          dataValues: {
+            users_ingredients
+          }
+        } = await Users.findOne({
+          where: { id }
+        });
+        const currentUsersIngredients = users_ingredients ? JSON.parse(users_ingredients) : [];
+        currentUsersIngredients.push(body)
+
+        const updateUser = await Users.update(
+          { users_ingredients: JSON.stringify(currentUsersIngredients) },
+          { where: { id } },
+        )
+        res.status(200).send(currentUsersIngredients);
+      }
+      else {
+        res.status(500).send({ msg: 'server error of adding your ingredient by your authorithation' })
+      }
+    }
+    catch (error) {
+      res.status(500).send({ msg: 'server error of adding your ingredient' })
+    }
+  }
 };
 
 module.exports = usersControllers;

@@ -1,14 +1,17 @@
 import {
     memo,
     useState,
-    useEffect,
-} from "react"
-
+} from "react";
+import { useDispatch, useSelector } from 'react-redux';
 import {
+    Button,
     Grid,
+    Typography,
 } from '@material-ui/core';
 
+import { addIngredient } from '../../../stores/actions/users';
 import IngredientsForm from "../IngredientsForm";
+import { Alert } from "@material-ui/lab";
 
 const initialIngredient = {
     name_ingredient: '',
@@ -19,6 +22,8 @@ const initialIngredient = {
 
 
 const UsersIngredientsForm = () => {
+    const dispatch = useDispatch();
+    const { error: errorByAddingUsersIngredient } = useSelector(state => state.users)
     const [currentIngredient, setCurrentIngredient] = useState(initialIngredient);
 
     const handleChange = ({ target: { name, value } }) => {
@@ -41,9 +46,20 @@ const UsersIngredientsForm = () => {
         })
     };
 
-    // useEffect(() => {
-    //     console.log('currentIngredient', currentIngredient)
-    // }, [currentIngredient])
+    const savePersonalIngredient = () => {
+        const currentIngredientName = currentIngredient.name_ingredient.trim();
+        if (currentIngredientName) {
+            dispatch(addIngredient(
+                {
+                    ...currentIngredient,
+                    name_ingredient: currentIngredientName
+                }
+            )
+            );
+        }
+    };
+console.log('#######', errorByAddingUsersIngredient, '#######')
+
 
 
     return (
@@ -59,6 +75,21 @@ const UsersIngredientsForm = () => {
                 handleChangeSwitch={handleChangeSwitch}
                 handleChangeAutocomtete={handleChangeAutocomtete}
             />
+            <Button
+                onClick={savePersonalIngredient}
+                fullWidth
+            >
+                add ingredient in your profile
+            </Button>
+            {
+                errorByAddingUsersIngredient
+                    ?
+                    <Typography color='error' align='center'>
+                        {errorByAddingUsersIngredient.msg}
+                    </Typography>
+                    :
+                    ''
+            }
             {/* {[
                 { title: 'name of ingredient', key: 'name_ingredient' },
                 { title: 'size of ingredient', key: 'size_ingredient' },

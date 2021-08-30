@@ -3,13 +3,9 @@ import React, {
 } from 'react';
 
 import {
-  Button,
-  FormControlLabel,
   Modal,
-  Switch,
-  TextField
+  Button,
 } from '@material-ui/core';
-import { Autocomplete } from '@material-ui/lab';
 import {
   HighlightOff as HighlightOffIcon
 } from '@material-ui/icons';
@@ -51,9 +47,6 @@ const EditModal = (props) => {
       'measure_ingredient': value,
     })
   }
-  useEffect(()=>{
-    console.log('currentIngredient', currentIngredient)
-  },[currentIngredient])
 
   const getModalContent = () => {
     return (

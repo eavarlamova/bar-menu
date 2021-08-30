@@ -5,11 +5,19 @@ import {
   SIGN_UP_FAIL,
   SING_IN_FAIL,
   SIGN_OUT_FAIL,
+  ADD_INGREDIENT,
   SING_IN_SUCCESS,
   SING_OUT_SUCCESS,
+  ADD_INGREDIENT_FAIL,
+  ADD_INGREDIENT_SUCCESS,
 } from "../constants/users";
 
 import { CHECK_JWT } from '../../mainConstants'
+
+const parseUsersInfo =(user) => ({
+  ...user,
+  users_ingredients: JSON.parse(user.users_ingredients)
+})
 
 export const checkJWT = (payload) => ({
   type: CHECK_JWT,
@@ -22,14 +30,13 @@ export const signUp = (payload) => ({
 });
 
 
-
 export const signIn = (payload) => ({
   type: SING_IN,
   payload,
 });
 export const signInSuccess = (payload) => ({
   type: SING_IN_SUCCESS,
-  payload,
+  payload: parseUsersInfo(payload),
 })
 export const signInFail = (payload) => ({
   type: SING_IN_FAIL,
@@ -47,3 +54,16 @@ export const signOutFail = (payload) => ({
   type: SIGN_OUT_FAIL,
   payload,
 })
+
+export const addIngredient = (payload) => ({
+  type: ADD_INGREDIENT,
+  payload,
+});
+export const addIngredientSuccess = (payload) => ({
+  type: ADD_INGREDIENT_SUCCESS,
+  payload
+});
+export const addIngredientFail = (payload) => ({
+  type: ADD_INGREDIENT_FAIL,
+  payload,
+});
