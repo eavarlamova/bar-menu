@@ -14,15 +14,29 @@ const getPublicUsersData = (user) => ({
   users_ingredients: user.users_ingredients,
 
   products: user.products,
-})
+});
+
+async function checkAuthUser(req) {
+  const {
+    headers: {
+      authorization: jwtForCheck
+    }
+  } = req;
+  const findJWT = await JWTtemp.findOne({
+    where: { jwt: jwtForCheck }
+  })
+  return findJWT;
+}
 
 const usersControllers = {
 
-  async checkJWT({ params: { jwt } }, res, next) {
-    try {
-      const findJWT = await JWTtemp.findOne({
-        where: { jwt },
-      })
+  async checkJWT(req, res, next) {
+    // async checkJWT({ params: { jwt } }, res, next) {
+      try {
+      // const findJWT = await JWTtemp.findOne({
+      //   where: { jwt },
+      // })
+      const findJWT = await checkAuthUser(req);
       if (findJWT) {
         const { dataValues: { user_id: id } } = findJWT
         const { dataValues: findUser } = await Users.findOne({
@@ -124,15 +138,8 @@ const usersControllers = {
 
   async addIngredient(req, res, next) {
     try {
-      const {
-        body,
-        headers: {
-          authorization: jwtForCheck
-        }
-      } = req;
-      const findJWT = await JWTtemp.findOne({
-        where: { jwt: jwtForCheck }
-      })
+      const { body } = req;
+      const findJWT = await checkAuthUser(req);
       if (findJWT) {
         const { dataValues: { user_id: id } } = findJWT;
         const {
@@ -145,7 +152,7 @@ const usersControllers = {
         const currentUsersIngredients = users_ingredients ? JSON.parse(users_ingredients) : [];
         currentUsersIngredients.push(body)
 
-        const updateUser = await Users.update(
+        await Users.update(
           { users_ingredients: JSON.stringify(currentUsersIngredients) },
           { where: { id } },
         )
@@ -156,6 +163,7 @@ const usersControllers = {
       }
     }
     catch (error) {
+      console.log('error', error)
       res.status(500).send({ msg: 'server error of adding your ingredient' })
     }
   }
