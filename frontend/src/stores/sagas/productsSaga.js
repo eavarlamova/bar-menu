@@ -35,7 +35,6 @@ const HANDLER = {
     *[GET_USERS_PRODUCTS](id) {
         try {
             const { data } = yield makeAxiosWithJWTHeader(`products/${id}`)
-            // const { data } = yield call(axios, `${URL}/products/${id}`);
             yield put(setPersonalProducts(data))
         }
         catch (error) {
@@ -45,9 +44,11 @@ const HANDLER = {
     },
     *[DELETE_PRODUCT](id) {
         try {
-            yield call(axios, `${URL}/products/${id}`, {
-                method: 'DELETE',
-            })
+            yield makeAxiosWithJWTHeader(`products/${id}`,'DELETE')
+
+            // yield call(axios, `${URL}/products/${id}`, {
+            //     method: 'DELETE',
+            // })
             yield put(deleteProductSuccess(id));
         }
         catch (error) {

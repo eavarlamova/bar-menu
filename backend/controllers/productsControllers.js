@@ -61,12 +61,18 @@ const productsControllers = {
     },
     async deleteProduct(req, res, next) {
         try {
-            await Products.destroy({
-                where: {
-                    id: req.params.id
-                }
-            });
-            res.sendStatus(200);
+            const findJWT = await checkAuthUser(req);
+            if (findJWT) {
+                await Products.destroy({
+                    where: {
+                        id: req.params.id
+                    }
+                });
+                res.sendStatus(200);
+            }
+            else {
+                throw new Error();
+            }
         }
         catch (error) {
             res.status(500).send({ msg: 'oops... some problem with deleting  the product' })
