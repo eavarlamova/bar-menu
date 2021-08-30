@@ -17,37 +17,29 @@ import {
     getUsersProductsFail,
 } from '../actions/products';
 import { makeAxiosWithJWTHeader } from '../../helpers/axiosHeader';
+import { getErrorInfo } from '../../helpers/errorInfo';
 
 
 const HANDLER = {
     *[ADD_PRODUCT](payload) {
         try {
-            const { data } = yield makeAxiosWithJWTHeader('products/add','POST',payload)
+            const { data } = yield makeAxiosWithJWTHeader('products/add', 'POST', payload)
             yield put(addProductSuccess(data))
         }
         catch (error) {
-            const {
-                response: {
-                    data: { msg },
-                    status,
-                }
-            } = error;
+            const { msg, status } = getErrorInfo(error);
             yield put(addProductFail({ msg, status }))
         }
     },
 
     *[GET_USERS_PRODUCTS](id) {
         try {
-            const { data } = yield call(axios, `${URL}/products/${id}`);
+            const { data } = yield makeAxiosWithJWTHeader(`products/${id}`)
+            // const { data } = yield call(axios, `${URL}/products/${id}`);
             yield put(setPersonalProducts(data))
         }
         catch (error) {
-            const {
-                response: {
-                    data: { msg },
-                    status,
-                }
-            } = error;
+            const { msg, status } = getErrorInfo(error);
             yield put(getUsersProductsFail({ msg, status }))
         }
     },
@@ -59,12 +51,7 @@ const HANDLER = {
             yield put(deleteProductSuccess(id));
         }
         catch (error) {
-            const {
-                response: {
-                    data: { msg },
-                    status,
-                }
-            } = error;
+            const { msg, status } = getErrorInfo(error);
             yield put(deleteProductFail({ msg, status }))
         }
     }
