@@ -68,9 +68,9 @@ const HANDLER = {
                 data: payload
             })
             yield put(signInSuccess(data))
-            yield put(getUsersProducts(data.id))
-
             setJWT(data.jwt);
+
+            yield put(getUsersProducts(data.id))
         }
         catch (error) {
             const { msg, status } = getErrorInfo(error);
