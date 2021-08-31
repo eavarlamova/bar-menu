@@ -31,7 +31,11 @@ import './index.scss'
 
 const Navbar = () => {
 	const dispatch = useDispatch();
-	const { isAuth } = useSelector(state => state.users)
+	const {
+		isAuth,
+		user: {
+			users_ingredients
+		} } = useSelector(state => state.users)
 
 	const handleSignOut = () => {
 		const jwt = getJWT();
@@ -54,7 +58,7 @@ const Navbar = () => {
 								<Link to='/user'>
 									<IconButton >
 										{/*in badgeContent will be ingredients in Availability*/}
-										<Badge badgeContent={2} color="secondary">
+										<Badge badgeContent={users_ingredients.length} color="secondary">
 											<PersonIcon />
 											<LocalBarIcon />
 										</Badge>
