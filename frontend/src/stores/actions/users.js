@@ -11,8 +11,11 @@ import {
   ADD_INGREDIENT_FAIL,
   ADD_INGREDIENT_SUCCESS,
   EDIT_PERSONAL_INGREDIENT,
+  DELETE_PERSONAL_INGREDIENT,
   EDIT_PERSONAL_INGREDIENT_FAIL,
+  DELETE_PERSONAL_INGREDIENT_FAIL,
   EDIT_PERSONAL_INGREDIENT_SUCCESS,
+  DELETE_PERSONAL_INGREDIENT_SUCCESS,
 } from "../constants/users";
 
 import { CHECK_JWT } from '../../mainConstants'
@@ -83,3 +86,16 @@ export const editPersonalIngredientSuccess = (payload) => ({
   type: EDIT_PERSONAL_INGREDIENT_SUCCESS,
   payload,
 }); 
+
+export const deletePersonalIngredient = (payload) => ({
+  type: DELETE_PERSONAL_INGREDIENT,
+  payload,
+});
+export const deletePersonalIngredientFail = (payload) => ({
+  type: DELETE_PERSONAL_INGREDIENT_FAIL,
+  payload,
+});
+export const deletePersonalIngredientSuccess = (payload) => ({
+  type: DELETE_PERSONAL_INGREDIENT_SUCCESS,
+  payload,
+});

@@ -17,6 +17,7 @@ import IngredientsForm from "../IngredientsForm";
 import {
   addIngredient,
   editPersonalIngredient,
+  deletePersonalIngredient,
 } from '../../../stores/actions/users';
 import EditModal from '../../components/EditModal';
 
@@ -81,7 +82,9 @@ const UsersIngredientsForm = () => {
     }
   };
 
-  const deleteIngredient = (id) => { };
+  const deleteIngredient = (id) => { 
+    dispatch(deletePersonalIngredient(id))
+  };
 
   const editIngredient = (updateIngredient) => {
     const updateName = updateIngredient.name_ingredient.trim();

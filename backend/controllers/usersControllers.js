@@ -157,7 +157,7 @@ const usersControllers = {
         res.status(200).send(currentUsersIngredients);
       }
       else {
-        res.status(500).send({ msg: 'server error of adding your ingredient by your authorithation' })
+        res.status(402).send({ msg: 'server error of adding your ingredient by your unauthorithation' })
       }
     }
     catch (error) {
@@ -193,13 +193,43 @@ const usersControllers = {
         res.status(200).send(updateUsersIngredients);
       }
       else {
-        res.status(500).send({ msg: 'server error of edit your ingredient because you are unauthorathed' })
+        res.status(402).send({ msg: 'server error of edit your ingredient because you are unauthorathed' })
       }
     }
     catch (error) {
       res.status(500).send({ msg: 'server error of edit your ingredient' })
-     }
+    }
   },
+  async deleteIngredient(req, res, next) {
+    try {
+      const { params: { id } } = req;
+      const findJWT = await checkAuthUser(req);
+      if (findJWT) {
+        const { dataValues: { user_id } } = findJWT;
+        const {
+          dataValues: {
+            users_ingredients
+          }
+        } = await Users.findOne({
+          where: { id: user_id }
+        });
+        const currentUsersIngredients = users_ingredients ? JSON.parse(users_ingredients) : [];
+        const updateUsersIngredients = currentUsersIngredients.filter(item => item.id !== id)
+
+        await Users.update(
+          { users_ingredients: JSON.stringify(updateUsersIngredients) },
+          { where: { id: user_id } },
+        );
+        res.status(200).send(updateUsersIngredients);
+      }
+      else {
+        res.status(402).send({ msg: 'server error of delete your ingredient because you are unauthorathed' })
+      }
+    }
+    catch (error) {
+      res.status(500).send({ msg: 'server error of delete your ingredient' })
+    }
+  }
 };
 
 module.exports = usersControllers;

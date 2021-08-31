@@ -7,6 +7,9 @@ import {
   ADD_INGREDIENT_SUCCESS,
   EDIT_PERSONAL_INGREDIENT_FAIL,
   EDIT_PERSONAL_INGREDIENT_SUCCESS,
+  DELETE_PERSONAL_INGREDIENT,
+  DELETE_PERSONAL_INGREDIENT_SUCCESS,
+  DELETE_PERSONAL_INGREDIENT_FAIL,
 } from "../constants/users";
 
 
@@ -75,6 +78,20 @@ const usersReducers = (state = initialState, { type, payload }) => {
       return {
         ...state,
         error: { ...payload }
+      }
+    case DELETE_PERSONAL_INGREDIENT_SUCCESS:
+      return {
+        ...state,
+        error: null,
+        user: {
+          ...state.user,
+          users_ingredients: payload || [],
+        }
+      }
+    case DELETE_PERSONAL_INGREDIENT_FAIL:
+      return {
+        ...state,
+        error: { ...payload },
       }
     default:
       return { ...state };

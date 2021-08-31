@@ -8,6 +8,7 @@ import {
     SING_OUT,
     ADD_INGREDIENT,
     EDIT_PERSONAL_INGREDIENT,
+    DELETE_PERSONAL_INGREDIENT,
 } from '../constants/users';
 import {
     signInFail,
@@ -17,7 +18,9 @@ import {
     addIngredientFail,
     addIngredientSuccess,
     editPersonalIngredientFail,
+    deletePersonalIngredientFail,
     editPersonalIngredientSuccess,
+    deletePersonalIngredientSuccess,
 } from "../actions/users"
 import {
     getUsersProducts,
@@ -114,6 +117,19 @@ const HANDLER = {
         catch (error) {
             const { msg, status } = getErrorInfo(error);
             yield put(editPersonalIngredientFail({ msg, status }))
+        }
+    },
+    *[DELETE_PERSONAL_INGREDIENT](payload) {
+        try {
+            const { data } = yield makeAxiosWithJWTHeader(
+                `users/${payload}`,
+                'DELETE',
+            );
+            yield put(deletePersonalIngredientSuccess(data))
+        }
+        catch (error) {
+            const { msg, status } = getErrorInfo(error);
+            yield put(deletePersonalIngredientFail({ msg, status }))
         }
     }
 
