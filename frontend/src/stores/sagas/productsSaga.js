@@ -45,10 +45,6 @@ const HANDLER = {
     *[DELETE_PRODUCT](id) {
         try {
             yield makeAxiosWithJWTHeader(`products/${id}`,'DELETE')
-
-            // yield call(axios, `${URL}/products/${id}`, {
-            //     method: 'DELETE',
-            // })
             yield put(deleteProductSuccess(id));
         }
         catch (error) {

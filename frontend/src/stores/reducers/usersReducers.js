@@ -1,12 +1,12 @@
 import {
-  SING_OUT,
   SING_IN_FAIL,
   SIGN_OUT_FAIL,
   SING_IN_SUCCESS,
   SING_OUT_SUCCESS,
-  ADD_INGREDIENT_SUCCESS,
-  ADD_INGREDIENT,
   ADD_INGREDIENT_FAIL,
+  ADD_INGREDIENT_SUCCESS,
+  EDIT_PERSONAL_INGREDIENT_FAIL,
+  EDIT_PERSONAL_INGREDIENT_SUCCESS,
 } from "../constants/users";
 
 
@@ -54,13 +54,27 @@ const usersReducers = (state = initialState, { type, payload }) => {
         error: null,
         user: {
           ...state.user,
-          users_ingredients: payload,
+          users_ingredients: payload || [],
         }
       }
     case ADD_INGREDIENT_FAIL:
       return {
         ...state,
         error: { ...payload },
+      }
+    case EDIT_PERSONAL_INGREDIENT_SUCCESS:
+      return {
+        ...state,
+        error: null,
+        user: {
+          ...state.user,
+          users_ingredients: payload,
+        }
+      }
+    case EDIT_PERSONAL_INGREDIENT_FAIL:
+      return {
+        ...state,
+        error: { ...payload }
       }
     default:
       return { ...state };

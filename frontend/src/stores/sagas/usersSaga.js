@@ -7,6 +7,7 @@ import {
     SING_IN,
     SING_OUT,
     ADD_INGREDIENT,
+    EDIT_PERSONAL_INGREDIENT,
 } from '../constants/users';
 import {
     signInFail,
@@ -15,6 +16,8 @@ import {
     signOutSuccess,
     addIngredientFail,
     addIngredientSuccess,
+    editPersonalIngredientFail,
+    editPersonalIngredientSuccess,
 } from "../actions/users"
 import {
     getUsersProducts,
@@ -23,7 +26,7 @@ import {
 
 import { setJWT } from "../../helpers/jwt";
 import { makeAxiosWithJWTHeader } from '../../helpers/axiosHeader';
-import { getErrorInfo} from '../../helpers/errorInfo';
+import { getErrorInfo } from '../../helpers/errorInfo';
 
 
 
@@ -97,6 +100,20 @@ const HANDLER = {
         catch (error) {
             const { msg, status } = getErrorInfo(error);
             yield put(addIngredientFail({ msg, status }));
+        }
+    },
+    *[EDIT_PERSONAL_INGREDIENT](payload) {
+        try {
+            const { data } = yield makeAxiosWithJWTHeader(
+                'users/edit-ingredient',
+                'PATCH',
+                payload,
+            );
+            yield put(editPersonalIngredientSuccess(data))
+        }
+        catch (error) {
+            const { msg, status } = getErrorInfo(error);
+            yield put(editPersonalIngredientFail({ msg, status }))
         }
     }
 

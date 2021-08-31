@@ -25,7 +25,6 @@ const EditModal = (props) => {
   const [currentIngredient, setCurrentIngredient] = useState({ ...editableIngredient })
 
   useEffect(() => {
-    console.log('editableIngredient', editableIngredient)
     setCurrentIngredient({ ...editableIngredient })
   }, [editableIngredient])
 

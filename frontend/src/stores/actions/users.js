@@ -10,13 +10,16 @@ import {
   SING_OUT_SUCCESS,
   ADD_INGREDIENT_FAIL,
   ADD_INGREDIENT_SUCCESS,
+  EDIT_PERSONAL_INGREDIENT,
+  EDIT_PERSONAL_INGREDIENT_FAIL,
+  EDIT_PERSONAL_INGREDIENT_SUCCESS,
 } from "../constants/users";
 
 import { CHECK_JWT } from '../../mainConstants'
 
 const parseUsersInfo =(user) => ({
   ...user,
-  users_ingredients: JSON.parse(user.users_ingredients)
+  users_ingredients: JSON.parse(user.users_ingredients) || []
 })
 
 export const checkJWT = (payload) => ({
@@ -67,3 +70,16 @@ export const addIngredientFail = (payload) => ({
   type: ADD_INGREDIENT_FAIL,
   payload,
 });
+
+export const editPersonalIngredient = (payload) => ({
+  type: EDIT_PERSONAL_INGREDIENT,
+  payload,
+});
+export const editPersonalIngredientFail = (payload) => ({
+  type: EDIT_PERSONAL_INGREDIENT_FAIL,
+  payload,
+});
+export const editPersonalIngredientSuccess = (payload) => ({
+  type: EDIT_PERSONAL_INGREDIENT_SUCCESS,
+  payload,
+}); 

@@ -161,10 +161,45 @@ const usersControllers = {
       }
     }
     catch (error) {
-      console.log('error', error)
       res.status(500).send({ msg: 'server error of adding your ingredient' })
     }
-  }
+  },
+
+  async editIngredient(req, res, next) {
+    try {
+      const { body } = req;
+      const findJWT = await checkAuthUser(req);
+      if (findJWT) {
+        const { dataValues: { user_id: id } } = findJWT;
+        const {
+          dataValues: {
+            users_ingredients
+          }
+        } = await Users.findOne({
+          where: { id }
+        });
+        const currentUsersIngredients = users_ingredients ? JSON.parse(users_ingredients) : [];
+        const updateUsersIngredients = currentUsersIngredients.map(item => (
+          item.id === body.id
+            ?
+            body
+            :
+            item
+        ))
+        await Users.update(
+          { users_ingredients: JSON.stringify(updateUsersIngredients) },
+          { where: { id } },
+        );
+        res.status(200).send(updateUsersIngredients);
+      }
+      else {
+        res.status(500).send({ msg: 'server error of edit your ingredient because you are unauthorathed' })
+      }
+    }
+    catch (error) {
+      res.status(500).send({ msg: 'server error of edit your ingredient' })
+     }
+  },
 };
 
 module.exports = usersControllers;
