@@ -1,5 +1,5 @@
-.adding-form {
-    &__modal {
+.modal {
+   
         min-width: 200px;
         width: 40%;
         height: 25%;
@@ -14,13 +14,14 @@
         padding: 2%;
         display: flex;
         flex-direction: column;
-    }
-    &__modal-header{
+    
+    &__header{
         display: flex;
         justify-content: space-between;
         align-content: center;
         > div {
             align-self: center;
         }
+        
     }
 }

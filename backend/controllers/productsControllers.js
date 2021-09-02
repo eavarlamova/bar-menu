@@ -77,6 +77,26 @@ const productsControllers = {
         catch (error) {
             res.status(500).send({ msg: 'oops... some problem with deleting  the product' })
         }
+    },
+    async editProduct(req, res, next) {
+        try {
+            throw new Error()
+            const findJWT = await checkAuthUser(req);
+            if (findJWT) {
+                const { body } = req;
+                await Products.update(
+                    { ...body },
+                    { where: { id: body.id } },
+                )
+                res.status(200).send(body);
+            }
+            else {
+                res.status(402).send({ msg: 'oops... some problem with edit the product because you are unauthorathed' })
+            }
+        }
+        catch (error) {
+            res.status(500).send({ msg: 'oops... some problem with edit the product' })
+        }
     }
 }
 

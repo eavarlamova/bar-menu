@@ -1,6 +1,7 @@
 import
 React, {
   memo,
+  useEffect,
   useState
 } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
@@ -17,7 +18,10 @@ import {
   HighlightOff as HighlightOffIcon
 } from '@material-ui/icons';
 
-import { addProduct } from '../../../stores/actions/products';
+import {
+  addProduct,
+  editProduct,
+} from '../../../stores/actions/products';
 import EditModal from '../EditModal';
 
 import './index.scss';
@@ -44,11 +48,13 @@ const initialProduct = {
 };
 
 const validateProduct = ({
+  id,
   steps,
   product,
   ingredients,
   descriptions,
 }) => ({
+  id,
   steps: steps.trim(),
   product: product.trim(),
   ingredients: JSON.stringify(ingredients.all),
@@ -56,7 +62,11 @@ const validateProduct = ({
 });
 
 
-const AddingProductsForm = () => {
+const AddingProductsForm = (props) => {
+  const {
+    actionType = 'add',
+    editableProduct
+  } = props;
   const dispatch = useDispatch();
   const { id: users_id } = useSelector(state => state.users.user)
   const { error: productsError } = useSelector(state => state.products)
@@ -64,6 +74,20 @@ const AddingProductsForm = () => {
   const [modalState, setModalState] = useState(false);
   const [editableIngredient, setEditableIngredient] = useState(null);
   const [currentProduct, setCurrentProduct] = useState(initialProduct);
+
+  useEffect(() => {
+    if (editableProduct) {
+      if (actionType === 'edit') {
+        setCurrentProduct({
+          ...editableProduct,
+          ingredients: {
+            all: JSON.parse(editableProduct.ingredients)
+          },
+          current: ''
+        })
+      }
+    }
+  }, [editableProduct])
 
 
   const handleChangeModal = (ingredient) => {
@@ -132,17 +156,23 @@ const AddingProductsForm = () => {
     // check correct of obj
     // remake steps 
     const correctProduct = validateProduct(currentProduct);
+    console.log('correctProduct', correctProduct)
     const { product, ingredients } = correctProduct;
-
     if (users_id && product && ingredients) {
-      dispatch(
-        addProduct({
-          ...correctProduct,
-          users_id,
-          ingredients,
-        }))
+      const updateProduct = {
+        ...correctProduct,
+        users_id,
+        ingredients,
+      }
+      if (actionType === 'add') {
+        dispatch(addProduct(updateProduct))
+      }
+      else if (actionType === 'edit') {
+        dispatch(editProduct(updateProduct))
+      }
     }
   };
+  // const editProduct = () => { }
 
   const deleteIngredient = (ingredientId) => {
     const allIngredientsUpdate = currentProduct.ingredients.all.filter(item => item.id !== ingredientId);
@@ -158,6 +188,13 @@ const AddingProductsForm = () => {
 
   return (
     <>
+      <Typography
+        align='center'
+        color='primary'
+        variant='h6'
+      >
+        {`${actionType} your product now`.toUpperCase()}
+      </Typography>
       {[
         'product',
         'descriptions',
@@ -196,10 +233,8 @@ const AddingProductsForm = () => {
                     className='adding-form_ready-ingredients'
                     fullWidth
                   >
-                    {console.log('currentProduct.ingredients.all', currentProduct.ingredients.all)}
                     {
                       currentProduct.ingredients.all.map(item => {
-                        console.log('item', item)
                         return (
                           <Tooltip
                             title={`edit ${item.name_ingredient}`}>
@@ -238,7 +273,7 @@ const AddingProductsForm = () => {
         onClick={saveProduct}
         fullWidth
       >
-        add product
+        {actionType} product
       </Button>
       {
         productsError

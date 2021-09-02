@@ -10,8 +10,8 @@ import {
   HighlightOff as HighlightOffIcon
 } from '@material-ui/icons';
 
-import IngredientsForm from '../../components/IngredientsForm';
-
+import IngredientsForm from '../IngredientsForm';
+import AddingProductsForm from '../AddingProductsForm';
 import './index.scss'
 
 
@@ -21,6 +21,8 @@ const EditModal = (props) => {
     editIngredient,
     handleChangeModal,
     editableIngredient,
+    target = 'ingredient',
+    editableProduct,
   } = props;
   const [currentIngredient, setCurrentIngredient] = useState({ ...editableIngredient })
 
@@ -47,12 +49,12 @@ const EditModal = (props) => {
     })
   }
 
-  const getModalContent = () => {
+  const getModalContentForEditIngredient = () => {
     return (
       editableIngredient
         ?
-        <div className='adding-form__modal'        >
-          <div className='adding-form__modal-header'>
+        <div className='modal'>
+          <div className='modal__header'>
             <h3>{editableIngredient.name_ingredient.toUpperCase()}</h3>
             <div
               onClick={() => { handleChangeModal(null) }}
@@ -69,7 +71,7 @@ const EditModal = (props) => {
           />
 
           <Button
-            className='adding-form__modal-button'
+            className='modal__button'
             fullWidth
             onClick={() => { currentIngredient.name_ingredient.trim() && editIngredient(currentIngredient) }}
           >
@@ -81,6 +83,18 @@ const EditModal = (props) => {
     )
   }
 
+  const getModalContentForEditProduct = () => (
+    <div className='modal'>
+     
+
+      <AddingProductsForm
+      actionType='edit'
+      editableProduct={editableProduct}
+      />
+
+    </div>
+  )
+
   return (
     <Modal
       open={modalState}
@@ -88,7 +102,14 @@ const EditModal = (props) => {
       aria-labelledby="simple-modal-title"
       aria-describedby="simple-modal-description"
     >
-      {getModalContent()}
+      {
+        target === 'ingredient'
+          ?
+          getModalContentForEditIngredient()
+          :
+          getModalContentForEditProduct()
+          
+      }
     </Modal>
   )
 };

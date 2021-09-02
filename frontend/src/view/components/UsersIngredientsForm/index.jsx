@@ -10,7 +10,8 @@ import {
   Typography,
 } from '@material-ui/core';
 import {
-  HighlightOff as HighlightOffIcon
+  HighlightOff as HighlightOffIcon,
+  ArrowDownward as ArrowDownwardIcon,
 } from '@material-ui/icons';
 
 import IngredientsForm from "../IngredientsForm";
@@ -82,26 +83,19 @@ const UsersIngredientsForm = () => {
     }
   };
 
-  const deleteIngredient = (id) => { 
+  const deleteIngredient = (id) => {
     dispatch(deletePersonalIngredient(id))
   };
 
   const editIngredient = (updateIngredient) => {
     const updateName = updateIngredient.name_ingredient.trim();
     if (updateName) {
-      // const updateAllIngredients = users_ingredients.map(item => {
-      //   if (item.id === updateIngredient.id) return { ...updateIngredient, name_ingredient: updateName }
-      //   return { ...item }
-      // });
       dispatch(
         editPersonalIngredient(
           { ...updateIngredient, name_ingredient: updateName }
         )
       );
-      // { ...updateIngredient, name_ingredient: updateName }
-      // updateAllIngredients save (action)
     }
-
     setModalState(false);
   };
 
@@ -110,7 +104,13 @@ const UsersIngredientsForm = () => {
       container
       direction='column'
     >
-      add your ingredient
+      <Typography
+        align='center'
+        color='primary'
+        variant='h6'
+      >
+        {`add your ingredient now`.toUpperCase()}
+      </Typography>
       <IngredientsForm
 
         currentIngredient={currentIngredient}
