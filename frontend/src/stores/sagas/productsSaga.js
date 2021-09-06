@@ -27,7 +27,15 @@ import { getErrorInfo } from '../../helpers/errorInfo';
 const HANDLER = {
   *[ADD_PRODUCT](payload) {
     try {
-      const { data } = yield makeAxiosWithJWTHeader('products/add', 'POST', payload)
+      const formData = new FormData();
+      const productInfo = { ...payload };
+      delete productInfo.file;
+      // console.log('productInfo', productInfo)
+      // console.log('payload.photo', payload.photo)
+      formData.append('product', JSON.stringify(productInfo))
+      formData.append('photo', payload.photo)
+// console.log('#######', ...formData, '#######')
+      const { data } = yield makeAxiosWithJWTHeader('products/add', 'POST', formData, 'multipart/form-data')
       yield put(addProductSuccess(data))
     }
     catch (error) {

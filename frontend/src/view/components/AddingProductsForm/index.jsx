@@ -23,6 +23,7 @@ import {
   editProduct,
 } from '../../../stores/actions/products';
 import EditModal from '../EditModal';
+import DropZoneFiles from '../DropzoneFiles';
 
 import './index.scss';
 
@@ -50,11 +51,13 @@ const initialProduct = {
 const validateProduct = ({
   id,
   steps,
+  photo,
   product,
   ingredients,
   descriptions,
 }) => ({
   id,
+  photo,
   steps: steps.trim(),
   product: product.trim(),
   ingredients: JSON.stringify(ingredients.all),
@@ -74,6 +77,7 @@ const AddingProductsForm = (props) => {
   const [modalState, setModalState] = useState(false);
   const [editableIngredient, setEditableIngredient] = useState(null);
   const [currentProduct, setCurrentProduct] = useState(initialProduct);
+  const [photo, setPhoto] = useState(null);
 
   useEffect(() => {
     if (editableProduct) {
@@ -163,6 +167,7 @@ const AddingProductsForm = (props) => {
         ...correctProduct,
         users_id,
         ingredients,
+        photo,
       }
       if (actionType === 'add') {
         dispatch(addProduct(updateProduct))
@@ -172,7 +177,6 @@ const AddingProductsForm = (props) => {
       }
     }
   };
-  // const editProduct = () => { }
 
   const deleteIngredient = (ingredientId) => {
     const allIngredientsUpdate = currentProduct.ingredients.all.filter(item => item.id !== ingredientId);
@@ -269,6 +273,9 @@ const AddingProductsForm = (props) => {
             />
           )
       ))}
+      <DropZoneFiles
+        setFile={setPhoto}
+      />
       <Button
         onClick={saveProduct}
         fullWidth
