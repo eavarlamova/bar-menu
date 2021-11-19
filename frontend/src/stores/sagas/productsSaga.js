@@ -22,6 +22,7 @@ import {
 } from '../actions/products';
 import { makeAxiosWithJWTHeader } from '../../helpers/axiosHeader';
 import { getErrorInfo } from '../../helpers/errorInfo';
+import { getFormData } from '../../helpers/formData';
 
 
 const HANDLER = {
@@ -30,11 +31,8 @@ const HANDLER = {
       const formData = new FormData();
       const productInfo = { ...payload };
       delete productInfo.file;
-      // console.log('productInfo', productInfo)
-      // console.log('payload.photo', payload.photo)
       formData.append('product', JSON.stringify(productInfo))
       formData.append('photo', payload.photo)
-// console.log('#######', ...formData, '#######')
       const { data } = yield makeAxiosWithJWTHeader('products/add', 'POST', formData, 'multipart/form-data')
       yield put(addProductSuccess(data))
     }
@@ -66,7 +64,14 @@ const HANDLER = {
   },
   *[EDIT_PRODUCT](payload) {
     try {
-      const { data } = yield makeAxiosWithJWTHeader(`products/edit-product`, 'PUT', payload)
+      // const formData = new FormData();
+      // const productInfo = { ...payload };
+      // delete productInfo.file;
+      // formData.append('product', JSON.stringify(productInfo))
+      // formData.append('photo', payload.photo)
+      const formData = getFormData(payload);
+      const { data } = yield makeAxiosWithJWTHeader(`products/edit-product`, 'PUT', formData, 'multipart/form-data')
+      // console.log('data', data)
       yield put(editProductSuccess(data))
     }
     catch (error) {

@@ -160,14 +160,14 @@ const AddingProductsForm = (props) => {
     // check correct of obj
     // remake steps 
     const correctProduct = validateProduct(currentProduct);
-    console.log('correctProduct', correctProduct)
     const { product, ingredients } = correctProduct;
     if (users_id && product && ingredients) {
+      const updatePhoto = photo || correctProduct.photo
       const updateProduct = {
         ...correctProduct,
         users_id,
         ingredients,
-        photo,
+        photo: updatePhoto,
       }
       if (actionType === 'add') {
         dispatch(addProduct(updateProduct))
