@@ -27,10 +27,11 @@ const productsControllers = {
 
             if (findJWT) {
                 const pathPhoto = req.file && req.file.filename || null
-                // console.log('`${__dirname}/../public/images/${pathPhoto}', `${__dirname}/../public/images/${pathPhoto}`)
+                console.log('${__dirname}', __dirname);
+                console.log('`${__dirname}/../public/images/${pathPhoto}', `${__dirname}/../public/images/${pathPhoto}`)
                 const newProduct = await Products.create({
                     ...updateBody,
-                    photo: `http://localhost:4000/../public/images/${pathPhoto}`,
+                    photo: `http://localhost:4000/images/${pathPhoto}`,
                 })
                 res.status(200).send(newProduct)
             }
