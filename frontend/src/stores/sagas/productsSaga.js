@@ -28,11 +28,7 @@ import { getFormData } from '../../helpers/formData';
 const HANDLER = {
   *[ADD_PRODUCT](payload) {
     try {
-      const formData = new FormData();
-      const productInfo = { ...payload };
-      delete productInfo.file;
-      formData.append('product', JSON.stringify(productInfo))
-      formData.append('photo', payload.photo)
+      const formData = getFormData(payload);
       const { data } = yield makeAxiosWithJWTHeader('products/add', 'POST', formData, 'multipart/form-data')
       yield put(addProductSuccess(data))
     }
@@ -64,14 +60,8 @@ const HANDLER = {
   },
   *[EDIT_PRODUCT](payload) {
     try {
-      // const formData = new FormData();
-      // const productInfo = { ...payload };
-      // delete productInfo.file;
-      // formData.append('product', JSON.stringify(productInfo))
-      // formData.append('photo', payload.photo)
       const formData = getFormData(payload);
       const { data } = yield makeAxiosWithJWTHeader(`products/edit-product`, 'PUT', formData, 'multipart/form-data')
-      // console.log('data', data)
       yield put(editProductSuccess(data))
     }
     catch (error) {
