@@ -1,5 +1,3 @@
-// const Sequelize = require('sequelize')
-// const Op = Sequelize.Op;
 const { hash, verify } = require("argon2");
 const jwt = require("jsonwebtoken");
 
@@ -18,17 +16,6 @@ const getPublicUsersData = (user) => ({
   products: user.products,
 });
 
-// const checkAuthUser = async (req) => {
-//   const {
-//     headers: {
-//       authorization: jwtForCheck
-//     }
-//   } = req;
-//   const findJWT = await JWTtemp.findOne({
-//     where: { jwt: jwtForCheck }
-//   })
-//   return findJWT;
-// }
 
 const usersControllers = {
 

@@ -21,13 +21,9 @@ import EditModal from '../EditModal';
 import './index.scss';
 
 
-const ProductsList = (props) => {
-  const { products } = props;
-  const {
-    products: productsFromStore,
-    products: {
-      error: errorGettingUsersProducts,
-    } } = useSelector(state => state)
+const ProductsList = ({ products }) => {
+  // const { productsFromStore } = useSelector(state => state.products)
+  // const errorGettingUsersProducts = useSelector(state => state.products.error)
   const dispatch = useDispatch();
   const [modalState, setModalState] = useState(false);
   const [editableProduct, setEditableProduct] = useState(null)
@@ -35,7 +31,6 @@ const ProductsList = (props) => {
   const handleChangeModal = (product) => {
     product && setEditableProduct(product)
     setModalState(!modalState)
-    console.log('modalState', modalState)
   };
 
 
@@ -102,7 +97,7 @@ const ProductsList = (props) => {
                         onClick={() => { handleChangeModal(item) }}
                       >
                         edit
-                        </Button>
+                      </Button>
                     </Grid>
                     <Grid item xs={6}>
                       <Button
@@ -112,7 +107,7 @@ const ProductsList = (props) => {
                         onClick={() => { deleteCurrentProduct(item.id) }}
                       >
                         delete
-                        </Button>
+                      </Button>
                     </Grid>
                   </Grid>
                 </CardActions>
