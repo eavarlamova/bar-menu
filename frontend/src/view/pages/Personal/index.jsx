@@ -39,9 +39,13 @@ const Personal = () => {
             sm={4}
             xl={3}
           >
-            <div className='personal__adding-col'>
-              <AddingProductsForm />
-              <UsersIngredientsForm />
+            <div className='personal__adding-cols'>
+              <div className='personal__adding-form'>
+                <AddingProductsForm />
+              </div>
+              <div className='personal__editing-form'>
+                <UsersIngredientsForm />
+              </div>
             </div>
             {/*
  form for adding user`s ingredients
