@@ -22,9 +22,7 @@ const App = () => {
 
   useEffect(() => {
     const jwt = getJWT();
-    console.log('jwt in APP', typeof jwt)
     if (jwt)  {
-      console.log('#######', 'in if', '#######')
       dispatch(checkJWT(jwt))
     };
   }, [dispatch])
@@ -41,7 +39,6 @@ const App = () => {
     <Router>
       <Switch>
         <PrivateRouter component={Personal} path={'/user'} />
-        {/* <Route path='/user' component={Personal} /> */}
         {isAuth ? <Redirect to='/user' /> : <Route path='/signin' component={SignIn} />}
         {isAuth ? <Redirect to='/user' /> : <Route path={'/signup'} component={SignUp} />}
         <Route path='/' component={Home} />

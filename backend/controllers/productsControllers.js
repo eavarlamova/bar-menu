@@ -11,6 +11,17 @@ const { checkAuthUser } = require("./helpers/checkAuth")
 //     }],
 // })
 
+const getFullProductsInformation = (id) => (
+  Products.findOne({
+    where: { id },
+    include: [{
+      model: Users,
+      as: 'author',
+      attributes: ['email', 'name', 'avatar']
+    }],
+  })
+);
+
 
 const productsControllers = {
   async addProduct(req, res, next) {
@@ -25,7 +36,8 @@ const productsControllers = {
           ...updateBody,
           photo: pathPhoto && `http://localhost:4000/images/${pathPhoto}`,
         })
-        res.status(200).send(newProduct)
+        const fullProductsInformation = await getFullProductsInformation(newProduct.id)
+        res.status(200).send(fullProductsInformation)
       }
       else {
         throw new Error();
@@ -99,9 +111,10 @@ const productsControllers = {
         }
         await Products.update(
           newBody,
-          { where: { id: updateBody.id } },
+          { where: { id: newBody.id } },
         )
-        res.status(200).send(newBody);
+        const fullProductsInformation = await getFullProductsInformation(newBody.id)
+        res.status(200).send(fullProductsInformation);
       }
       else {
         res.status(402).send({ msg: 'oops... some problem with edit the product because you are unauthorathed' })

@@ -1,4 +1,4 @@
-import { Avatar, Card, CardContent, CardHeader, CardMedia, Grid, Typography } from '@material-ui/core';
+import { Avatar, Card, CardContent, CardHeader, CardMedia, Container, Grid, Typography } from '@material-ui/core';
 import React from 'react';
 import { useSelector } from 'react-redux';
 
@@ -17,31 +17,8 @@ const Personal = () => {
   return (
     <>
       <Navbar />
-      <Grid
-        container
-        justifyContent='center'
-        spacing={3}
-      >
-        <Grid
-          item xs={12}
-          sm={4}
-          xl={3}
-        >
-          <div className='personal__adding-col'>
-            <AddingProductsForm />
-            <UsersIngredientsForm />
-          </div>
-          {/*
- form for adding user`s ingredients
-output all user`s ingredients
-          */}
-        </Grid>
-        <Grid
-          item
-          xs={12}
-          sm={8}
-          xl={9}
-        >
+      <div className='personal'>
+        <div className="personal__welcome-text">
           <Typography variant='h5'>
             Welcome {user.name}. It`s your Personal Page
           </Typography>
@@ -49,12 +26,40 @@ output all user`s ingredients
             It`s your products.
             All products from other users you can see in main page.
           </Typography>
+        </div>
 
-          <ProductsList
-            products={personalProducts}
-          />
+        <Grid
+          container
+          justifyContent='center'
+          spacing={3}
+
+        >
+          <Grid
+            item xs={12}
+            sm={4}
+            xl={3}
+          >
+            <div className='personal__adding-col'>
+              <AddingProductsForm />
+              <UsersIngredientsForm />
+            </div>
+            {/*
+ form for adding user`s ingredients
+output all user`s ingredients
+          */}
+          </Grid>
+          <Grid
+            item
+            xs={12}
+            sm={8}
+            xl={9}
+          >
+            <ProductsList
+              products={personalProducts}
+            />
+          </Grid>
         </Grid>
-      </Grid>
+      </div>
     </>
   )
 };

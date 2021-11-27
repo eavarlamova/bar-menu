@@ -1,6 +1,13 @@
 .personal {
+    width: 90%;
+    margin: auto;
 
-    &__photo{
+    &__welcome-text {
+        text-align: center;
+        padding: 2%;
+        text-decoration: underline blue 2px;
+    }
+    &__photo {
         justify-self: center;
         margin: auto;
         width: 80%;
