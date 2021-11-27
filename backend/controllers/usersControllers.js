@@ -166,13 +166,7 @@ const usersControllers = {
           where: { id }
         });
         const currentUsersIngredients = users_ingredients ? JSON.parse(users_ingredients) : [];
-        const updateUsersIngredients = currentUsersIngredients.map(item => (
-          item.id === body.id
-            ?
-            body
-            :
-            item
-        ))
+        const updateUsersIngredients = currentUsersIngredients.map(item => item.id === body.id ? body : item); 
         await Users.update(
           { users_ingredients: JSON.stringify(updateUsersIngredients) },
           { where: { id } },

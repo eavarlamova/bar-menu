@@ -55,7 +55,7 @@ const IngredientsForm = (props) => {
                     ]}
                     value={currentIngredient.measure_ingredient}
                     onChange={handleChangeAutocomtete}
-                    getOptionLabel={options => options}
+                    getOptionLabel={(options) => options}
                     renderInput={(params) => (<TextField {...params} label='measure of ingredient' />)}
                 />
             </div>

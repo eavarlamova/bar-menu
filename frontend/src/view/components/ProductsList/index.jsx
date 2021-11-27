@@ -18,8 +18,6 @@ import { parseIngredients } from '../../../helpers/parse';
 import { deleteProduct } from '../../../stores/actions/products';
 import EditModal from '../EditModal';
 
-import './index.scss';
-
 
 const ProductsList = ({ products }) => {
   // const { productsFromStore } = useSelector(state => state.products)

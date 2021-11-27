@@ -28,9 +28,9 @@ const productsControllers = {
     try {
       const { body } = req;
       const updateBody = JSON.parse(body.product)
-      const findJWT = await checkAuthUser(req);
+      const hasAccess = await checkAuthUser(req);
 
-      if (findJWT) {
+      if (hasAccess) {
         const pathPhoto = req.file && req.file.filename || null
         const newProduct = await Products.create({
           ...updateBody,
@@ -49,8 +49,8 @@ const productsControllers = {
   },
   async getUsersProducts(req, res, next) {
     try {
-      const findJWT = await checkAuthUser(req);
-      if (findJWT) {
+      const hasAccess = await checkAuthUser(req);
+      if (hasAccess) {
         const usersProducts = await Products.findAll({
           where: { users_id: req.params.id },
           include: [{
@@ -79,8 +79,8 @@ const productsControllers = {
   },
   async deleteProduct(req, res, next) {
     try {
-      const findJWT = await checkAuthUser(req);
-      if (findJWT) {
+      const hasAccess = await checkAuthUser(req);
+      if (hasAccess) {
         await Products.destroy({
           where: {
             id: req.params.id
@@ -98,12 +98,10 @@ const productsControllers = {
   },
   async editProduct(req, res, next) {
     try {
-      const findJWT = await checkAuthUser(req);
-      if (findJWT) {
+      const hasAccess = await checkAuthUser(req);
+      if (hasAccess) {
         const { body, file } = req;
-        console.log('body', body)
         const updateBody = JSON.parse(body.product)
-        console.log('updateBody.photo', updateBody.photo)
         const pathPhoto = file && file.filename || null;
         const newBody = {
           ...updateBody,
