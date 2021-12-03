@@ -3,14 +3,17 @@ import {
     EDIT_PRODUCT,
     DELETE_PRODUCT,
     ADD_PRODUCT_FAIL,
+    GET_ALL_PRODUCTS,
     EDIT_PRODUCT_FAIL,
     GET_USERS_PRODUCTS,
     DELETE_PRODUCT_FAIL,
     ADD_PRODUCT_SUCCESS,
     EDIT_PRODUCT_SUCCESS,
     SET_PERSONAL_PRODUCTS,
+    GET_ALL_PRODUCTS_FAIL,
     DELETE_PRODUCT_SUCCESS,
     GET_USERS_PRODUCTS_FAIL,
+    GET_ALL_PRODUCTS_SUCCESS,
 } from "../constants/products";
 
 
@@ -64,5 +67,17 @@ export const editProductFail = (payload) => ({
 });
 export const editProductSuccess = (payload) => ({
     type: EDIT_PRODUCT_SUCCESS,
+    payload,
+});
+
+export const getAllProducts = () => ({
+    type: GET_ALL_PRODUCTS,
+});
+export const getAllProductsFail = (payload) => ({
+    type: GET_ALL_PRODUCTS_FAIL,
+    payload,
+});
+export const getAllProductsSuccess = (payload) => ({
+    type: GET_ALL_PRODUCTS_SUCCESS,
     payload,
 });
