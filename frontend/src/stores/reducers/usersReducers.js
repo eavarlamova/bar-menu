@@ -1,15 +1,25 @@
 import {
-  SING_OUT,
   SING_IN_FAIL,
-  SING_IN_SUCCSES,
+  SIGN_OUT_FAIL,
+  SING_IN_SUCCESS,
+  SING_OUT_SUCCESS,
+  ADD_INGREDIENT_FAIL,
+  ADD_INGREDIENT_SUCCESS,
+  EDIT_PERSONAL_INGREDIENT_FAIL,
+  EDIT_PERSONAL_INGREDIENT_SUCCESS,
+  DELETE_PERSONAL_INGREDIENT,
+  DELETE_PERSONAL_INGREDIENT_SUCCESS,
+  DELETE_PERSONAL_INGREDIENT_FAIL,
 } from "../constants/users";
+
+
 
 const initialState = {
   user: {
     email: '',
     name: '',
     id: null,
-    user_ingredients: '',
+    users_ingredients: '',
   },
   isAuth: false,
   error: null,
@@ -18,7 +28,7 @@ const initialState = {
 
 const usersReducers = (state = initialState, { type, payload }) => {
   switch (type) {
-    case SING_IN_SUCCSES:
+    case SING_IN_SUCCESS:
       return {
         ...state,
         user: { ...payload },
@@ -32,10 +42,57 @@ const usersReducers = (state = initialState, { type, payload }) => {
         error: { ...payload },
       };
 
-    case SING_OUT:
+    case SING_OUT_SUCCESS:
       return {
         ...initialState,
       };
+    case SIGN_OUT_FAIL:
+      return {
+        ...state,
+        error: { ...payload }
+      }
+    case ADD_INGREDIENT_SUCCESS:
+      return {
+        ...state,
+        error: null,
+        user: {
+          ...state.user,
+          users_ingredients: payload || [],
+        }
+      }
+    case ADD_INGREDIENT_FAIL:
+      return {
+        ...state,
+        error: { ...payload },
+      }
+    case EDIT_PERSONAL_INGREDIENT_SUCCESS:
+      return {
+        ...state,
+        error: null,
+        user: {
+          ...state.user,
+          users_ingredients: payload,
+        }
+      }
+    case EDIT_PERSONAL_INGREDIENT_FAIL:
+      return {
+        ...state,
+        error: { ...payload }
+      }
+    case DELETE_PERSONAL_INGREDIENT_SUCCESS:
+      return {
+        ...state,
+        error: null,
+        user: {
+          ...state.user,
+          users_ingredients: payload || [],
+        }
+      }
+    case DELETE_PERSONAL_INGREDIENT_FAIL:
+      return {
+        ...state,
+        error: { ...payload },
+      }
     default:
       return { ...state };
   }

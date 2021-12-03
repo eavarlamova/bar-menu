@@ -1,0 +1,39 @@
+.dropzone {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    margin: 10px 0;
+    border-width: 2;
+    border-radius: 2;
+    border-color: #eeeeee;
+    border-style: dashed;
+    background-color: #fafafa;
+    color: #bdbdbd;
+    outline: none;
+    transition: border 0.24s ease-in-out;
+    overflow: auto;
+
+    :focus {
+        outline: none;
+    }
+    &__title {
+        text-align: center;
+    }
+    hr {
+        border-style: double;
+        border-color: #eeeeee;
+    }
+
+    &__file {
+        color: black;
+    }
+
+    &:hover {
+        border-color: #3f51b5;
+        transition: border 0.5s ease-in-out;
+    }
+    &:hover &__download {
+        background-color: #eeeeee ;
+    }
+}

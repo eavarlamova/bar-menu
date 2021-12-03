@@ -4,10 +4,26 @@ import {
   SING_OUT,
   SIGN_UP_FAIL,
   SING_IN_FAIL,
-  SING_IN_SUCCSES,
+  SIGN_OUT_FAIL,
+  ADD_INGREDIENT,
+  SING_IN_SUCCESS,
+  SING_OUT_SUCCESS,
+  ADD_INGREDIENT_FAIL,
+  ADD_INGREDIENT_SUCCESS,
+  EDIT_PERSONAL_INGREDIENT,
+  DELETE_PERSONAL_INGREDIENT,
+  EDIT_PERSONAL_INGREDIENT_FAIL,
+  DELETE_PERSONAL_INGREDIENT_FAIL,
+  EDIT_PERSONAL_INGREDIENT_SUCCESS,
+  DELETE_PERSONAL_INGREDIENT_SUCCESS,
 } from "../constants/users";
 
 import { CHECK_JWT } from '../../mainConstants'
+
+const parseUsersInfo =(user) => ({
+  ...user,
+  users_ingredients: JSON.parse(user.users_ingredients) || []
+})
 
 export const checkJWT = (payload) => ({
   type: CHECK_JWT,
@@ -20,14 +36,13 @@ export const signUp = (payload) => ({
 });
 
 
-
 export const signIn = (payload) => ({
   type: SING_IN,
   payload,
 });
-export const signInSuccses = (payload) => ({
-  type: SING_IN_SUCCSES,
-  payload,
+export const signInSuccess = (payload) => ({
+  type: SING_IN_SUCCESS,
+  payload: parseUsersInfo(payload),
 })
 export const signInFail = (payload) => ({
   type: SING_IN_FAIL,
@@ -37,4 +52,50 @@ export const signInFail = (payload) => ({
 export const signOut = (payload) => ({
   type: SING_OUT,
   payload,
+});
+export const signOutSuccess = () => ({
+  type: SING_OUT_SUCCESS,
+});
+export const signOutFail = (payload) => ({
+  type: SIGN_OUT_FAIL,
+  payload,
 })
+
+export const addIngredient = (payload) => ({
+  type: ADD_INGREDIENT,
+  payload,
+});
+export const addIngredientSuccess = (payload) => ({
+  type: ADD_INGREDIENT_SUCCESS,
+  payload
+});
+export const addIngredientFail = (payload) => ({
+  type: ADD_INGREDIENT_FAIL,
+  payload,
+});
+
+export const editPersonalIngredient = (payload) => ({
+  type: EDIT_PERSONAL_INGREDIENT,
+  payload,
+});
+export const editPersonalIngredientFail = (payload) => ({
+  type: EDIT_PERSONAL_INGREDIENT_FAIL,
+  payload,
+});
+export const editPersonalIngredientSuccess = (payload) => ({
+  type: EDIT_PERSONAL_INGREDIENT_SUCCESS,
+  payload,
+}); 
+
+export const deletePersonalIngredient = (payload) => ({
+  type: DELETE_PERSONAL_INGREDIENT,
+  payload,
+});
+export const deletePersonalIngredientFail = (payload) => ({
+  type: DELETE_PERSONAL_INGREDIENT_FAIL,
+  payload,
+});
+export const deletePersonalIngredientSuccess = (payload) => ({
+  type: DELETE_PERSONAL_INGREDIENT_SUCCESS,
+  payload,
+});

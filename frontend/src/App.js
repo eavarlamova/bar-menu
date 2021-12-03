@@ -22,7 +22,9 @@ const App = () => {
 
   useEffect(() => {
     const jwt = getJWT();
-    jwt && dispatch(checkJWT(jwt));
+    if (jwt)  {
+      dispatch(checkJWT(jwt))
+    };
   }, [dispatch])
 
   const PrivateRouter = (props) => (
@@ -36,11 +38,10 @@ const App = () => {
   return (
     <Router>
       <Switch>
-        <PrivateRouter component={Personal} path={'/user'} />
-        {/* <Route path='/user' component={Personal} /> */}
+        <Route path='/' component={Home}  exact/>
+        <PrivateRouter component={Personal} path={'/user'} exact/>
         {isAuth ? <Redirect to='/user' /> : <Route path='/signin' component={SignIn} />}
         {isAuth ? <Redirect to='/user' /> : <Route path={'/signup'} component={SignUp} />}
-        <Route path='/' component={Home} />
       </Switch>
     </Router>
   )
