@@ -136,6 +136,7 @@ const productsControllers = {
           'steps',
           'photo',
           'product',
+          'users_id',
           'ingredients',
           'descriptions',
         ],

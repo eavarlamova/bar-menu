@@ -17,37 +17,52 @@ import { Alert } from '@material-ui/lab';
 import { parseIngredients } from '../../../helpers/parse';
 import { deleteProduct } from '../../../stores/actions/products';
 import EditModal from '../EditModal';
+import { Link } from "react-router-dom";
 
-const getButtonContent = (
+
+const getButton = (name, action = null, userId) => {
+  return (
+    action
+      ?
+      <Button
+        fullWidth
+        variant="outlined"
+        color="primary"
+        onClick={() => { action() }}
+      >
+        {name}
+      </Button>
+      :
+      <Link to={`/user/${userId}`}>
+        <Button
+          fullWidth
+          variant="outlined"
+          color="primary"
+        >
+          {name}
+        </Button>
+      </Link>
+  )
+};
+const getButtonsContent = (
   nameFirstButton,
   nameSecondButton,
-  functionFirstButton,
-  functionSecondButton,
+  actionFirstButton,
+  actionSecondButton,
+  userId = null,
 ) => (
   <Grid container spacing={1}>
     <Grid item xs={6}>
-      <Button
-        fullWidth
-        variant="outlined"
-        color="primary"
-        onClick={() => { functionFirstButton() }}
-      >
-        {nameFirstButton}
-      </Button>
+      {getButton(nameFirstButton, actionFirstButton, userId)}
     </Grid>
     <Grid item xs={6}>
-      <Button
-        fullWidth
-        variant="outlined"
-        color="primary"
-        onClick={() => { functionSecondButton() }}
-      >
-        {nameSecondButton}
-      </Button>
+      {getButton(nameSecondButton, actionSecondButton)}
     </Grid>
 
   </Grid>
 );
+
+
 const ProductsList = ({ products, target = 'personal' }) => {
   // const { productsFromStore } = useSelector(state => state.products)
   // const errorGettingUsersProducts = useSelector(state => state.products.error)
@@ -118,7 +133,7 @@ const ProductsList = ({ products, target = 'personal' }) => {
                   {
                     target === 'personal'
                       ?
-                      getButtonContent(
+                      getButtonsContent(
                         'edit',
                         'delete',
                         handleChangeModal.bind(null, item),
@@ -148,14 +163,14 @@ const ProductsList = ({ products, target = 'personal' }) => {
 
                       // </Grid>
                       :
-                      getButtonContent(
+                      getButtonsContent(
                         'open author page',
                         'add in favorite',
-                        ()=>{alert('need write function')},
-                        ()=>{alert('need write function')},
+                        null,
+                        () => { alert('need write function for add in favorite') },
+                        item.users_id,
                       )
                   }
-
                 </CardActions>
               </Card>
             )
