@@ -13,6 +13,7 @@ import SignIn from './view/pages/SignIn';
 import SignUp from './view/pages/SignUp';
 import { getJWT } from "./helpers/jwt";
 import { checkJWT } from './stores/actions/users';
+import User from './view/pages/User';
 
 
 
@@ -22,7 +23,7 @@ const App = () => {
 
   useEffect(() => {
     const jwt = getJWT();
-    if (jwt)  {
+    if (jwt) {
       dispatch(checkJWT(jwt))
     };
   }, [dispatch])
@@ -34,12 +35,12 @@ const App = () => {
       :
       <Redirect to='/signin' />
   );
-
   return (
     <Router>
       <Switch>
-        <Route path='/' component={Home}  exact/>
-        <PrivateRouter component={Personal} path={'/user'} exact/>
+        <Route path='/' component={Home} exact />
+        <Route component={User} path='/user/:id' exact />
+        <PrivateRouter component={Personal} path={'/user/'} exact />
         {isAuth ? <Redirect to='/user' /> : <Route path='/signin' component={SignIn} />}
         {isAuth ? <Redirect to='/user' /> : <Route path={'/signup'} component={SignUp} />}
       </Switch>

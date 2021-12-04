@@ -64,6 +64,8 @@ const Navbar = () => {
                 <IconButton onClick={handleSignOut}>
                   <ExitToAppIcon />
                 </IconButton>
+
+                <Link to='/user/42'> KEK </Link>
               </>
               :
               (

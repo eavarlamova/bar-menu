@@ -44,7 +44,10 @@ const Home = () => {
               :
               allProducts && allProducts.length
                 ?
-                <ProductsList products={allProducts} />
+                <ProductsList
+                  products={allProducts}
+                  target='main'
+                />
                 :
                 'we have no any products, but you can change it!'
           }

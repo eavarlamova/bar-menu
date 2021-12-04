@@ -18,8 +18,37 @@ import { parseIngredients } from '../../../helpers/parse';
 import { deleteProduct } from '../../../stores/actions/products';
 import EditModal from '../EditModal';
 
+const getButtonContent = (
+  nameFirstButton,
+  nameSecondButton,
+  functionFirstButton,
+  functionSecondButton,
+) => (
+  <Grid container spacing={1}>
+    <Grid item xs={6}>
+      <Button
+        fullWidth
+        variant="outlined"
+        color="primary"
+        onClick={() => { functionFirstButton() }}
+      >
+        {nameFirstButton}
+      </Button>
+    </Grid>
+    <Grid item xs={6}>
+      <Button
+        fullWidth
+        variant="outlined"
+        color="primary"
+        onClick={() => { functionSecondButton() }}
+      >
+        {nameSecondButton}
+      </Button>
+    </Grid>
 
-const ProductsList = ({ products }) => {
+  </Grid>
+);
+const ProductsList = ({ products, target = 'personal' }) => {
   // const { productsFromStore } = useSelector(state => state.products)
   // const errorGettingUsersProducts = useSelector(state => state.products.error)
   const dispatch = useDispatch();
@@ -37,7 +66,7 @@ const ProductsList = ({ products }) => {
     return ingredientsArray.map(item =>
       <Typography
         variant='body2'
-        className='personal__ingredient'
+        className={`${target}__ingredient`}
       >
         {item.name_ingredient} {
           (item.size_ingredient && item.measure_ingredient)
@@ -75,7 +104,7 @@ const ProductsList = ({ products }) => {
                   subheader={getIngredientsFieldListForRender(item.ingredients)}
                 />
                 <CardMedia
-                  className='personal__photo'
+                  className={`${target}__photo`}
                   image={item.photo || 'https://loremflickr.com/g/320/240/cockail'}
                   title={`drink ${item.product}`}
                 />
@@ -86,28 +115,47 @@ const ProductsList = ({ products }) => {
                   </Typography>
                 </CardContent>
                 <CardActions>
-                  <Grid container spacing={1}>
-                    <Grid item xs={6}>
-                      <Button
-                        fullWidth
-                        variant="outlined"
-                        color="primary"
-                        onClick={() => { handleChangeModal(item) }}
-                      >
-                        edit
-                      </Button>
-                    </Grid>
-                    <Grid item xs={6}>
-                      <Button
-                        fullWidth
-                        variant="outlined"
-                        color="primary"
-                        onClick={() => { deleteCurrentProduct(item.id) }}
-                      >
-                        delete
-                      </Button>
-                    </Grid>
-                  </Grid>
+                  {
+                    target === 'personal'
+                      ?
+                      getButtonContent(
+                        'edit',
+                        'delete',
+                        handleChangeModal.bind(null, item),
+                        deleteCurrentProduct.bind(null, item.id)
+                      )
+                      // <Grid container spacing={1}>
+                      //   <Grid item xs={6}>
+                      //     <Button
+                      //       fullWidth
+                      //       variant="outlined"
+                      //       color="primary"
+                      //       onClick={() => { handleChangeModal(item) }}
+                      //     >
+                      //       edit
+                      //     </Button>
+                      //   </Grid>
+                      //   <Grid item xs={6}>
+                      //     <Button
+                      //       fullWidth
+                      //       variant="outlined"
+                      //       color="primary"
+                      //       onClick={() => { deleteCurrentProduct(item.id) }}
+                      //     >
+                      //       delete
+                      //     </Button>
+                      //   </Grid>
+
+                      // </Grid>
+                      :
+                      getButtonContent(
+                        'open author page',
+                        'add in favorite',
+                        ()=>{alert('need write function')},
+                        ()=>{alert('need write function')},
+                      )
+                  }
+
                 </CardActions>
               </Card>
             )
