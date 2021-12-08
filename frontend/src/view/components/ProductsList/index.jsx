@@ -50,17 +50,22 @@ const getButtonsContent = (
   actionFirstButton,
   actionSecondButton,
   userId = null,
-) => (
-  <Grid container spacing={1}>
-    <Grid item xs={6}>
-      {getButton(nameFirstButton, actionFirstButton, userId)}
-    </Grid>
-    <Grid item xs={6}>
-      {getButton(nameSecondButton, actionSecondButton)}
-    </Grid>
+  currentUserId,
+) => {
+  const flagForNotOvnerOfCurrentProduct = userId !== currentUserId;
+  const updateNameFirstButton =  userId && !flagForNotOvnerOfCurrentProduct ? 'look my page' : nameFirstButton
+  return (
+    <Grid container spacing={1}>
+      <Grid item xs={flagForNotOvnerOfCurrentProduct ? 6 : 12}>
+        {getButton(updateNameFirstButton, actionFirstButton, userId)}
+      </Grid>
+      <Grid item xs={flagForNotOvnerOfCurrentProduct ? 6 : 0}>
+        {flagForNotOvnerOfCurrentProduct && getButton(nameSecondButton, actionSecondButton)}
+      </Grid>
 
-  </Grid>
-);
+    </Grid>
+  )
+};
 
 
 const ProductsList = ({ products, target = 'personal' }) => {
@@ -69,6 +74,7 @@ const ProductsList = ({ products, target = 'personal' }) => {
   const dispatch = useDispatch();
   const [modalState, setModalState] = useState(false);
   const [editableProduct, setEditableProduct] = useState(null)
+  const { id } = useSelector(state => state.users.user);
 
   const handleChangeModal = (product) => {
     product && setEditableProduct(product)
@@ -139,29 +145,6 @@ const ProductsList = ({ products, target = 'personal' }) => {
                         handleChangeModal.bind(null, item),
                         deleteCurrentProduct.bind(null, item.id)
                       )
-                      // <Grid container spacing={1}>
-                      //   <Grid item xs={6}>
-                      //     <Button
-                      //       fullWidth
-                      //       variant="outlined"
-                      //       color="primary"
-                      //       onClick={() => { handleChangeModal(item) }}
-                      //     >
-                      //       edit
-                      //     </Button>
-                      //   </Grid>
-                      //   <Grid item xs={6}>
-                      //     <Button
-                      //       fullWidth
-                      //       variant="outlined"
-                      //       color="primary"
-                      //       onClick={() => { deleteCurrentProduct(item.id) }}
-                      //     >
-                      //       delete
-                      //     </Button>
-                      //   </Grid>
-
-                      // </Grid>
                       :
                       getButtonsContent(
                         'open author page',
@@ -169,6 +152,7 @@ const ProductsList = ({ products, target = 'personal' }) => {
                         null,
                         () => { alert('need write function for add in favorite') },
                         item.users_id,
+                        id,
                       )
                   }
                 </CardActions>

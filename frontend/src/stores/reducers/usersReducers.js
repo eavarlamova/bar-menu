@@ -1,3 +1,4 @@
+import { GET_ALL_PRODUCTS_FAIL } from "../constants/products";
 import {
   SING_IN_FAIL,
   SIGN_OUT_FAIL,
@@ -5,11 +6,12 @@ import {
   SING_OUT_SUCCESS,
   ADD_INGREDIENT_FAIL,
   ADD_INGREDIENT_SUCCESS,
+  GET_USER_INFORMATION_FAIL,
+  GET_USER_INFORMATION_SUCCESS,
   EDIT_PERSONAL_INGREDIENT_FAIL,
-  EDIT_PERSONAL_INGREDIENT_SUCCESS,
-  DELETE_PERSONAL_INGREDIENT,
-  DELETE_PERSONAL_INGREDIENT_SUCCESS,
   DELETE_PERSONAL_INGREDIENT_FAIL,
+  EDIT_PERSONAL_INGREDIENT_SUCCESS,
+  DELETE_PERSONAL_INGREDIENT_SUCCESS,
 } from "../constants/users";
 
 
@@ -21,6 +23,7 @@ const initialState = {
     id: null,
     users_ingredients: '',
   },
+  selectedUserData: null,
   isAuth: false,
   error: null,
 }
@@ -89,6 +92,16 @@ const usersReducers = (state = initialState, { type, payload }) => {
         }
       }
     case DELETE_PERSONAL_INGREDIENT_FAIL:
+      return {
+        ...state,
+        error: { ...payload },
+      }
+    case GET_USER_INFORMATION_SUCCESS:
+      return {
+        ...state,
+        selectedUserData: { ...payload }
+      }
+    case GET_USER_INFORMATION_FAIL:
       return {
         ...state,
         error: { ...payload },
