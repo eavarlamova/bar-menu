@@ -1,24 +1,27 @@
+import React, {
+  memo,
+  useEffect
+} from 'react';
+import { useDispatch, useSelector } from 'react-redux';
+
 import { Typography } from '@material-ui/core';
-import React, { useEffect } from 'react';
-import { useDispatch, useSelector, useStore } from 'react-redux';
 
 import Navbar from '../../components/Navbar';
-
+import ProductsList from '../../components/ProductsList';
 import { getAllProducts } from '../../../stores/actions/products';
 
 import './index.scss';
-import ProductsList from '../../components/ProductsList';
+
 
 const Home = () => {
   const dispatch = useDispatch();
-  const allProducts = useSelector(state => state.products.allProducts);
   const error = useSelector(state => state.products.error);
+  const allProducts = useSelector(state => state.products.allProducts);
 
   useEffect(() => {
     dispatch(getAllProducts());
   }, [dispatch])
 
-  console.log('allProducts', allProducts)
   return (
     <>
       <Navbar />
@@ -57,4 +60,4 @@ const Home = () => {
   )
 };
 
-export default Home;
+export default memo(Home);

@@ -236,7 +236,6 @@ const usersControllers = {
             'name',
             'avatar',
           ]
-
       });
       res.status(200).send(userInfo);
     }

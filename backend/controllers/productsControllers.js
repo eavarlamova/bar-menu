@@ -119,7 +119,6 @@ const productsControllers = {
       }
     }
     catch (error) {
-      console.log('error', error)
       res.status(500).send({ msg: 'oops... some problem with edit the product' })
     }
   },

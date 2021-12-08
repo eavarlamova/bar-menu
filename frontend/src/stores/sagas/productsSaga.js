@@ -76,7 +76,6 @@ const HANDLER = {
       const { data } = yield call(axios, `${URL}/products`, {
         method: 'GET',
       });
-      console.log('data', data)
       yield put(getAllProductsSuccess(data));
     }
     catch (error) {
