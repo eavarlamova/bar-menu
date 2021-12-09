@@ -34,7 +34,7 @@ const SignIn = () => {
   const { error: signInGlobalError } = useSelector(state => state.users);
 
   // useEffect(() => {
-  //   redirectWithAuth(isAuth)
+    // redirectWithAuth(isAuth)
   // }, [isAuth])
 
   const handleChange = ({ target: { value, name } }) => {

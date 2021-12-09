@@ -1,4 +1,4 @@
-.personal {
+.user {
     width: 90%;
     margin: auto;
 
@@ -13,12 +13,4 @@
         width: 80%;
         min-height: 200px;
     }
-    &__adding-cols {
-        position: -webkit-sticky;
-        position: sticky;
-        top: 2%;
-    }
-    &__adding-form {
-        margin-bottom: 10%;
-     }
 }

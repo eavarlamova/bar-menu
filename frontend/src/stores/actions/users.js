@@ -9,9 +9,12 @@ import {
   SING_IN_SUCCESS,
   SING_OUT_SUCCESS,
   ADD_INGREDIENT_FAIL,
+  GET_USER_INFORMATION,
   ADD_INGREDIENT_SUCCESS,
   EDIT_PERSONAL_INGREDIENT,
+  GET_USER_INFORMATION_FAIL,
   DELETE_PERSONAL_INGREDIENT,
+  GET_USER_INFORMATION_SUCCESS,
   EDIT_PERSONAL_INGREDIENT_FAIL,
   DELETE_PERSONAL_INGREDIENT_FAIL,
   EDIT_PERSONAL_INGREDIENT_SUCCESS,
@@ -97,5 +100,18 @@ export const deletePersonalIngredientFail = (payload) => ({
 });
 export const deletePersonalIngredientSuccess = (payload) => ({
   type: DELETE_PERSONAL_INGREDIENT_SUCCESS,
+  payload,
+});
+
+export const getUserInformation = (payload) => ({
+  type: GET_USER_INFORMATION,
+  payload,
+});
+export const getUserInformationFail = (payload) => ({
+  type: GET_USER_INFORMATION_FAIL,
+  payload,
+});
+export const getUserInformationSuccess = (payload) => ({
+  type: GET_USER_INFORMATION_SUCCESS,
   payload,
 });

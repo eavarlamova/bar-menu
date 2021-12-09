@@ -115,14 +115,37 @@ const productsControllers = {
         res.status(200).send(fullProductsInformation);
       }
       else {
-        res.status(402).send({ msg: 'oops... some problem with edit the product because you are unauthorathed' })
+        res.status(401).send({ msg: 'oops... some problem with edit the product because you are unauthorathed' })
       }
     }
     catch (error) {
-      console.log('error', error)
       res.status(500).send({ msg: 'oops... some problem with edit the product' })
     }
-  }
+  },
+  async getAllProducts(req, res, next) {
+    try {
+      const allProducts = await Products.findAll({
+        include: [{
+          model: Users,
+          as: 'author',
+          attributes: ['email', 'name', 'avatar']
+        }],
+        attributes: [
+          'id',
+          'steps',
+          'photo',
+          'product',
+          'users_id',
+          'ingredients',
+          'descriptions',
+        ],
+      });
+      res.status(200).send(allProducts)
+    }
+    catch (error) {
+      res.status(500).send({ msg: 'oops... some problem with getting all products' })
+    }
+  },
 }
 
 module.exports = productsControllers;

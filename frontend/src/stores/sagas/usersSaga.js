@@ -1,12 +1,13 @@
 import { call, put, takeEvery } from "redux-saga/effects"
 import axios from 'axios';
 
-import { URL, CHECK_JWT } from '../../mainConstants';
+import { URL, CHECK_JWT, URL_FRONT } from '../../mainConstants';
 import {
   SING_UP,
   SING_IN,
   SING_OUT,
   ADD_INGREDIENT,
+  GET_USER_INFORMATION,
   EDIT_PERSONAL_INGREDIENT,
   DELETE_PERSONAL_INGREDIENT,
 } from '../constants/users';
@@ -17,6 +18,8 @@ import {
   signOutSuccess,
   addIngredientFail,
   addIngredientSuccess,
+  getUserInformationFail,
+  getUserInformationSuccess,
   editPersonalIngredientFail,
   deletePersonalIngredientFail,
   editPersonalIngredientSuccess,
@@ -131,7 +134,17 @@ const HANDLER = {
       const { msg, status } = getErrorInfo(error);
       yield put(deletePersonalIngredientFail({ msg, status }))
     }
-  }
+  },
+  *[GET_USER_INFORMATION](payload) {
+    try {
+      const { data } = yield call(axios, `${URL}/users/${payload}`);
+      yield put(getUserInformationSuccess(data))
+    }
+    catch (error) {
+      const { msg, status } = getErrorInfo(error);
+      yield put(getUserInformationFail({ msg, status }))
+    }
+  },
 
 };
 

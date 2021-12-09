@@ -166,7 +166,7 @@ const usersControllers = {
           where: { id }
         });
         const currentUsersIngredients = users_ingredients ? JSON.parse(users_ingredients) : [];
-        const updateUsersIngredients = currentUsersIngredients.map(item => item.id === body.id ? body : item); 
+        const updateUsersIngredients = currentUsersIngredients.map(item => item.id === body.id ? body : item);
         await Users.update(
           { users_ingredients: JSON.stringify(updateUsersIngredients) },
           { where: { id } },
@@ -210,7 +210,39 @@ const usersControllers = {
     catch (error) {
       res.status(500).send({ msg: 'server error of delete your ingredient' })
     }
-  }
+  },
+  async getUserInfo(req, res, next) {
+    try {
+      const { params: { id } } = req;
+      const userInfo = await Users.findOne({
+        where: { id },
+        include: [{
+          model: Products,
+          as: 'products',
+          attributes: [
+            'id',
+            'steps',
+            'photo',
+            'product',
+            'users_id',
+            'ingredients',
+            'descriptions',
+          ],
+        }],
+        attributes:
+          [
+            'id',
+            'email',
+            'name',
+            'avatar',
+          ]
+      });
+      res.status(200).send(userInfo);
+    }
+    catch (error) {
+      res.status(500).send({ msg: 'server error of getting user`s info' })
+    }
+  },
 };
 
 module.exports = usersControllers;

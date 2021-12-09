@@ -17,14 +17,64 @@ import { Alert } from '@material-ui/lab';
 import { parseIngredients } from '../../../helpers/parse';
 import { deleteProduct } from '../../../stores/actions/products';
 import EditModal from '../EditModal';
+import { Link } from "react-router-dom";
 
 
-const ProductsList = ({ products }) => {
+const getButton = (name, action = null, userId) => {
+  return (
+    action
+      ?
+      <Button
+        fullWidth
+        variant="outlined"
+        color="primary"
+        onClick={() => { action() }}
+      >
+        {name}
+      </Button>
+      :
+      <Link to={`/user/${userId}`}>
+        <Button
+          fullWidth
+          variant="outlined"
+          color="primary"
+        >
+          {name}
+        </Button>
+      </Link>
+  )
+};
+const getButtonsContent = (
+  nameFirstButton,
+  nameSecondButton,
+  actionFirstButton,
+  actionSecondButton,
+  userId = null,
+  currentUserId,
+) => {
+  const flagForNotOvnerOfCurrentProduct = userId !== currentUserId;
+  const updateNameFirstButton =  userId && !flagForNotOvnerOfCurrentProduct ? 'look my page' : nameFirstButton
+  return (
+    <Grid container spacing={1}>
+      <Grid item xs={flagForNotOvnerOfCurrentProduct ? 6 : 12}>
+        {getButton(updateNameFirstButton, actionFirstButton, userId)}
+      </Grid>
+      <Grid item xs={flagForNotOvnerOfCurrentProduct ? 6 : 0}>
+        {flagForNotOvnerOfCurrentProduct && getButton(nameSecondButton, actionSecondButton)}
+      </Grid>
+
+    </Grid>
+  )
+};
+
+
+const ProductsList = ({ products, target = 'personal' }) => {
   // const { productsFromStore } = useSelector(state => state.products)
   // const errorGettingUsersProducts = useSelector(state => state.products.error)
   const dispatch = useDispatch();
   const [modalState, setModalState] = useState(false);
   const [editableProduct, setEditableProduct] = useState(null)
+  const { id } = useSelector(state => state.users.user);
 
   const handleChangeModal = (product) => {
     product && setEditableProduct(product)
@@ -37,7 +87,7 @@ const ProductsList = ({ products }) => {
     return ingredientsArray.map(item =>
       <Typography
         variant='body2'
-        className='personal__ingredient'
+        className={`${target}__ingredient`}
       >
         {item.name_ingredient} {
           (item.size_ingredient && item.measure_ingredient)
@@ -75,7 +125,7 @@ const ProductsList = ({ products }) => {
                   subheader={getIngredientsFieldListForRender(item.ingredients)}
                 />
                 <CardMedia
-                  className='personal__photo'
+                  className={`${target}__photo`}
                   image={item.photo || 'https://loremflickr.com/g/320/240/cockail'}
                   title={`drink ${item.product}`}
                 />
@@ -86,28 +136,25 @@ const ProductsList = ({ products }) => {
                   </Typography>
                 </CardContent>
                 <CardActions>
-                  <Grid container spacing={1}>
-                    <Grid item xs={6}>
-                      <Button
-                        fullWidth
-                        variant="outlined"
-                        color="primary"
-                        onClick={() => { handleChangeModal(item) }}
-                      >
-                        edit
-                      </Button>
-                    </Grid>
-                    <Grid item xs={6}>
-                      <Button
-                        fullWidth
-                        variant="outlined"
-                        color="primary"
-                        onClick={() => { deleteCurrentProduct(item.id) }}
-                      >
-                        delete
-                      </Button>
-                    </Grid>
-                  </Grid>
+                  {
+                    target === 'personal'
+                      ?
+                      getButtonsContent(
+                        'edit',
+                        'delete',
+                        handleChangeModal.bind(null, item),
+                        deleteCurrentProduct.bind(null, item.id)
+                      )
+                      :
+                      getButtonsContent(
+                        'open author page',
+                        'add in favorite',
+                        null,
+                        () => { alert('need write function for add in favorite') },
+                        item.users_id,
+                        id,
+                      )
+                  }
                 </CardActions>
               </Card>
             )

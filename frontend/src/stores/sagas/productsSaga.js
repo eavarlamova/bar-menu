@@ -7,6 +7,7 @@ import {
   ADD_PRODUCT,
   EDIT_PRODUCT,
   DELETE_PRODUCT,
+  GET_ALL_PRODUCTS,
   GET_USERS_PRODUCTS,
 } from '../constants/products';
 import {
@@ -15,10 +16,11 @@ import {
   deleteProductFail,
   addProductSuccess,
   editProductSuccess,
+  getAllProductsFail,
   setPersonalProducts,
   deleteProductSuccess,
   getUsersProductsFail,
-  editProduct,
+  getAllProductsSuccess,
 } from '../actions/products';
 import { makeAxiosWithJWTHeader } from '../../helpers/axiosHeader';
 import { getErrorInfo } from '../../helpers/errorInfo';
@@ -68,7 +70,19 @@ const HANDLER = {
       const { msg, status } = getErrorInfo(error);
       yield put(editProductFail({ msg, status }))
     }
-  }
+  },
+  *[GET_ALL_PRODUCTS]() {
+    try {
+      const { data } = yield call(axios, `${URL}/products`, {
+        method: 'GET',
+      });
+      yield put(getAllProductsSuccess(data));
+    }
+    catch (error) {
+      const { msg, status } = getErrorInfo(error);
+      yield put(getAllProductsFail({ msg, status }))
+    }
+  },
 
 };
 

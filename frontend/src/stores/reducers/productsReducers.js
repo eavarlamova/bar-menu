@@ -7,6 +7,8 @@ import {
     SET_PERSONAL_PRODUCTS,
     DELETE_PRODUCT_SUCCESS,
     GET_USERS_PRODUCTS_FAIL,
+    GET_ALL_PRODUCTS_SUCCESS,
+    GET_ALL_PRODUCTS_FAIL,
 } from "../constants/products";
 import { parseIngredients } from '../../helpers/parse';
 import { StarSharp } from "@material-ui/icons";
@@ -76,6 +78,16 @@ const productsReducers = (state = initialState, { type, payload }) => {
                 error: null,
             }
         case EDIT_PRODUCT_FAIL:
+            return {
+                ...state,
+                error: { ...payload },
+            }
+        case GET_ALL_PRODUCTS_SUCCESS:
+            return {
+                ...state,
+                allProducts: [...payload],
+            }
+        case GET_ALL_PRODUCTS_FAIL:
             return {
                 ...state,
                 error: { ...payload },
