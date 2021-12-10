@@ -67,6 +67,7 @@ const EditModal = (props) => {
       <Modal
         open={openModal}
         onClose={handleChangeModal}
+        onClick={event => event.stopPropagation()}
       >
         <div className="modal">
 
