@@ -1,10 +1,12 @@
 import { memo } from "react";
 import { useSelector } from "react-redux";
 
-import { Card, CardHeader, Typography } from "@material-ui/core";
+import { Card, CardContent, CardHeader, CardMedia, Typography } from "@material-ui/core";
 
 import { parseIngredients } from "../../../helpers/parse";
 import { Redirect } from "react-router";
+
+import './index.scss';
 
 
 const MenuDocument = (props) => {
@@ -30,7 +32,7 @@ const MenuDocument = (props) => {
   if (!selectedUserData && id) return <Redirect to={`/user/${id}`} />
   if (!selectedUserData) return <Redirect to='/' />
   return (
-    <>
+    <div className='menu'>
       <Typography
         variant='h3'
         align='center'
@@ -46,15 +48,21 @@ const MenuDocument = (props) => {
           ingredients,
           descriptions,
         }) => (
-          <Card >
+          <Card className='menu__card'>
             <CardHeader
               title={product}
               subheader={getIngredientsFieldListForRender(ingredients)}
             />
+            <CardMedia
+              className='menu__photo'
+              image={photo || 'https://loremflickr.com/g/320/240/cockail'}
+              title={`drink ${product}`}
+            />
+            <CardContent> {descriptions}</CardContent>
           </Card>
         ))
       }
-    </>
+    </div>
   )
 };
 
