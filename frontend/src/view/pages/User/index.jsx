@@ -6,13 +6,14 @@ import {
 import { Redirect } from "react-router";
 import { useDispatch, useSelector } from "react-redux";
 
-import { Typography } from "@material-ui/core";
+import { Button, Typography } from "@material-ui/core";
 
 import Navbar from "../../components/Navbar";
 import ProductsList from "../../components/ProductsList";
 import { getUserInformation } from "../../../stores/actions/users";
 
 import './index.scss';
+import { Link } from "react-router-dom";
 
 
 const User = (props) => {
@@ -50,6 +51,12 @@ const User = (props) => {
               <Typography variant='body1'>
                 you can write on email - <b>{selectedUserData.email}</b>
               </Typography>
+              <Link to={`/menu/${selectedUserData.id}`}>
+                <Button
+                  variant='outlined'
+                  color='primary'
+                > look {selectedUserData.name}`s menu</Button>
+              </Link>
             </div>
             <div className="user__products-list">
               <ProductsList products={selectedUserData.products} target='user' />
