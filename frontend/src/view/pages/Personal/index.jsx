@@ -1,4 +1,4 @@
-import { Avatar, Card, CardContent, CardHeader, CardMedia, Container, Grid, Typography } from '@material-ui/core';
+import { Avatar, Button, Card, CardContent, CardHeader, CardMedia, Container, Grid, Typography } from '@material-ui/core';
 import React from 'react';
 import { useSelector } from 'react-redux';
 
@@ -32,7 +32,6 @@ const Personal = () => {
           container
           justifyContent='center'
           spacing={3}
-
         >
           <Grid
             item xs={12}

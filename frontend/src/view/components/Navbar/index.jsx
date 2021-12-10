@@ -1,6 +1,6 @@
 import
 React, {
-  memo,
+  memo, useState,
 } from 'react';
 import {
   useDispatch,
@@ -16,6 +16,7 @@ import {
   MenuItem,
   Typography,
   IconButton,
+  Menu,
 } from '@material-ui/core';
 import {
   Person as PersonIcon,
@@ -25,19 +26,31 @@ import {
 
 
 import { setJWT, getJWT } from '../../../helpers/jwt';
-import { signOut } from '../../../stores/actions/users'
-import './index.scss'
+import { signOut } from '../../../stores/actions/users';
+import EditModal from '../../pages/Personal/components/EditModal';
+
+import './index.scss';
 
 
 const Navbar = () => {
   const dispatch = useDispatch();
   const isAuth = useSelector(state => state.users.isAuth);
   const users_ingredients = useSelector(state => state.users.user.users_ingredients);
+  const [anchorEl, setAnchorEl] = React.useState(null);
+  const openMenu = Boolean(anchorEl);
 
   const handleSignOut = () => {
     const jwt = getJWT();
     dispatch(signOut(jwt))
   };
+
+  const handleClick = (event) => {
+    setAnchorEl(event.currentTarget);
+  };
+  const handleClose = () => {
+    setAnchorEl(null);
+  };
+
 
   return (
     <>
@@ -48,11 +61,14 @@ const Navbar = () => {
               Bar_menu
             </Typography>
           </Link>
-          <MenuItem>
+          <div>
             {isAuth
               ?
-              <>
-                <Link to='/user'>
+              <div>
+                <Button
+                  onClick={handleClick}
+                  aria-controls="navbar__menu"
+                >
                   <IconButton >
                     {/*in badgeContent will be ingredients in Availability*/}
                     <Badge badgeContent={users_ingredients.length} color="secondary">
@@ -60,11 +76,26 @@ const Navbar = () => {
                       <LocalBarIcon />
                     </Badge>
                   </IconButton>
-                </Link>
+                </Button>
                 <IconButton onClick={handleSignOut}>
                   <ExitToAppIcon />
                 </IconButton>
-              </>
+
+                <Menu
+                  id='navbar__menu'
+                  anchorEl={anchorEl}
+                  open={openMenu}
+                  onClose={handleClose}
+                >
+                  {[
+                    <Link to='/user'>open profile</Link>,
+                    <EditModal closeMenu={handleClose}>edit profile</EditModal>,
+                  ].map(item =>
+                    <MenuItem onClick={handleClose}> {item} </MenuItem>
+                  )}
+                </Menu>
+
+              </div>
               :
               (
                 <>
@@ -78,7 +109,7 @@ const Navbar = () => {
               )
             }
 
-          </MenuItem>
+          </div>
         </Toolbar>
       </AppBar >
     </>
