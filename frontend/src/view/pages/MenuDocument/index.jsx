@@ -4,6 +4,7 @@ import { useSelector } from "react-redux";
 import { Card, CardHeader, Typography } from "@material-ui/core";
 
 import { parseIngredients } from "../../../helpers/parse";
+import { Redirect } from "react-router";
 
 
 const MenuDocument = (props) => {
@@ -14,31 +15,20 @@ const MenuDocument = (props) => {
 
     match: { params: { id } }
   } = props;
-
   const { selectedUserData } = useSelector(state => state.users);
-  console.log('selectedUserData', selectedUserData)
-  //     const currentUserProducts = allProducts.filter(product => Number(product.users_id) === Number(id))
-  // console.log('currentUserProducts', currentUserProducts)
 
   const getIngredientsFieldListForRender = (JSONstringIngredientsArray) => {
     const ingredientsArray = parseIngredients(JSONstringIngredientsArray)
-    return ingredientsArray.map(item =>
-      <Typography
-        variant='body2'
-        className='menu__ingredient'
-      >
-        {item.name_ingredient} {
-          (item.size_ingredient && item.measure_ingredient)
-            ?
-            `- ${item.size_ingredient} ${item.measure_ingredient}`
-            :
-            ''
-        }
-      </Typography>
-    );
+    return ingredientsArray.reduce((str, item, index, { length }) => {
+      const signFinish = length - 1 === index ? '.' : ', '
+      str = str + item.name_ingredient + signFinish
+      return str;
+    },
+      '');
   };
 
-
+  if (!selectedUserData && id) return <Redirect to={`/user/${id}`} />
+  if (!selectedUserData) return <Redirect to='/' />
   return (
     <>
       <Typography

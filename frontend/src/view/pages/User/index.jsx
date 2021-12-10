@@ -51,12 +51,17 @@ const User = (props) => {
               <Typography variant='body1'>
                 you can write on email - <b>{selectedUserData.email}</b>
               </Typography>
-              <Link to={`/menu/${selectedUserData.id}`}>
-                <Button
-                  variant='outlined'
-                  color='primary'
-                > look {selectedUserData.name}`s menu</Button>
-              </Link>
+              {selectedUserData.products.length
+                ?
+                <Link to={`/menu/${selectedUserData.id}`}>
+                  <Button
+                    variant='outlined'
+                    color='primary'
+                  > look {selectedUserData.name}`s menu</Button>
+                </Link>
+                :
+                ''
+              }
             </div>
             <div className="user__products-list">
               <ProductsList products={selectedUserData.products} target='user' />
