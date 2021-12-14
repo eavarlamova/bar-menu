@@ -10,13 +10,16 @@ import {
   GET_USER_INFORMATION,
   EDIT_PERSONAL_INGREDIENT,
   DELETE_PERSONAL_INGREDIENT,
+  EDIT_USER_INFO,
 } from '../constants/users';
 import {
   signInFail,
   signOutFail,
   signInSuccess,
   signOutSuccess,
+  editUserInfoFail,
   addIngredientFail,
+  editUserInfoSuccess,
   addIngredientSuccess,
   getUserInformationFail,
   getUserInformationSuccess,
@@ -31,8 +34,10 @@ import {
 } from "../actions/products";
 
 import { setJWT } from "../../helpers/jwt";
-import { makeAxiosWithJWTHeader } from '../../helpers/axiosHeader';
+import { getFormData } from '../../helpers/formData';
 import { getErrorInfo } from '../../helpers/errorInfo';
+import { makeAxiosWithJWTHeader } from '../../helpers/axiosHeader';
+
 
 
 
@@ -143,6 +148,22 @@ const HANDLER = {
     catch (error) {
       const { msg, status } = getErrorInfo(error);
       yield put(getUserInformationFail({ msg, status }))
+    }
+  },
+  *[EDIT_USER_INFO](payload) {
+    try {
+      const formData = getFormData(payload, 'user');
+      const { data } = yield makeAxiosWithJWTHeader(
+        'users/edit',
+        'PATCH',
+        formData,
+      );
+      yield put(editUserInfoSuccess(data));
+      yield put(getUsersProducts(data.id))
+
+    } catch (error) {
+      const { msg, status } = getErrorInfo(error);
+      yield put(editUserInfoFail({ msg, status }))
     }
   },
 

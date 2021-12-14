@@ -243,6 +243,48 @@ const usersControllers = {
       res.status(500).send({ msg: 'server error of getting user`s info' })
     }
   },
+  async editUserData(req, res, next) {
+    try {
+      const findJWT = await checkAuthUser(req);
+      if (findJWT) {
+        const {
+          body,
+          file,
+        } = req;
+        const updateBody = JSON.parse(body.user).currentUser;
+        const pathPhoto = file && file.filename || null;
+        const { dataValues: findUser } = await Users.findOne({ where: { id: updateBody.id } })
+        const dublicateEmail = await Users.findAll({ where: { email: updateBody.email } });
+
+        if (updateBody.email !== findUser.email && dublicateEmail.length !== 0) {
+          res.status(500).send({ msg: 'this email is exist' })
+        }
+        else {
+          const updateData = {
+            name: updateBody.name || findUser.name,
+            email: updateBody.email || findUser.email,
+            avatar: pathPhoto ? `http://localhost:4000/images/${pathPhoto}` : findUser.photo,
+          }
+          await Users.update(
+            { ...updateData },
+            { where: { id: updateBody.id } },
+          );
+
+          res.status(200).send({
+            ...updateBody,
+            ...updateData,
+          });
+        };
+      }
+      else {
+        res.status(402).send({ msg: 'server error of editing your profile because you are unauthorathed' })
+      }
+    }
+    catch (error) {
+      res.status(500).send({ msg: 'server error of edit your personaly info' })
+
+    }
+  },
 };
 
 module.exports = usersControllers;

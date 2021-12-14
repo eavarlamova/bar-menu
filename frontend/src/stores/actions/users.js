@@ -6,11 +6,14 @@ import {
   SING_IN_FAIL,
   SIGN_OUT_FAIL,
   ADD_INGREDIENT,
+  EDIT_USER_INFO,
   SING_IN_SUCCESS,
   SING_OUT_SUCCESS,
   ADD_INGREDIENT_FAIL,
+  EDIT_USER_INFO_FAIL,
   GET_USER_INFORMATION,
   ADD_INGREDIENT_SUCCESS,
+  EDIT_USER_INFO_SUCCESS,
   EDIT_PERSONAL_INGREDIENT,
   GET_USER_INFORMATION_FAIL,
   DELETE_PERSONAL_INGREDIENT,
@@ -113,5 +116,18 @@ export const getUserInformationFail = (payload) => ({
 });
 export const getUserInformationSuccess = (payload) => ({
   type: GET_USER_INFORMATION_SUCCESS,
+  payload,
+});
+
+export const editUserInfo = (payload) => ({
+  type: EDIT_USER_INFO,
+  payload,
+});
+export const editUserInfoFail = (payload) => ({
+  type: EDIT_USER_INFO_FAIL,
+  payload,
+});
+export const editUserInfoSuccess = (payload) => ({
+  type: EDIT_USER_INFO_SUCCESS,
   payload,
 });

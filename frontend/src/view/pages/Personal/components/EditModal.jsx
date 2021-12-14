@@ -1,4 +1,11 @@
-import { memo, useState } from "react";
+import React, {
+  memo,
+  useState,
+} from "react";
+import {
+  useDispatch,
+  useSelector,
+} from "react-redux";
 
 import {
   Modal,
@@ -9,21 +16,24 @@ import {
   HighlightOff as HighlightOffIcon
 } from '@material-ui/icons';
 
+import isEmail from "validator/lib/isEmail";
 import DropzoneFiles from "../../../components/DropzoneFiles";
+import { editUserInfo } from "../../../../stores/actions/users"
 
 import './index.scss';
-import { useSelector } from "react-redux";
 
 
 const EditModal = (props) => {
+  const dispatch = useDispatch();
   const {
     children,
     closeMenu,
   } = props;
   const { user } = useSelector(state => state.users)
-  const [openModal, setOpenModal] = useState(false);
   const [photo, setPhoto] = useState(null);
+  const [openModal, setOpenModal] = useState(false);
   const [currentUser, setCurrentUser] = useState(user || {})
+  const [error, setError] = useState({ name: null, email: null });
 
 
   const handleChangeModal = (event) => {
@@ -32,7 +42,6 @@ const EditModal = (props) => {
     if (openModal) closeMenu();
   };
 
-  // check work
   const handleChange = ({ target }) => {
     setCurrentUser({
       ...currentUser,
@@ -46,18 +55,53 @@ const EditModal = (props) => {
       'email',
     ].map(item => (
       <TextField
-        id={`${item}-input`}
-        onChange={handleChange}
-        // onKeyDown={saveIngredient}
-        label={item}
-        type={item}
-        name={item}
-        value={currentUser[item]}
         fullWidth
         multiline
+        type={item}
+        name={item}
+        id={`${item}-input`}
+        onChange={handleChange}
+        value={currentUser[item]}
+        error={Boolean(error[item])}
+        label={error[item] ? error[item] : item}
+        onKeyDown={(event) => { event.key === 'Enter' && saveChange() }}
       />
     ))
   );
+
+  const checkError = () => {
+    const { name, email } = currentUser;
+    if (!name.trim()) {
+      setError({
+        ...error,
+        name: 'name is not correct',
+        email: null,
+      })
+      return true;
+    }
+    if (!isEmail(email)) {
+      setError({
+        ...error,
+        email: 'email is not correct',
+        name: null,
+      })
+      return true;
+    };
+  };
+
+
+  const saveChange = () => {
+    if (checkError()) return;
+
+    dispatch(editUserInfo({
+      photo,
+      currentUser,
+    }));
+    setOpenModal(false);
+    closeMenu();
+  };
+
+
   return (
     <>
       <div onClick={handleChangeModal}>
@@ -70,7 +114,6 @@ const EditModal = (props) => {
         onClick={event => event.stopPropagation()}
       >
         <div className="modal">
-
           <div className="modal__header">
             <h3> EDIT YOUR PROFILE </h3>
             <div
@@ -79,10 +122,9 @@ const EditModal = (props) => {
               <HighlightOffIcon />
             </div>
           </div>
-
           {getInputContent()}
           <DropzoneFiles setFile={setPhoto} />
-          <Button>
+          <Button onClick={saveChange}>
             save change
           </Button>
         </div>

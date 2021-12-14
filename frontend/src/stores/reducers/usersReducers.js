@@ -12,6 +12,8 @@ import {
   DELETE_PERSONAL_INGREDIENT_FAIL,
   EDIT_PERSONAL_INGREDIENT_SUCCESS,
   DELETE_PERSONAL_INGREDIENT_SUCCESS,
+  EDIT_USER_INFO_SUCCESS,
+  EDIT_USER_INFO_FAIL,
 } from "../constants/users";
 
 
@@ -102,6 +104,17 @@ const usersReducers = (state = initialState, { type, payload }) => {
         selectedUserData: { ...payload }
       }
     case GET_USER_INFORMATION_FAIL:
+      return {
+        ...state,
+        error: { ...payload },
+      }
+    case EDIT_USER_INFO_SUCCESS:
+      return {
+        ...state,
+        user: payload,
+        error: null,
+      }
+    case EDIT_USER_INFO_FAIL:
       return {
         ...state,
         error: { ...payload },
