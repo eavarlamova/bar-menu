@@ -25,6 +25,7 @@ import {
 } from '@material-ui/icons';
 
 
+import ErrorNotification from '../ErrorNotification';
 import { setJWT, getJWT } from '../../../helpers/jwt';
 import { signOut } from '../../../stores/actions/users';
 import EditModal from '../../pages/Personal/components/EditModal';
@@ -112,6 +113,8 @@ const Navbar = () => {
           </div>
         </Toolbar>
       </AppBar >
+
+      <ErrorNotification/>
     </>
   )
 };

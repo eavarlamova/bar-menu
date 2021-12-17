@@ -3,6 +3,8 @@ import {
     RESET_ERROR,
 } from '../constants/error';
 
+import { getErrorInfo } from '../../helpers/errorInfo';
+
 const initialState = {
     hasError: false,
     // msg: 'text', // can be
@@ -12,13 +14,14 @@ const initialState = {
 const errorReducer = (state = initialState, { type, payload }) => {
     switch (type) {
         case SET_ERROR:
+            const error = getErrorInfo(payload);
             return {
                 hasError: true,
-                ...payload,
+                ...error,
             }
         case RESET_ERROR:
             return {
-                initialState,
+                ...initialState,
             }
         default:
             return {
