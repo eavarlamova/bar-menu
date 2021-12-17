@@ -24,9 +24,7 @@ const errorReducer = (state = initialState, { type, payload }) => {
                 ...initialState,
             }
         default:
-            return {
-                ...state,
-            }
+            return { ...state }
     }
 };
 
