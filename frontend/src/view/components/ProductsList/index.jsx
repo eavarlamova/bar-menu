@@ -1,5 +1,13 @@
-import { memo, useEffect, useState } from "react";
-import { useDispatch, useSelector } from "react-redux";
+import React, {
+  memo,
+  useState,
+  useEffect,
+} from "react";
+import {
+  useDispatch,
+  useSelector,
+} from "react-redux";
+import { Link } from "react-router-dom";
 
 import {
   Card,
@@ -12,12 +20,10 @@ import {
   CardContent,
   CardActions,
 } from "@material-ui/core";
-import { Alert } from '@material-ui/lab';
 
+import EditModal from '../EditModal';
 import { parseIngredients } from '../../../helpers/parse';
 import { deleteProduct } from '../../../stores/actions/products';
-import EditModal from '../EditModal';
-import { Link } from "react-router-dom";
 
 
 const getButton = (name, action = null, userId) => {
@@ -26,8 +32,8 @@ const getButton = (name, action = null, userId) => {
       ?
       <Button
         fullWidth
-        variant="outlined"
         color="primary"
+        variant="outlined"
         onClick={() => { action() }}
       >
         {name}
@@ -36,8 +42,8 @@ const getButton = (name, action = null, userId) => {
       <Link to={`/user/${userId}`}>
         <Button
           fullWidth
-          variant="outlined"
           color="primary"
+          variant="outlined"
         >
           {name}
         </Button>
@@ -53,7 +59,7 @@ const getButtonsContent = (
   currentUserId,
 ) => {
   const flagForNotOvnerOfCurrentProduct = userId !== currentUserId;
-  const updateNameFirstButton =  userId && !flagForNotOvnerOfCurrentProduct ? 'look my page' : nameFirstButton
+  const updateNameFirstButton = userId && !flagForNotOvnerOfCurrentProduct ? 'look my page' : nameFirstButton
   return (
     <Grid container spacing={1}>
       <Grid item xs={flagForNotOvnerOfCurrentProduct ? 6 : 12}>
@@ -62,25 +68,22 @@ const getButtonsContent = (
       <Grid item xs={flagForNotOvnerOfCurrentProduct ? 6 : 0}>
         {flagForNotOvnerOfCurrentProduct && getButton(nameSecondButton, actionSecondButton)}
       </Grid>
-
     </Grid>
   )
 };
 
 
 const ProductsList = ({ products, target = 'personal' }) => {
-  // const { productsFromStore } = useSelector(state => state.products)
-  // const errorGettingUsersProducts = useSelector(state => state.products.error)
   const dispatch = useDispatch();
+  const { id } = useSelector(state => state.users.user);
+  const { selectedUserData } = useSelector(state => state.users);
   const [modalState, setModalState] = useState(false);
   const [editableProduct, setEditableProduct] = useState(null)
-  const { id } = useSelector(state => state.users.user);
 
   const handleChangeModal = (product) => {
     product && setEditableProduct(product)
     setModalState(!modalState)
   };
-
 
   const getIngredientsFieldListForRender = (JSONstringIngredientsArray) => {
     const ingredientsArray = parseIngredients(JSONstringIngredientsArray)
@@ -117,9 +120,27 @@ const ProductsList = ({ products, target = 'personal' }) => {
                   avatar={
                     (item.author && item.author.avatar)
                       ?
-                      <Avatar>{item.author.avatar}</Avatar>
+                      <Avatar src={item.author.avatar} />
                       :
-                      <Avatar>{(item.author && item.author.name) ? item.author.name[0] : item.users_id}</Avatar>
+                      <Avatar src={
+                        selectedUserData
+                          ?
+                          item.users_id === selectedUserData.id && selectedUserData.avatar
+                          : null
+                      }>
+                        {
+                          (item.author && item.author.name)
+                            ?
+                            item.author.name[0]
+                            :
+                            (selectedUserData && item.users_id === selectedUserData.id
+                              ?
+                              selectedUserData.name[0]
+                              :
+                              item.users_id
+                            )
+                        }
+                      </Avatar>
                   }
                   title={item.product}
                   subheader={getIngredientsFieldListForRender(item.ingredients)}
@@ -165,12 +186,9 @@ const ProductsList = ({ products, target = 'personal' }) => {
 
       <EditModal
         modalState={modalState}
-        // editableIngredient={editableIngredient}
         handleChangeModal={handleChangeModal}
-        // editIngredient={editIngredient}
         target='product'
         editableProduct={editableProduct}
-
       />
     </>
   )

@@ -1,6 +1,16 @@
-import { Avatar, Card, CardContent, CardHeader, CardMedia, Container, Grid, Typography } from '@material-ui/core';
-import React from 'react';
-import { useSelector } from 'react-redux';
+import React, {
+  memo,
+  useEffect
+} from 'react';
+import {
+  useDispatch,
+  useSelector,
+} from 'react-redux';
+
+import {
+  Grid,
+  Typography,
+} from '@material-ui/core';
 
 import Navbar from '../../components/Navbar';
 import ProductsList from '../../components/ProductsList';
@@ -9,11 +19,11 @@ import UsersIngredientsForm from '../../components/UsersIngredientsForm';
 
 import './index.scss';
 
+
 const Personal = () => {
-  const {
-    users: { user },
-    products: { personalProducts }
-  } = useSelector(state => state)
+  const { user } = useSelector(state => state.users);
+  const { personalProducts } = useSelector(state => state.products);
+
   return (
     <>
       <Navbar />
@@ -32,7 +42,6 @@ const Personal = () => {
           container
           justifyContent='center'
           spacing={3}
-
         >
           <Grid
             item xs={12}
@@ -68,4 +77,4 @@ output all user`s ingredients
   )
 };
 
-export default Personal;
+export default memo(Personal);

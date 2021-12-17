@@ -3,8 +3,11 @@ import {
   useState,
   useEffect,
 } from "react";
+import { 
+  useDispatch, 
+  useSelector,
+} from "react-redux";
 import { Redirect } from "react-router";
-import { useDispatch, useSelector } from "react-redux";
 
 import { Typography } from "@material-ui/core";
 
@@ -35,7 +38,7 @@ const User = (props) => {
     }
   }, [idFromURL, idOfCurrentUser])
 
-
+  
   if (needRedirect) return <Redirect to='/user' />
   return (
     <>

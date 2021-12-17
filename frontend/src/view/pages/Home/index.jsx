@@ -17,10 +17,11 @@ const Home = () => {
   const dispatch = useDispatch();
   const error = useSelector(state => state.products.error);
   const allProducts = useSelector(state => state.products.allProducts);
+  const { avatar } = useSelector(state => state.users.user);
 
   useEffect(() => {
     dispatch(getAllProducts());
-  }, [dispatch])
+  }, [dispatch, avatar])
 
   return (
     <>
