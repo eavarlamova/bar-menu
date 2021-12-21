@@ -2,21 +2,16 @@ import {
   SING_UP,
   SING_IN,
   SING_OUT,
-  SIGN_UP_FAIL,
-  SING_IN_FAIL,
-  SIGN_OUT_FAIL,
   ADD_INGREDIENT,
+  EDIT_USER_INFO,
   SING_IN_SUCCESS,
   SING_OUT_SUCCESS,
-  ADD_INGREDIENT_FAIL,
   GET_USER_INFORMATION,
   ADD_INGREDIENT_SUCCESS,
+  EDIT_USER_INFO_SUCCESS,
   EDIT_PERSONAL_INGREDIENT,
-  GET_USER_INFORMATION_FAIL,
   DELETE_PERSONAL_INGREDIENT,
   GET_USER_INFORMATION_SUCCESS,
-  EDIT_PERSONAL_INGREDIENT_FAIL,
-  DELETE_PERSONAL_INGREDIENT_FAIL,
   EDIT_PERSONAL_INGREDIENT_SUCCESS,
   DELETE_PERSONAL_INGREDIENT_SUCCESS,
 } from "../constants/users";
@@ -38,7 +33,6 @@ export const signUp = (payload) => ({
   payload,
 });
 
-
 export const signIn = (payload) => ({
   type: SING_IN,
   payload,
@@ -46,11 +40,7 @@ export const signIn = (payload) => ({
 export const signInSuccess = (payload) => ({
   type: SING_IN_SUCCESS,
   payload: parseUsersInfo(payload),
-})
-export const signInFail = (payload) => ({
-  type: SING_IN_FAIL,
-  payload,
-})
+});
 
 export const signOut = (payload) => ({
   type: SING_OUT,
@@ -59,10 +49,6 @@ export const signOut = (payload) => ({
 export const signOutSuccess = () => ({
   type: SING_OUT_SUCCESS,
 });
-export const signOutFail = (payload) => ({
-  type: SIGN_OUT_FAIL,
-  payload,
-})
 
 export const addIngredient = (payload) => ({
   type: ADD_INGREDIENT,
@@ -72,17 +58,9 @@ export const addIngredientSuccess = (payload) => ({
   type: ADD_INGREDIENT_SUCCESS,
   payload
 });
-export const addIngredientFail = (payload) => ({
-  type: ADD_INGREDIENT_FAIL,
-  payload,
-});
 
 export const editPersonalIngredient = (payload) => ({
   type: EDIT_PERSONAL_INGREDIENT,
-  payload,
-});
-export const editPersonalIngredientFail = (payload) => ({
-  type: EDIT_PERSONAL_INGREDIENT_FAIL,
   payload,
 });
 export const editPersonalIngredientSuccess = (payload) => ({
@@ -94,10 +72,6 @@ export const deletePersonalIngredient = (payload) => ({
   type: DELETE_PERSONAL_INGREDIENT,
   payload,
 });
-export const deletePersonalIngredientFail = (payload) => ({
-  type: DELETE_PERSONAL_INGREDIENT_FAIL,
-  payload,
-});
 export const deletePersonalIngredientSuccess = (payload) => ({
   type: DELETE_PERSONAL_INGREDIENT_SUCCESS,
   payload,
@@ -107,11 +81,16 @@ export const getUserInformation = (payload) => ({
   type: GET_USER_INFORMATION,
   payload,
 });
-export const getUserInformationFail = (payload) => ({
-  type: GET_USER_INFORMATION_FAIL,
-  payload,
-});
 export const getUserInformationSuccess = (payload) => ({
   type: GET_USER_INFORMATION_SUCCESS,
+  payload,
+});
+
+export const editUserInfo = (payload) => ({
+  type: EDIT_USER_INFO,
+  payload,
+});
+export const editUserInfoSuccess = (payload) => ({
+  type: EDIT_USER_INFO_SUCCESS,
   payload,
 });

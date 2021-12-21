@@ -12,6 +12,7 @@ import {
 
 import IngredientsForm from '../IngredientsForm';
 import AddingProductsForm from '../AddingProductsForm';
+
 import './index.scss'
 
 
@@ -99,8 +100,6 @@ const EditModal = (props) => {
     <Modal
       open={modalState}
       onClose={() => { handleChangeModal(null) }}
-      aria-labelledby="simple-modal-title"
-      aria-describedby="simple-modal-description"
     >
       {
         target === 'ingredient'

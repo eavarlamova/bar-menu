@@ -1,18 +1,26 @@
 import { memo } from "react";
+import { Redirect } from "react-router";
 import { useSelector } from "react-redux";
 
-import { Card, CardContent, CardHeader, CardMedia, Typography } from "@material-ui/core";
+import {
+  Card,
+  Button,
+  CardMedia,
+  Typography,
+  CardHeader,
+  CardContent,
+} from "@material-ui/core";
 
 import { parseIngredients } from "../../../helpers/parse";
-import { Redirect } from "react-router";
 
 import './index.scss';
+import PDFDownload from "../../components/PDFDownload";
 
 
 const MenuDocument = (props) => {
   const {
     // products, // [{product, ingredients, step, photo, descriptions},{}]
-    // targetInfo, // userInfo or ingredientInfo:  {name, descriptions} ... desriptions is email and alco
+    // targetInfo, // userInfo or ingredientInfo: {name, descriptions} ... desriptions is email and alco
     // target = 'user', // user, ingredient, productThatYouHave,
 
     match: { params: { id } }
@@ -29,13 +37,19 @@ const MenuDocument = (props) => {
       '');
   };
 
+
   if (!selectedUserData && id) return <Redirect to={`/user/${id}`} />
   if (!selectedUserData) return <Redirect to='/' />
   return (
-    <div className='menu'>
+    <div className='menu' id='menu-for-pdf'>
+      <PDFDownload author={selectedUserData.name}>
+        download menu
+      </PDFDownload>
+
       <Typography
         variant='h3'
         align='center'
+        id={`menu-for-pdf-1`}
       >
         it`s <b>{selectedUserData.name}`s</b> menu
       </Typography>
@@ -47,8 +61,8 @@ const MenuDocument = (props) => {
           product,
           ingredients,
           descriptions,
-        }) => (
-          <Card className='menu__card'>
+        }, index) => (
+          <Card className='menu__card' id={`menu-for-pdf-${index + 2}`} >
             <CardHeader
               title={product}
               subheader={getIngredientsFieldListForRender(ingredients)}

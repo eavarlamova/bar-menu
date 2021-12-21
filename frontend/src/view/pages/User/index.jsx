@@ -4,8 +4,11 @@ React, {
   useState,
   useEffect,
 } from "react";
+import { 
+  useDispatch, 
+  useSelector,
+} from "react-redux";
 import { Redirect } from "react-router";
-import { useDispatch, useSelector } from "react-redux";
 
 import { Button, Typography } from "@material-ui/core";
 
@@ -38,10 +41,6 @@ const User = (props) => {
     }
   }, [idFromURL, idOfCurrentUser])
 
-  const getPdfMenu = () => {
-    const menu = 123
-
-  }
 
 if (needRedirect) return <Redirect to='/user' />
 return (
@@ -68,13 +67,13 @@ return (
                     look {selectedUserData.name}`s menu
                   </Button>
                 </Link>
-                <Button
+                {/* <Button
                   variant='outlined'
                   color='primary'
                   onClick={getPdfMenu}
                 >
                   download {selectedUserData.name}`s menu
-                </Button>
+                </Button> */}
               </>
               :
               ''
