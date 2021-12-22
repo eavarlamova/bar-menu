@@ -1,6 +1,15 @@
-import { memo, useEffect, useMemo } from "react";
-import { Redirect } from "react-router";
-import { useDispatch, useSelector } from "react-redux";
+import React, {
+  memo,
+  useEffect,
+} from "react";
+import {
+  useSelector,
+  useDispatch,
+} from "react-redux";
+import {
+  Link,
+  Redirect,
+} from "react-router-dom";
 
 import {
   Card,
@@ -12,11 +21,11 @@ import {
 } from "@material-ui/core";
 
 import { parseIngredients } from "../../../helpers/parse";
+import { getUserInformation } from "../../../stores/actions/users";
+
+import PDFDownload from "../../components/PDFDownload";
 
 import './index.scss';
-import PDFDownload from "../../components/PDFDownload";
-import { Link } from "react-router-dom";
-import { getUserInformation } from "../../../stores/actions/users";
 
 
 const MenuDocument = (props) => {

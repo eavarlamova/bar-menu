@@ -9,6 +9,7 @@ import {
 import { Link } from 'react-router-dom';
 
 import {
+  Menu,
   Badge,
   AppBar,
   Button,
@@ -16,7 +17,6 @@ import {
   MenuItem,
   Typography,
   IconButton,
-  Menu,
 } from '@material-ui/core';
 import {
   Person as PersonIcon,
@@ -30,6 +30,7 @@ import {
 import ErrorNotification from '../ErrorNotification';
 import { setJWT, getJWT } from '../../../helpers/jwt';
 import { signOut } from '../../../stores/actions/users';
+
 import EditModal from '../../pages/Personal/components/EditModal';
 
 import './index.scss';
