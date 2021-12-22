@@ -41,7 +41,7 @@ const PDFDownload = (props) => {
     <Button
       fullWidth
       color='primary'
-      variant='outlined'
+      variant='contained'
       onClick={getPdfMenu}
     >
       {children}

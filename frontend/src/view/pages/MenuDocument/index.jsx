@@ -15,6 +15,7 @@ import { parseIngredients } from "../../../helpers/parse";
 
 import './index.scss';
 import PDFDownload from "../../components/PDFDownload";
+import { Link } from "react-router-dom";
 
 
 const MenuDocument = (props) => {
@@ -42,6 +43,29 @@ const MenuDocument = (props) => {
   if (!selectedUserData) return <Redirect to='/' />
   return (
     <div className='menu' id='menu-for-pdf'>
+      {
+        [
+          {
+            name: `go to ${selectedUserData.name}'s page`,
+            link: `/user/${selectedUserData.id}`,
+          },
+          {
+            name: `go to main page`,
+            link: `/`,
+          },
+        ].map(({ name, link }) => (
+          <Link to={link}>
+            <Button
+              fullWidth
+              color='primary'
+              variant='outlined'
+            >
+              {name}
+            </Button>
+          </Link>
+        ))
+      }
+
       <PDFDownload author={selectedUserData.name}>
         download menu
       </PDFDownload>
