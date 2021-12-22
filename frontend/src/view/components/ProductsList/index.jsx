@@ -24,6 +24,7 @@ import {
 import EditModal from '../EditModal';
 import { parseIngredients } from '../../../helpers/parse';
 import { deleteProduct } from '../../../stores/actions/products';
+import ImageModal from "../ImageModal";
 
 
 const getButton = (name, action = null, userId) => {
@@ -146,11 +147,15 @@ const ProductsList = ({ products, target = 'personal' }) => {
                   title={item.product}
                   subheader={getIngredientsFieldListForRender(item.ingredients)}
                 />
-                <CardMedia
-                  className={`${target}__photo`}
-                  image={item.photo || 'https://loremflickr.com/g/320/240/cockail'}
-                  title={`drink ${item.product}`}
-                />
+
+                <ImageModal image={item.photo}>
+                  <CardMedia
+                    className={`${target}__photo`}
+                    image={item.photo || 'https://loremflickr.com/g/320/240/cockail'}
+                    title={`drink ${item.product}`}
+                  />
+                </ImageModal>
+
                 <CardContent>
                   {item.descriptions}
                   <Typography variant="body2" color="textSecondary" component="p">
