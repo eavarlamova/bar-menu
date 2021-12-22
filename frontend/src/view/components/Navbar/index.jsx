@@ -83,9 +83,15 @@ const Navbar = () => {
                     </Badge>
                   </IconButton>
                 </Button>
+                <Link to={`/menu/${id}`}>
+                  <Button>
+                    <MenuBookIcon />
+                  </Button>
+                </Link>
                 <IconButton onClick={handleSignOut}>
                   <ExitToAppIcon />
                 </IconButton>
+
 
                 <Menu
                   id='navbar__menu'
@@ -101,9 +107,6 @@ const Navbar = () => {
                   )}
                 </Menu>
 
-                <Link to={`/menu/${id}`}>
-                <MenuBookIcon/>
-                </Link>
               </div>
               :
               (
@@ -122,7 +125,7 @@ const Navbar = () => {
         </Toolbar>
       </AppBar >
 
-      <ErrorNotification/>
+      <ErrorNotification />
     </>
   )
 };
