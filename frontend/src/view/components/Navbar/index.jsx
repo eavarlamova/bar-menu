@@ -34,6 +34,7 @@ import { signOut } from '../../../stores/actions/users';
 import EditModal from '../../pages/Personal/components/EditModal';
 
 import './index.scss';
+import QRCodeModal from '../QRCodeModal';
 
 
 const Navbar = () => {
@@ -89,6 +90,7 @@ const Navbar = () => {
                     <MenuBookIcon />
                   </Button>
                 </Link>
+                <QRCodeModal />
                 <IconButton onClick={handleSignOut}>
                   <ExitToAppIcon />
                 </IconButton>

@@ -1,5 +1,7 @@
 import React, {
-  memo, useEffect, useState
+  memo,
+  useState,
+  useEffect,
 } from 'react';
 
 import {
@@ -86,11 +88,11 @@ const EditModal = (props) => {
 
   const getModalContentForEditProduct = () => (
     <div className='modal'>
-     
+
 
       <AddingProductsForm
-      actionType='edit'
-      editableProduct={editableProduct}
+        actionType='edit'
+        editableProduct={editableProduct}
       />
 
     </div>
@@ -107,7 +109,7 @@ const EditModal = (props) => {
           getModalContentForEditIngredient()
           :
           getModalContentForEditProduct()
-          
+
       }
     </Modal>
   )
