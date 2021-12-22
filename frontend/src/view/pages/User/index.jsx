@@ -67,13 +67,6 @@ return (
                     look {selectedUserData.name}`s menu
                   </Button>
                 </Link>
-                {/* <Button
-                  variant='outlined'
-                  color='primary'
-                  onClick={getPdfMenu}
-                >
-                  download {selectedUserData.name}`s menu
-                </Button> */}
               </>
               :
               ''

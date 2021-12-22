@@ -27,6 +27,7 @@ import { deleteProduct } from '../../../stores/actions/products';
 
 
 const getButton = (name, action = null, userId) => {
+  const targetLink = name === 'open author`s page' ? 'user' : 'menu'
   return (
     action
       ?
@@ -39,7 +40,7 @@ const getButton = (name, action = null, userId) => {
         {name}
       </Button>
       :
-      <Link to={`/user/${userId}`}>
+      <Link to={`/${targetLink}/${userId}`}>
         <Button
           fullWidth
           color="primary"
@@ -66,7 +67,7 @@ const getButtonsContent = (
         {getButton(updateNameFirstButton, actionFirstButton, userId)}
       </Grid>
       <Grid item xs={flagForNotOvnerOfCurrentProduct ? 6 : 0}>
-        {flagForNotOvnerOfCurrentProduct && getButton(nameSecondButton, actionSecondButton)}
+        {flagForNotOvnerOfCurrentProduct && getButton(nameSecondButton, actionSecondButton, userId)}
       </Grid>
     </Grid>
   )
@@ -168,10 +169,10 @@ const ProductsList = ({ products, target = 'personal' }) => {
                       )
                       :
                       getButtonsContent(
-                        'open author page',
-                        'add in favorite',
+                        'open author`s page',
+                        'open author`s menu',
                         null,
-                        () => { alert('need write function for add in favorite') },
+                        null,
                         item.users_id,
                         id,
                       )
