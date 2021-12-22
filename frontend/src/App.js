@@ -14,6 +14,7 @@ import SignUp from './view/pages/SignUp';
 import { getJWT } from "./helpers/jwt";
 import { checkJWT } from './stores/actions/users';
 import User from './view/pages/User';
+import MenuDocument from './view/pages/MenuDocument';
 
 
 
@@ -40,6 +41,7 @@ const App = () => {
       <Switch>
         <Route path='/' component={Home} exact />
         <Route component={User} path='/user/:id' exact />
+        <Route component={MenuDocument} path='/menu/:id' exact/>
         <PrivateRouter component={Personal} path={'/user/'} exact />
         {isAuth ? <Redirect to='/user' /> : <Route path='/signin' component={SignIn} />}
         {isAuth ? <Redirect to='/user' /> : <Route path={'/signup'} component={SignUp} />}

@@ -9,6 +9,7 @@ import {
 import { Link } from 'react-router-dom';
 
 import {
+  Menu,
   Badge,
   AppBar,
   Button,
@@ -16,18 +17,20 @@ import {
   MenuItem,
   Typography,
   IconButton,
-  Menu,
 } from '@material-ui/core';
 import {
   Person as PersonIcon,
   LocalBar as LocalBarIcon,
+  MenuBook as MenuBookIcon,
   ExitToApp as ExitToAppIcon,
 } from '@material-ui/icons';
+
 
 
 import ErrorNotification from '../ErrorNotification';
 import { setJWT, getJWT } from '../../../helpers/jwt';
 import { signOut } from '../../../stores/actions/users';
+
 import EditModal from '../../pages/Personal/components/EditModal';
 
 import './index.scss';
@@ -35,7 +38,10 @@ import './index.scss';
 
 const Navbar = () => {
   const dispatch = useDispatch();
-  const isAuth = useSelector(state => state.users.isAuth);
+  const {
+    isAuth,
+    user: { id },
+  } = useSelector(state => state.users);
   const users_ingredients = useSelector(state => state.users.user.users_ingredients);
   const [anchorEl, setAnchorEl] = React.useState(null);
   const openMenu = Boolean(anchorEl);
@@ -78,9 +84,15 @@ const Navbar = () => {
                     </Badge>
                   </IconButton>
                 </Button>
+                <Link to={`/menu/${id}`}>
+                  <Button>
+                    <MenuBookIcon />
+                  </Button>
+                </Link>
                 <IconButton onClick={handleSignOut}>
                   <ExitToAppIcon />
                 </IconButton>
+
 
                 <Menu
                   id='navbar__menu'
@@ -114,7 +126,7 @@ const Navbar = () => {
         </Toolbar>
       </AppBar >
 
-      <ErrorNotification/>
+      <ErrorNotification />
     </>
   )
 };
