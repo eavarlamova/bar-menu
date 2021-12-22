@@ -21,8 +21,10 @@ import {
 import {
   Person as PersonIcon,
   LocalBar as LocalBarIcon,
+  MenuBook as MenuBookIcon,
   ExitToApp as ExitToAppIcon,
 } from '@material-ui/icons';
+
 
 
 import ErrorNotification from '../ErrorNotification';
@@ -35,7 +37,10 @@ import './index.scss';
 
 const Navbar = () => {
   const dispatch = useDispatch();
-  const isAuth = useSelector(state => state.users.isAuth);
+  const {
+    isAuth,
+    user: { id },
+  } = useSelector(state => state.users);
   const users_ingredients = useSelector(state => state.users.user.users_ingredients);
   const [anchorEl, setAnchorEl] = React.useState(null);
   const openMenu = Boolean(anchorEl);
@@ -96,6 +101,9 @@ const Navbar = () => {
                   )}
                 </Menu>
 
+                <Link to={`/menu/${id}`}>
+                <MenuBookIcon/>
+                </Link>
               </div>
               :
               (

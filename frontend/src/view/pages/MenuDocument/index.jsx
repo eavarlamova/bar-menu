@@ -1,6 +1,6 @@
-import { memo } from "react";
+import { memo, useEffect, useMemo } from "react";
 import { Redirect } from "react-router";
-import { useSelector } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 
 import {
   Card,
@@ -16,17 +16,19 @@ import { parseIngredients } from "../../../helpers/parse";
 import './index.scss';
 import PDFDownload from "../../components/PDFDownload";
 import { Link } from "react-router-dom";
+import { getUserInformation } from "../../../stores/actions/users";
 
 
 const MenuDocument = (props) => {
+  const dispatch = useDispatch();
   const {
-    // products, // [{product, ingredients, step, photo, descriptions},{}]
-    // targetInfo, // userInfo or ingredientInfo: {name, descriptions} ... desriptions is email and alco
-    // target = 'user', // user, ingredient, productThatYouHave,
-
     match: { params: { id } }
   } = props;
   const { selectedUserData } = useSelector(state => state.users);
+
+  useEffect(() => {
+    if (!selectedUserData || Number(id) !== Number(selectedUserData.id)) dispatch(getUserInformation(id));
+  }, [dispatch])
 
   const getIngredientsFieldListForRender = (JSONstringIngredientsArray) => {
     const ingredientsArray = parseIngredients(JSONstringIngredientsArray)
