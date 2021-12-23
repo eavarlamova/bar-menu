@@ -2,12 +2,40 @@
     display: flex;
     justify-content: space-between;
 
-    a { 
+    a {
         color: white;
         text-decoration: none;
     }
 
     svg {
         color: white;
+    }
+
+    &__auth-button {
+        display: block;
+    }
+    &__auth-button-mobile {
+        display: none;
+    }
+    &__mobile-menu {
+        display: none;
+    }
+    &__auth-button-mobile-menu {
+        display: none;
+    }
+
+    @media (max-width: 500px) {
+        &__auth-button {
+            display: none;
+        }
+        &__auth-button-mobile {
+            display: block;
+        }
+        &__mobile-menu {
+            display: block;
+        }
+        &__auth-button-mobile-menu {
+            display: block;
+        }
     }
 }
