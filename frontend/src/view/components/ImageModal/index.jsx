@@ -23,15 +23,15 @@ const ImageModal = (props) => {
 
   const getModalContent = () => {
     return (
-      <div className='modal'>
+      <div className='modal-for-image'>
         <img
           src={image}
-          className='modal__image'
+          className='modal-for-image__image'
         />
         <Button
           color='primary'
           variant='contained'
-          className='modal__close'
+          className='modal-for-image__close'
           onClick={handleChangeModal}
         >
           close image
