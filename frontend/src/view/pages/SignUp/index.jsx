@@ -1,11 +1,11 @@
-import React,
-{
+import React, {
   memo,
   useState,
-  useEffect,
-  useCallback,
 } from 'react';
-import { useDispatch, useSelector } from 'react-redux';
+import {
+  useDispatch,
+  useSelector,
+} from 'react-redux';
 import { isEmail, isStrongPassword } from 'validator';
 
 import {
@@ -15,31 +15,25 @@ import {
   Typography,
 } from '../../../../node_modules/@material-ui/core'
 
-import Navbar from '../../components/Navbar';
 import { signUp as signUpAction } from '../../../stores/actions/users';
-import { redirectWithAuth } from '../../../helpers/redirect'
 
-import './index.scss'
+import Navbar from '../../components/Navbar';
+
+import './index.scss';
 
 const initialUserData = { email: '', password: '', name: '' };
 const vallidateUserData = ({ email, password, name }) => ({
+  name: name.trim(),
   email: email.trim(),
   password: password.trim(),
-  name: name.trim(),
 });
 
 
 const SignUp = () => {
   const dispatch = useDispatch();
-  const { isAuth } = useSelector(state => state.users)
-  const [userData, setUserData] = useState(initialUserData);
   const [error, setError] = useState(initialUserData);
+  const [userData, setUserData] = useState(initialUserData);
   const { error: signUpGlobalError } = useSelector(state => state.users);
-
-  // useEffect(() => {
-  //   redirectWithAuth(isAuth)
-  // }, [isAuth])
-
 
   const handleChange = ({ target: { value, name } }) => {
     setUserData({
@@ -53,11 +47,11 @@ const SignUp = () => {
   const clickSignUp = () => {
     const { email } = userData;
     const emailValidate = isEmail(email);
-    // add isStrongPassword for password in 'if'
+    // add isStrongPassword for password in 'if' (if you want)
     const trimUserData = vallidateUserData(userData);
     const {
-      password: trimUserPassword,
       name: trimUserName,
+      password: trimUserPassword,
     } = trimUserData;
     if (emailValidate && trimUserPassword && trimUserName) {
       dispatch(signUpAction(trimUserData))
@@ -66,9 +60,9 @@ const SignUp = () => {
     }
     else {
       setError({
+        name: trimUserName ? '' : 'uncorrect name',
         email: emailValidate ? '' : 'uncorrect email',
         password: trimUserPassword ? '' : 'uncorrect password',
-        name: trimUserName ? '' : 'uncorrect name',
       })
     }
   };
@@ -78,22 +72,27 @@ const SignUp = () => {
     <>
       <Navbar />
       <Grid
-        className='sign-up__form'
         container
         direction="column"
-        justifyContent="center"
         alignItems="center"
+        justifyContent="center"
+        className='sign-up__form'
       >
         <Typography variant="h5">
           JOIN TO OUR PARTY
         </Typography>
         {
-          ['email', 'password', 'name', 'sign up'].map((item, index, array) => (
+          [
+            'email',
+            'password',
+            'name',
+            'sign up'
+          ].map((item, index, array) => (
             <Grid
               item
-              xs={12}
-              sm={8}
               xl={6}
+              sm={8}
+              xs={12}
               fullWidth
             >
               {
@@ -103,31 +102,31 @@ const SignUp = () => {
                     error[item] ?
                       <TextField
                         error
-                        helperText={error[item]}
-                        id={`${item}-input`}
-                        onChange={handleChange}
-                        label={item}
-                        type={item}
-                        value={userData[item]}
                         fullWidth
+                        type={item}
+                        label={item}
+                        id={`${item}-input`}
+                        value={userData[item]}
+                        onChange={handleChange}
+                        helperText={error[item]}
                       />
                       :
                       <TextField
-                        id={`${item}-input`}
-                        onChange={handleChange}
-                        label={item}
+                        fullWidth
                         type={item}
                         name={item}
+                        label={item}
+                        id={`${item}-input`}
+                        onChange={handleChange}
                         value={userData[item]}
-                        fullWidth
                       />
                   )
                   :
                   (
                     <>
                       <Button
-                        onClick={clickSignUp}
                         fullWidth
+                        onClick={clickSignUp}
                       >
                         {item}
                       </Button>

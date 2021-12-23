@@ -22,18 +22,17 @@ const PDFDownload = (props) => {
       if (numberOfGettingContent === 0) break;
       const canvas = await html2canvas(currentElementOfMmenu, {
         logging: true,
-        letterRendering: 1,
-        allowTaint: false,
         useCORS: true,
+        allowTaint: false,
+        letterRendering: 1,
       });
       const imgData = canvas.toDataURL('image/png');
 
       contentForPDF.content.push({
-        image: imgData,
         width: 500,
+        image: imgData,
         margin: [0, 0, 0, 10]
       });
-
     }
     pdfMake.createPdf(contentForPDF).download(`${author}'s-menu.`)
   }

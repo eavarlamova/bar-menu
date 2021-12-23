@@ -1,7 +1,6 @@
 import React, {
   memo,
   useState,
-  useEffect,
 } from "react";
 import {
   useDispatch,
@@ -21,9 +20,10 @@ import {
   CardActions,
 } from "@material-ui/core";
 
-import EditModal from '../EditModal';
 import { parseIngredients } from '../../../helpers/parse';
 import { deleteProduct } from '../../../stores/actions/products';
+
+import EditModal from '../EditModal';
 import ImageModal from "../ImageModal";
 
 
@@ -107,7 +107,7 @@ const ProductsList = ({ products, target = 'personal' }) => {
 
   const deleteCurrentProduct = (id) => {
     dispatch(deleteProduct(id));
-  }
+  };
 
 
   return (
@@ -151,14 +151,18 @@ const ProductsList = ({ products, target = 'personal' }) => {
                 <ImageModal image={item.photo}>
                   <CardMedia
                     className={`${target}__photo`}
-                    image={item.photo || 'https://loremflickr.com/g/320/240/cockail'}
                     title={`drink ${item.product}`}
+                    image={item.photo || 'https://loremflickr.com/g/320/240/cockail'}
                   />
                 </ImageModal>
 
                 <CardContent>
                   {item.descriptions}
-                  <Typography variant="body2" color="textSecondary" component="p">
+                  <Typography
+                    variant="body2"
+                    color="textSecondary"
+                    component="p"
+                  >
                     {item.steps}
                   </Typography>
                 </CardContent>
@@ -191,10 +195,10 @@ const ProductsList = ({ products, target = 'personal' }) => {
       }
 
       <EditModal
-        modalState={modalState}
-        handleChangeModal={handleChangeModal}
         target='product'
+        modalState={modalState}
         editableProduct={editableProduct}
+        handleChangeModal={handleChangeModal}
       />
     </>
   )

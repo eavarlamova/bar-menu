@@ -1,10 +1,10 @@
-import
-React, {
-  memo, useState,
+import React, {
+  memo,
+  useState,
 } from 'react';
 import {
   useDispatch,
-  useSelector
+  useSelector,
 } from 'react-redux';
 import { Link } from 'react-router-dom';
 
@@ -15,22 +15,22 @@ import {
   Button,
   Toolbar,
   MenuItem,
-  Typography,
   IconButton,
+  Typography,
 } from '@material-ui/core';
 import {
+  Menu as MenuIcon,
   Person as PersonIcon,
   LocalBar as LocalBarIcon,
   MenuBook as MenuBookIcon,
   ExitToApp as ExitToAppIcon,
-  Menu as MenuIcon,
 } from '@material-ui/icons';
 
-import ErrorNotification from '../ErrorNotification';
-import { setJWT, getJWT } from '../../../helpers/jwt';
+import { getJWT } from '../../../helpers/jwt';
 import { signOut } from '../../../stores/actions/users';
 
 import QRCodeModal from '../QRCodeModal';
+import ErrorNotification from '../ErrorNotification';
 import EditModal from '../../pages/Personal/components/EditModal';
 
 import './index.scss';
@@ -69,8 +69,10 @@ const Navbar = () => {
         aria-controls="navbar__menu"
       >
         <IconButton >
-          {/*in badgeContent will be ingredients in Availability*/}
-          <Badge badgeContent={users_ingredients.length} color="secondary">
+          <Badge
+            color="secondary"
+            badgeContent={users_ingredients.length}
+          >
             <PersonIcon />
             <LocalBarIcon />
           </Badge>
@@ -92,9 +94,9 @@ const Navbar = () => {
     <div className="navbar__auth-button">
       {getAuthorizedButton().map(item => item)}
       <Menu
+        open={openMenu}
         id='navbar__menu'
         anchorEl={anchorEl}
-        open={openMenu}
         onClose={handleClose}
       >
         {[
@@ -113,11 +115,11 @@ const Navbar = () => {
         onClick={(event) => handleClick(event, 'mobile')}
       />
       <Menu
-        className='navbar__auth-button-mobile-menu'
         open={openMenuMobile}
-        onClose={handleClose.bind(null, 'mobile')}
         id='navbar__mobile-menu'
         anchorEl={anchorElMobile}
+        onClose={handleClose.bind(null, 'mobile')}
+        className='navbar__auth-button-mobile-menu'
       >
         {getAuthorizedButton().map(item => (
           <MenuItem onClose={handleClose.bind(null, 'mobile')}>

@@ -1,6 +1,8 @@
-import React, { memo, useEffect } from 'react';
+import React, {
+  memo,
+  useEffect,
+} from 'react';
 import { useDropzone } from 'react-dropzone';
-import { useSelector } from 'react-redux';
 
 import './index.scss';
 
@@ -22,17 +24,23 @@ const DropzoneFiles = ({ setFile }) => {
 
 
   const acceptedFileItems = acceptedFiles.map(file => (
-    <li key={file.path} className='dropzone__file'>
+    <li
+      key={file.path}
+      className='dropzone__file'
+    >
       {file.path} - {file.size} bytes
     </li>
   ));
 
   const fileRejectionItems = fileRejections.map(({ file, errors }) => (
-    <li key={file.path} className='dropzone__file'>
+    <li
+      key={file.path}
+      className='dropzone__file'
+    >
       {file.path} - {file.size} bytes
       <ul>
-        {errors.map(e => (
-          <li key={e.code}>{e.message}</li>
+        {errors.map(error => (
+          <li key={error.code}>{error.message}</li>
         ))}
       </ul>
     </li>
@@ -64,6 +72,6 @@ const DropzoneFiles = ({ setFile }) => {
       }
     </section>
   );
-}
+};
 
 export default memo(DropzoneFiles);

@@ -2,13 +2,17 @@ import React, {
   memo,
   useEffect
 } from 'react';
-import { useDispatch, useSelector } from 'react-redux';
+import {
+  useDispatch,
+  useSelector,
+} from 'react-redux';
 
 import { Typography } from '@material-ui/core';
 
+import { getAllProducts } from '../../../stores/actions/products';
+
 import Navbar from '../../components/Navbar';
 import ProductsList from '../../components/ProductsList';
-import { getAllProducts } from '../../../stores/actions/products';
 
 import './index.scss';
 
@@ -16,12 +20,13 @@ import './index.scss';
 const Home = () => {
   const dispatch = useDispatch();
   const error = useSelector(state => state.products.error);
-  const allProducts = useSelector(state => state.products.allProducts);
   const { avatar } = useSelector(state => state.users.user);
+  const allProducts = useSelector(state => state.products.allProducts);
 
   useEffect(() => {
     dispatch(getAllProducts());
   }, [dispatch, avatar])
+
 
   return (
     <>
@@ -49,8 +54,8 @@ const Home = () => {
               allProducts && allProducts.length
                 ?
                 <ProductsList
-                  products={allProducts}
                   target='main'
+                  products={allProducts}
                 />
                 :
                 'we have no any products, but you can change it!'

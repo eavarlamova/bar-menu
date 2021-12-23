@@ -2,7 +2,11 @@ import {
   memo,
   useState,
 } from "react";
-import { useDispatch, useSelector } from 'react-redux';
+import {
+  useDispatch,
+  useSelector,
+} from 'react-redux';
+
 import {
   Grid,
   Chip,
@@ -11,15 +15,15 @@ import {
 } from '@material-ui/core';
 import {
   HighlightOff as HighlightOffIcon,
-  ArrowDownward as ArrowDownwardIcon,
 } from '@material-ui/icons';
 
-import IngredientsForm from "../IngredientsForm";
 import {
   addIngredient,
   editPersonalIngredient,
   deletePersonalIngredient,
 } from '../../../stores/actions/users';
+
+import IngredientsForm from "../IngredientsForm";
 import EditModal from '../../components/EditModal';
 
 const initialIngredient = {
@@ -43,7 +47,6 @@ const UsersIngredientsForm = () => {
   const [editableIngredient, setEditableIngredient] = useState(null);
   const [currentIngredient, setCurrentIngredient] = useState(initialIngredient);
 
-
   const handleChangeModal = (ingredient) => {
     ingredient && setEditableIngredient(ingredient)
     setModalState(!modalState)
@@ -62,6 +65,7 @@ const UsersIngredientsForm = () => {
       [name]: checked,
     })
   };
+
   const handleChangeAutocomtete = (event, value) => {
     setCurrentIngredient({
       ...currentIngredient,
@@ -92,7 +96,10 @@ const UsersIngredientsForm = () => {
     if (updateName) {
       dispatch(
         editPersonalIngredient(
-          { ...updateIngredient, name_ingredient: updateName }
+          {
+            ...updateIngredient,
+            name_ingredient: updateName,
+          }
         )
       );
     }
@@ -105,29 +112,31 @@ const UsersIngredientsForm = () => {
       direction='column'
     >
       <Typography
+        variant='h6'
         align='center'
         color='primary'
-        variant='h6'
       >
         {`add your ingredient now`.toUpperCase()}
       </Typography>
       <IngredientsForm
-
-        currentIngredient={currentIngredient}
         handleChange={handleChange}
+        currentIngredient={currentIngredient}
         handleChangeSwitch={handleChangeSwitch}
         handleChangeAutocomtete={handleChangeAutocomtete}
       />
       <Button
-        onClick={savePersonalIngredient}
         fullWidth
+        onClick={savePersonalIngredient}
       >
         add ingredient in your profile
-            </Button>
+      </Button>
       {
         error
           ?
-          <Typography color='error' align='center'>
+          <Typography
+            color='error'
+            align='center'
+          >
             {error.msg}
           </Typography>
           :
@@ -139,19 +148,19 @@ const UsersIngredientsForm = () => {
           <Grid
             container
             direction='row'
-            justifyContent="space-around"
             alignItems="center"
+            justifyContent="space-around"
           >
             {
               users_ingredients.map(item => (
                 <Chip
-                  label={item.name_ingredient}
                   variant="outlined"
+                  label={item.name_ingredient}
                   style={{ maxWidth: '200px' }}
-                  color={item.alkohol ? 'primary' : 'ligth'}
                   deleteIcon={<HighlightOffIcon />}
-                  onDelete={() => { deleteIngredient(item.id) }}
+                  color={item.alkohol ? 'primary' : 'ligth'}
                   onClick={() => { handleChangeModal(item) }}
+                  onDelete={() => { deleteIngredient(item.id) }}
                 />
               ))
             }
@@ -162,12 +171,12 @@ const UsersIngredientsForm = () => {
       }
       <EditModal
         modalState={modalState}
-        editableIngredient={editableIngredient}
-        handleChangeModal={handleChangeModal}
         editIngredient={editIngredient}
+        handleChangeModal={handleChangeModal}
+        editableIngredient={editableIngredient}
       />
     </Grid>
   )
-}
+};
 
 export default memo(UsersIngredientsForm);

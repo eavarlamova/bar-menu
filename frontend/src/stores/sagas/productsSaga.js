@@ -1,33 +1,45 @@
 import axios from "axios";
-import { call, put, takeEvery } from "redux-saga/effects"
+import { 
+  put, 
+  call, 
+  takeEvery,
+} from "redux-saga/effects";
 
-import { URL } from "../../mainConstants";
 import {
   ADD_PRODUCT,
   EDIT_PRODUCT,
   DELETE_PRODUCT,
   GET_ALL_PRODUCTS,
   GET_USERS_PRODUCTS,
-} from '../constants/products';
+} from "../constants/products";
+import { URL } from "../../mainConstants";
+
 import {
   addProductSuccess,
   editProductSuccess,
   setPersonalProducts,
   deleteProductSuccess,
   getAllProductsSuccess,
-} from '../actions/products';
-import { setError, resetError } from "../actions/error";
+} from "../actions/products";
+import { 
+  setError, 
+  resetError,
+} from "../actions/error";
 
-import { getFormData } from '../../helpers/formData';
-import { makeAxiosWithJWTHeader } from '../../helpers/axiosHeader';
-
+import { getFormData } from "../../helpers/formData";
+import { makeAxiosWithJWTHeader } from "../../helpers/axiosHeader";
 
 const HANDLER = {
   *[ADD_PRODUCT](payload) {
     try {
       const formData = getFormData(payload);
-      const { data } = yield makeAxiosWithJWTHeader('products/add', 'POST', formData, 'multipart/form-data')
-      yield put(addProductSuccess(data))
+      const { data } = yield makeAxiosWithJWTHeader(
+        "products/add",
+        "POST",
+        formData,
+        "multipart/form-data"
+      );
+      yield put(addProductSuccess(data));
       yield put(resetError());
     } catch (error) {
       yield put(setError(error));
@@ -35,8 +47,8 @@ const HANDLER = {
   },
   *[GET_USERS_PRODUCTS](id) {
     try {
-      const { data } = yield makeAxiosWithJWTHeader(`products/${id}`)
-      yield put(setPersonalProducts(data))
+      const { data } = yield makeAxiosWithJWTHeader(`products/${id}`);
+      yield put(setPersonalProducts(data));
       yield put(resetError());
     } catch (error) {
       yield put(setError(error));
@@ -44,7 +56,7 @@ const HANDLER = {
   },
   *[DELETE_PRODUCT](id) {
     try {
-      yield makeAxiosWithJWTHeader(`products/${id}`, 'DELETE')
+      yield makeAxiosWithJWTHeader(`products/${id}`, "DELETE");
       yield put(deleteProductSuccess(id));
       yield put(resetError());
     } catch (error) {
@@ -54,8 +66,13 @@ const HANDLER = {
   *[EDIT_PRODUCT](payload) {
     try {
       const formData = getFormData(payload);
-      const { data } = yield makeAxiosWithJWTHeader(`products/edit-product`, 'PUT', formData, 'multipart/form-data')
-      yield put(editProductSuccess(data))
+      const { data } = yield makeAxiosWithJWTHeader(
+        `products/edit-product`,
+        "PUT",
+        formData,
+        "multipart/form-data"
+      );
+      yield put(editProductSuccess(data));
       yield put(resetError());
     } catch (error) {
       yield put(setError(error));
@@ -64,7 +81,7 @@ const HANDLER = {
   *[GET_ALL_PRODUCTS]() {
     try {
       const { data } = yield call(axios, `${URL}/products`, {
-        method: 'GET',
+        method: "GET",
       });
       yield put(getAllProductsSuccess(data));
       yield put(resetError());
@@ -72,16 +89,15 @@ const HANDLER = {
       yield put(setError(error));
     }
   },
-
 };
 
 function* sagaManage({ type, payload }) {
   const handler = HANDLER[type];
   if (handler) yield handler(payload);
-};
+}
 
 function* productsSagaWatcher() {
-  yield takeEvery('*', sagaManage)
+  yield takeEvery("*", sagaManage);
 }
 
 export default productsSagaWatcher;

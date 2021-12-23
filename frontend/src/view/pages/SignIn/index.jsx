@@ -1,24 +1,24 @@
 import
 React, {
-  memo, 
+  memo,
   useState,
-  useEffect,
 } from 'react';
-import { 
+import {
   useSelector,
-  useDispatch, 
- } from 'react-redux';
-import { 
+  useDispatch,
+} from 'react-redux';
+import { isEmail, isStrongPassword } from 'validator';
+
+import {
   Grid,
   Button,
   TextField,
   Typography,
 } from '@material-ui/core';
-import { isEmail, isStrongPassword } from 'validator';
+
+import { signIn as signInAction } from '../../../stores/actions/users';
 
 import Navbar from "../../components/Navbar";
-import { redirectWithAuth } from '../../../helpers/redirect';
-import { signIn as signInAction } from '../../../stores/actions/users';
 
 const initialUserData = { email: '', password: '' };
 const vallidateUserData = ({ email, password }) => ({
@@ -26,16 +26,12 @@ const vallidateUserData = ({ email, password }) => ({
   password: password.trim(),
 });
 
+
 const SignIn = () => {
   const dispatch = useDispatch();
-  const { isAuth } = useSelector(state => state.users)
-  const [userData, setUserData] = useState(initialUserData);
   const [error, setError] = useState(initialUserData);
+  const [userData, setUserData] = useState(initialUserData);
   const { error: signInGlobalError } = useSelector(state => state.users);
-
-  // useEffect(() => {
-    // redirectWithAuth(isAuth)
-  // }, [isAuth])
 
   const handleChange = ({ target: { value, name } }) => {
     setUserData({
@@ -43,12 +39,12 @@ const SignIn = () => {
       [name]: value
     })
     setError(initialUserData);
-  }; 
+  };
 
   const clickSignUp = () => {
     const { email } = userData;
     const emailValidate = isEmail(email);
-    // add isStrongPassword for password in 'if'
+    // you can add inStrongPassword in if (if you want to suffer)
     const trimUserData = vallidateUserData(userData);
     const {
       password: trimUserPassword,
@@ -71,22 +67,26 @@ const SignIn = () => {
     <>
       <Navbar />
       <Grid
-        className='sign-up__form'
         container
         direction="column"
-        justifyContent="center"
         alignItems="center"
+        justifyContent="center"
+        className='sign-up__form'
       >
         <Typography variant="h5">
           GO ON OUR PARTY
         </Typography>
         {
-          ['email', 'password', 'sign in'].map((item, index, array) => (
+          [
+            'email',
+            'password',
+            'sign in'
+          ].map((item, index, array) => (
             <Grid
               item
-              xs={12}
-              sm={8}
               xl={6}
+              sm={8}
+              xs={12}
               fullWidth
             >
               {
@@ -96,31 +96,31 @@ const SignIn = () => {
                     error[item] ?
                       <TextField
                         error
-                        helperText={error[item]}
-                        id={`${item}-input`}
-                        onChange={handleChange}
-                        label={item}
-                        type={item}
-                        value={userData[item]}
                         fullWidth
+                        type={item}
+                        label={item}
+                        id={`${item}-input`}
+                        value={userData[item]}
+                        onChange={handleChange}
+                        helperText={error[item]}
                       />
                       :
                       <TextField
-                        id={`${item}-input`}
-                        onChange={handleChange}
-                        label={item}
+                        fullWidth
                         type={item}
                         name={item}
+                        label={item}
+                        id={`${item}-input`}
+                        onChange={handleChange}
                         value={userData[item]}
-                        fullWidth
                       />
                   )
                   :
                   (
                     <>
                       <Button
-                        onClick={clickSignUp}
                         fullWidth
+                        onClick={clickSignUp}
                       >
                         {item}
                       </Button>

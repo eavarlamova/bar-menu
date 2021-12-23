@@ -1,9 +1,7 @@
 import React, {
   memo,
-  useEffect
 } from 'react';
 import {
-  useDispatch,
   useSelector,
 } from 'react-redux';
 
@@ -40,13 +38,13 @@ const Personal = () => {
 
         <Grid
           container
-          justifyContent='center'
           spacing={3}
+          justifyContent='center'
         >
           <Grid
-            item xs={12}
             sm={4}
             xl={3}
+            item xs={12}
           >
             <div className='personal__adding-cols'>
               <div className='personal__adding-form'>
@@ -56,16 +54,12 @@ const Personal = () => {
                 <UsersIngredientsForm />
               </div>
             </div>
-            {/*
- form for adding user`s ingredients
-output all user`s ingredients
-          */}
           </Grid>
           <Grid
             item
-            xs={12}
             sm={8}
             xl={9}
+            xs={12}
           >
             <ProductsList
               products={personalProducts}

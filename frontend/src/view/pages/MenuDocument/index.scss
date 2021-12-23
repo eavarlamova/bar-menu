@@ -1,18 +1,17 @@
-.menu{
+.menu {
+  &__card {
+    width: 80%;
+    margin: auto;
+    margin-bottom: 1%;
+  }
+  &__photo {
+    width: 80%;
+    margin: auto;
+    min-height: 200px;
+    justify-self: center;
+  }
 
-    &__card {
-        width: 80%;
-        margin: auto;
-        margin-bottom: 1%;;
-    }
-    &__photo{
-        justify-self: center;
-        margin: auto;
-        width: 80%;
-        min-height: 200px;
-    }
-
-    button { 
-        margin-bottom: 5px;
-    }
+  button {
+    margin-bottom: 5px;
+  }
 }

@@ -1,16 +1,16 @@
 .main {
-    width: 90%;
-    margin: auto;
+  width: 90%;
+  margin: auto;
 
-    &__welcome-text{
-        text-align: center;
-        padding: 2%;
-        text-decoration: underline blue 2px;
-    };
-    &__photo{
-        justify-self: center;
-        margin: auto;
-        width: 80%;
-        min-height: 200px;
-    }
+  &__welcome-text {
+    padding: 2%;
+    text-align: center;
+    text-decoration: underline blue 2px;
+  }
+  &__photo {
+    width: 80%;
+    margin: auto;
+    min-height: 200px;
+    justify-self: center;
+  }
 }

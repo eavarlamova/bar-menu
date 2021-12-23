@@ -1,10 +1,14 @@
-import axios from 'axios';
-import { call, put, takeEvery } from "redux-saga/effects"
+import axios from "axios";
+import { 
+  put, 
+  call, 
+  takeEvery,
+} from "redux-saga/effects";
 
-import {
-  URL,
+import { 
+  URL, 
   CHECK_JWT,
-} from '../../mainConstants';
+} from "../../mainConstants";
 import {
   SING_UP,
   SING_IN,
@@ -14,7 +18,8 @@ import {
   GET_USER_INFORMATION,
   EDIT_PERSONAL_INGREDIENT,
   DELETE_PERSONAL_INGREDIENT,
-} from '../constants/users';
+} from "../constants/users";
+
 import {
   signInSuccess,
   signOutSuccess,
@@ -23,38 +28,39 @@ import {
   getUserInformationSuccess,
   editPersonalIngredientSuccess,
   deletePersonalIngredientSuccess,
-} from "../actions/users"
-import {
-  getUsersProducts,
+} from "../actions/users";
+import { 
+  getUsersProducts, 
   setPersonalProducts,
 } from "../actions/products";
-import { setError, resetError } from "../actions/error";
+import { 
+  setError, 
+  resetError,
+} from "../actions/error";
 
 import { setJWT } from "../../helpers/jwt";
-import { getFormData } from '../../helpers/formData';
-import { makeAxiosWithJWTHeader } from '../../helpers/axiosHeader';
-
-
+import { getFormData } from "../../helpers/formData";
+import { makeAxiosWithJWTHeader } from "../../helpers/axiosHeader";
 
 const HANDLER = {
   *[CHECK_JWT]() {
     try {
-      const { data } = yield makeAxiosWithJWTHeader('users/check')
-      yield put(signInSuccess(data))
-      yield put(getUsersProducts(data.id))
+      const { data } = yield makeAxiosWithJWTHeader("users/check");
+      yield put(signInSuccess(data));
+      yield put(getUsersProducts(data.id));
       yield put(resetError());
     } catch (error) {
       yield put(setError(error));
-      setJWT('')
+      setJWT("");
     }
   },
   *[SING_UP](payload) {
     try {
       const { data } = yield call(axios, `${URL}/users/signup`, {
         method: "POST",
-        data: payload
-      })
-      yield put(signInSuccess(data))
+        data: payload,
+      });
+      yield put(signInSuccess(data));
       setJWT(data.jwt);
       yield put(resetError());
     } catch (error) {
@@ -65,12 +71,12 @@ const HANDLER = {
     try {
       const { data } = yield call(axios, `${URL}/users/signin`, {
         method: "POST",
-        data: payload
-      })
-      yield put(signInSuccess(data))
+        data: payload,
+      });
+      yield put(signInSuccess(data));
       setJWT(data.jwt);
 
-      yield put(getUsersProducts(data.id))
+      yield put(getUsersProducts(data.id));
       yield put(resetError());
     } catch (error) {
       yield put(setError(error));
@@ -81,7 +87,7 @@ const HANDLER = {
       yield call(axios, `${URL}/users/signout/${payload}`);
       yield put(signOutSuccess());
       yield put(setPersonalProducts([]));
-      setJWT('');
+      setJWT("");
       yield put(resetError());
     } catch (error) {
       yield put(setError(error));
@@ -90,11 +96,11 @@ const HANDLER = {
   *[ADD_INGREDIENT](payload) {
     try {
       const { data: allUsersIngredients } = yield makeAxiosWithJWTHeader(
-        'users/add-ingredient',
-        'PATCH',
-        payload,
+        "users/add-ingredient",
+        "PATCH",
+        payload
       );
-      yield put(addIngredientSuccess(allUsersIngredients))
+      yield put(addIngredientSuccess(allUsersIngredients));
       yield put(resetError());
     } catch (error) {
       yield put(setError(error));
@@ -103,11 +109,11 @@ const HANDLER = {
   *[EDIT_PERSONAL_INGREDIENT](payload) {
     try {
       const { data } = yield makeAxiosWithJWTHeader(
-        'users/edit-ingredient',
-        'PATCH',
-        payload,
+        "users/edit-ingredient",
+        "PATCH",
+        payload
       );
-      yield put(editPersonalIngredientSuccess(data))
+      yield put(editPersonalIngredientSuccess(data));
       yield put(resetError());
     } catch (error) {
       yield put(setError(error));
@@ -117,9 +123,9 @@ const HANDLER = {
     try {
       const { data } = yield makeAxiosWithJWTHeader(
         `users/${payload}`,
-        'DELETE',
+        "DELETE"
       );
-      yield put(deletePersonalIngredientSuccess(data))
+      yield put(deletePersonalIngredientSuccess(data));
       yield put(resetError());
     } catch (error) {
       yield put(setError(error));
@@ -128,7 +134,7 @@ const HANDLER = {
   *[GET_USER_INFORMATION](payload) {
     try {
       const { data } = yield call(axios, `${URL}/users/${payload}`);
-      yield put(getUserInformationSuccess(data))
+      yield put(getUserInformationSuccess(data));
       yield put(resetError());
     } catch (error) {
       yield put(setError(error));
@@ -136,29 +142,28 @@ const HANDLER = {
   },
   *[EDIT_USER_INFO](payload) {
     try {
-      const formData = getFormData(payload, 'user');
+      const formData = getFormData(payload, "user");
       const { data } = yield makeAxiosWithJWTHeader(
-        'users/edit',
-        'PATCH',
-        formData,
+        "users/edit",
+        "PATCH",
+        formData
       );
       yield put(editUserInfoSuccess(data));
-      yield put(getUsersProducts(data.id))
+      yield put(getUsersProducts(data.id));
       yield put(resetError());
     } catch (error) {
       yield put(setError(error));
     }
   },
-
 };
 
 function* sagaManage({ type, payload }) {
   const handler = HANDLER[type];
   if (handler) yield handler(payload);
-};
+}
 
 function* usersSagaWatcher() {
-  yield takeEvery('*', sagaManage)
+  yield takeEvery("*", sagaManage);
 }
 
 export default usersSagaWatcher;

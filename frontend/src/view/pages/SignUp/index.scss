@@ -1,10 +1,8 @@
-.sign-up { 
-  
-   &__form {
-         
-   & > div {
-      margin: auto;
+.sign-up {
+  &__form {
+    & > div {
       width: 100%;
-   }
-   }
+      margin: auto;
+    }
+  }
 }

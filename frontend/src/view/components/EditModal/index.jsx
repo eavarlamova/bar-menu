@@ -31,7 +31,7 @@ const EditModal = (props) => {
 
   useEffect(() => {
     setCurrentIngredient({ ...editableIngredient })
-  }, [editableIngredient])
+  }, [editableIngredient]);
 
   const handleChange = ({ target: { name, value } }) => {
     setCurrentIngredient({
@@ -50,7 +50,7 @@ const EditModal = (props) => {
       ...currentIngredient,
       'measure_ingredient': value,
     })
-  }
+  };
 
   const getModalContentForEditIngredient = () => {
     return (
@@ -67,15 +67,15 @@ const EditModal = (props) => {
           </div>
 
           <IngredientsForm
-            currentIngredient={currentIngredient}
             handleChange={handleChange}
+            currentIngredient={currentIngredient}
             handleChangeSwitch={handleChangeSwitch}
             handleChangeAutocomtete={handleChangeAutocomtete}
           />
 
           <Button
-            className='modal__button'
             fullWidth
+            className='modal__button'
             onClick={() => { currentIngredient.name_ingredient.trim() && editIngredient(currentIngredient) }}
           >
             edit ingredient
@@ -84,19 +84,17 @@ const EditModal = (props) => {
         :
         ''
     )
-  }
+  };
 
   const getModalContentForEditProduct = () => (
     <div className='modal'>
-
-
       <AddingProductsForm
         actionType='edit'
         editableProduct={editableProduct}
       />
-
     </div>
-  )
+  );
+
 
   return (
     <Modal
@@ -109,7 +107,6 @@ const EditModal = (props) => {
           getModalContentForEditIngredient()
           :
           getModalContentForEditProduct()
-
       }
     </Modal>
   )
