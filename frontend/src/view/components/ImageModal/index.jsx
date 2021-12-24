@@ -31,14 +31,16 @@ const ImageModal = (props) => {
         <Button
           color='primary'
           variant='contained'
-          className='modal-for-image__close'
           onClick={handleChangeModal}
+          className='modal-for-image__close'
         >
           close image
         </Button>
       </div>
     )
-  }
+  };
+
+  
   return (
     <>
       <Tooltip

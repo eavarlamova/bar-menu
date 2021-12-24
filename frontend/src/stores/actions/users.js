@@ -15,18 +15,17 @@ import {
   EDIT_PERSONAL_INGREDIENT_SUCCESS,
   DELETE_PERSONAL_INGREDIENT_SUCCESS,
 } from "../constants/users";
+import { CHECK_JWT } from "../../mainConstants";
 
-import { CHECK_JWT } from '../../mainConstants'
-
-const parseUsersInfo =(user) => ({
+const parseUsersInfo = (user) => ({
   ...user,
-  users_ingredients: JSON.parse(user.users_ingredients) || []
-})
+  users_ingredients: JSON.parse(user.users_ingredients) || [],
+});
 
 export const checkJWT = (payload) => ({
   type: CHECK_JWT,
   payload,
-})
+});
 
 export const signUp = (payload) => ({
   type: SING_UP,
@@ -56,7 +55,7 @@ export const addIngredient = (payload) => ({
 });
 export const addIngredientSuccess = (payload) => ({
   type: ADD_INGREDIENT_SUCCESS,
-  payload
+  payload,
 });
 
 export const editPersonalIngredient = (payload) => ({
@@ -66,7 +65,7 @@ export const editPersonalIngredient = (payload) => ({
 export const editPersonalIngredientSuccess = (payload) => ({
   type: EDIT_PERSONAL_INGREDIENT_SUCCESS,
   payload,
-}); 
+});
 
 export const deletePersonalIngredient = (payload) => ({
   type: DELETE_PERSONAL_INGREDIENT,

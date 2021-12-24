@@ -1,7 +1,7 @@
-import {
-  SET_ERROR,
+import { 
+  SET_ERROR, 
   RESET_ERROR,
-} from '../constants/error';
+} from "../constants/error";
 
 export const setError = (payload) => ({
   type: SET_ERROR,
@@ -9,4 +9,4 @@ export const setError = (payload) => ({
 });
 export const resetError = () => ({
   type: RESET_ERROR,
-})
+});

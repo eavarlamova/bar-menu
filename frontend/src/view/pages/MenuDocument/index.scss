@@ -1,18 +1,20 @@
-.menu{
+%not-full-width-center {
+  width: 80%;
+  margin: auto;
+}
 
-    &__card {
-        width: 80%;
-        margin: auto;
-        margin-bottom: 1%;;
-    }
-    &__photo{
-        justify-self: center;
-        margin: auto;
-        width: 80%;
-        min-height: 200px;
-    }
+.menu {
+  &__card {
+    @extend %not-full-width-center;
+    margin-bottom: 1%;
+  }
+  &__photo {
+    @extend %not-full-width-center;
+    min-height: 200px;
+    justify-self: center;
+  }
 
-    button { 
-        margin-bottom: 5px;
-    }
+  button {
+    margin-bottom: 5px;
+  }
 }

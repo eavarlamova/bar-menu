@@ -6,6 +6,7 @@ import {
   useDispatch,
   useSelector,
 } from "react-redux";
+import isEmail from "validator/lib/isEmail";
 
 import {
   Modal,
@@ -16,9 +17,9 @@ import {
   HighlightOff as HighlightOffIcon
 } from '@material-ui/icons';
 
-import isEmail from "validator/lib/isEmail";
+import { editUserInfo } from "../../../../stores/actions/users";
+
 import DropzoneFiles from "../../../components/DropzoneFiles";
-import { editUserInfo } from "../../../../stores/actions/users"
 
 import './index.scss';
 
@@ -34,7 +35,6 @@ const EditModal = (props) => {
   const [openModal, setOpenModal] = useState(false);
   const [currentUser, setCurrentUser] = useState(user || {})
   const [error, setError] = useState({ name: null, email: null });
-
 
   const handleChangeModal = (event) => {
     event.stopPropagation();
@@ -74,16 +74,16 @@ const EditModal = (props) => {
     if (!name.trim()) {
       setError({
         ...error,
-        name: 'name is not correct',
         email: null,
+        name: 'name is not correct',
       })
       return true;
     }
     if (!isEmail(email)) {
       setError({
         ...error,
-        email: 'email is not correct',
         name: null,
+        email: 'email is not correct',
       })
       return true;
     };
@@ -92,7 +92,6 @@ const EditModal = (props) => {
 
   const saveChange = () => {
     if (checkError()) return;
-
     dispatch(editUserInfo({
       photo,
       currentUser,

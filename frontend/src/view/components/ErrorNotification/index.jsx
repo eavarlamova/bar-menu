@@ -11,7 +11,6 @@ const Alert = React.forwardRef(function Alert(props, ref) {
   return <AlertMui elevation={6} ref={ref} variant="filled" {...props} />;
 });
 
-
 const ErrorNotification = () => {
   const {
     msg,
@@ -31,6 +30,7 @@ const ErrorNotification = () => {
     setOpen(false);
   };
 
+  
   return (
     <>
       {hasError

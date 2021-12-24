@@ -37,7 +37,7 @@ const MenuDocument = (props) => {
 
   useEffect(() => {
     if (!selectedUserData || Number(id) !== Number(selectedUserData.id)) dispatch(getUserInformation(id));
-  }, [dispatch])
+  }, [dispatch]);
 
   const getIngredientsFieldListForRender = (JSONstringIngredientsArray) => {
     const ingredientsArray = parseIngredients(JSONstringIngredientsArray)
@@ -53,7 +53,10 @@ const MenuDocument = (props) => {
   if (!selectedUserData && id) return <Redirect to={`/user/${id}`} />
   if (!selectedUserData) return <Redirect to='/' />
   return (
-    <div className='menu' id='menu-for-pdf'>
+    <div
+      id='menu-for-pdf'
+      className='menu'
+    >
       {
         [
           {
@@ -91,21 +94,23 @@ const MenuDocument = (props) => {
 
       {
         selectedUserData.products.map(({
-          step,
           photo,
           product,
           ingredients,
           descriptions,
         }, index) => (
-          <Card className='menu__card' id={`menu-for-pdf-${index + 2}`} >
+          <Card
+            className='menu__card'
+            id={`menu-for-pdf-${index + 2}`}
+          >
             <CardHeader
               title={product}
               subheader={getIngredientsFieldListForRender(ingredients)}
             />
             <CardMedia
               className='menu__photo'
-              image={photo || 'https://loremflickr.com/g/320/240/cockail'}
               title={`drink ${product}`}
+              image={photo || 'https://loremflickr.com/g/320/240/cockail'}
             />
             <CardContent> {descriptions}</CardContent>
           </Card>
