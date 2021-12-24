@@ -1,17 +1,22 @@
+%half-width-center {
+  width: 50%;
+  margin-left: 25% !important;
+}
+
 .modal-for-image {
   margin: 0;
   padding: 0;
   width: 100%;
   overflow: auto;
+  margin-top: 50%;
   background-color: rgba(0, 0, 0, 0);
+  transform: translate(0, -50%);
 
   &__image {
-    width: 50%;
-    margin: auto;
+    @extend %half-width-center;
     overflow: auto;
   }
   &__close {
-    width: 50%;
-    margin: auto !important;
+    @extend %half-width-center;
   }
 }

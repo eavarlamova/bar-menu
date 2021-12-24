@@ -17,7 +17,6 @@ import {
 } from "../constants/users";
 import { CHECK_JWT } from "../../mainConstants";
 
-
 const parseUsersInfo = (user) => ({
   ...user,
   users_ingredients: JSON.parse(user.users_ingredients) || [],
