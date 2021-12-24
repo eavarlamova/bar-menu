@@ -27,10 +27,10 @@ import IngredientsForm from "../IngredientsForm";
 import EditModal from '../../components/EditModal';
 
 const initialIngredient = {
+  alkohol: false,
   name_ingredient: '',
   size_ingredient: 0,
   measure_ingredient: '',
-  alkohol: false,
 };
 
 

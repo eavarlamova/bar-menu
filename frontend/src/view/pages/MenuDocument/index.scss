@@ -1,12 +1,15 @@
+%not-full-width-center {
+  width: 80%;
+  margin: auto;
+}
+
 .menu {
   &__card {
-    width: 80%;
-    margin: auto;
+    @extend %not-full-width-center;
     margin-bottom: 1%;
   }
   &__photo {
-    width: 80%;
-    margin: auto;
+    @extend %not-full-width-center;
     min-height: 200px;
     justify-self: center;
   }

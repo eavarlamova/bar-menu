@@ -25,7 +25,7 @@ const Home = () => {
 
   useEffect(() => {
     dispatch(getAllProducts());
-  }, [dispatch, avatar])
+  }, [dispatch, avatar]);
 
 
   return (

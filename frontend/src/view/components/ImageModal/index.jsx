@@ -38,7 +38,9 @@ const ImageModal = (props) => {
         </Button>
       </div>
     )
-  }
+  };
+
+  
   return (
     <>
       <Tooltip

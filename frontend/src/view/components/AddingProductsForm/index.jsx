@@ -23,7 +23,7 @@ import DropZoneFiles from "../DropzoneFiles";
 
 import {
   addProduct,
-  editProduct
+  editProduct,
 } from "../../../stores/actions/products";
 
 import "./index.scss";
@@ -202,9 +202,9 @@ const AddingProductsForm = (props) => {
   return (
     <>
       <Typography
+        variant="h6"
         align="center"
         color="primary"
-        variant="h6"
       >
         {`${actionType} your product now`.toUpperCase()}
       </Typography>
@@ -217,9 +217,9 @@ const AddingProductsForm = (props) => {
         ?
         (
           <Grid
+            spacing={2}
             container
             alignItems="center"
-            spacing={2}
           >
             <Grid
               item

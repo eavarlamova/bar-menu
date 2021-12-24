@@ -7,8 +7,10 @@ import {
   useDispatch,
   useSelector,
 } from "react-redux";
-import { Redirect } from "react-router";
-import { Link } from "react-router-dom";
+import {
+  Link,
+  Redirect,
+} from "react-router-dom";
 
 import {
   Button,

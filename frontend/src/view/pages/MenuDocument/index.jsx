@@ -37,7 +37,7 @@ const MenuDocument = (props) => {
 
   useEffect(() => {
     if (!selectedUserData || Number(id) !== Number(selectedUserData.id)) dispatch(getUserInformation(id));
-  }, [dispatch])
+  }, [dispatch]);
 
   const getIngredientsFieldListForRender = (JSONstringIngredientsArray) => {
     const ingredientsArray = parseIngredients(JSONstringIngredientsArray)

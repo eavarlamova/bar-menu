@@ -9,8 +9,8 @@
   width: 100%;
   overflow: auto;
   margin-top: 50%;
-  background-color: rgba(0, 0, 0, 0);
   transform: translate(0, -50%);
+  background-color: rgba(0, 0, 0, 0);
 
   &__image {
     @extend %half-width-center;

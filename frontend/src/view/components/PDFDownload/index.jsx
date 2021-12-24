@@ -35,7 +35,7 @@ const PDFDownload = (props) => {
       });
     }
     pdfMake.createPdf(contentForPDF).download(`${author}'s-menu.`)
-  }
+  };
 
   return (
     <Button

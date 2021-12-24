@@ -20,8 +20,7 @@ const DropzoneFiles = ({ setFile }) => {
 
   useEffect(() => {
     setFile(acceptedFiles[0])
-  }, [acceptedFiles])
-
+  }, [acceptedFiles]);
 
   const acceptedFileItems = acceptedFiles.map(file => (
     <li

@@ -31,10 +31,10 @@ const IngredientsForm = (props) => {
         label='alkohol'
         control={
           <Switch
-            color='primary'
             name='alkohol'
-            checked={currentIngredient.alkohol}
+            color='primary'
             onChange={handleChangeSwitch}
+            checked={currentIngredient.alkohol}
           />}>
       </FormControlLabel>
       <div className='ingredient-form__size-info'>
