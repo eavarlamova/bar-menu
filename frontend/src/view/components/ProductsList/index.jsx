@@ -117,7 +117,7 @@ const ProductsList = ({ products, target = 'personal' }) => {
           ?
           products.map(item => {
             return (
-              <Card>
+              <Card key={item.id}>
                 <CardHeader
                   avatar={
                     (item.author && item.author.avatar)
@@ -151,7 +151,6 @@ const ProductsList = ({ products, target = 'personal' }) => {
                 <ImageModal image={item.photo}>
                   <CardMedia
                     className={`${target}__photo`}
-                    title={`drink ${item.product}`}
                     image={item.photo || 'https://loremflickr.com/g/320/240/cockail'}
                   />
                 </ImageModal>
@@ -159,10 +158,10 @@ const ProductsList = ({ products, target = 'personal' }) => {
                 <CardContent>
                   {item.descriptions}
                   <Typography
+                    component="p"
                     variant="body2"
                     color="textSecondary"
-                    component="p"
-                  >
+                    >
                     {item.steps}
                   </Typography>
                 </CardContent>
