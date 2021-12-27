@@ -3,14 +3,6 @@ const { Products, Users } = require('../models')
 const { checkAuthUser } = require("./helpers/checkAuth")
 
 
-// const allProducts = await Products.findAll({
-//     include: [{
-//         model: Users,
-//         as: 'author',
-//         attributes: ['email', 'name', 'avatar']
-//     }],
-// })
-
 const getFullProductsInformation = (id) => (
   Products.findOne({
     where: { id },
